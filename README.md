@@ -1,18 +1,19 @@
-# [Nome do projeto]
+# Collab - Rua 4.0.4
 
 [Escreva um ou dois  parágrafo resumindo o objetivo do seu projeto.]
 
 ## Alunos integrantes da equipe
 
-* [Nome completo do aluno 1]
-* [Nome completo do aluno 2]
-* [Nome completo do aluno 3]
-* [Nome completo do aluno 4]
+* Ana Luiza Machado Alves
+* Lucas de Carvalho Barbosa
+* Lucas Henrique Chaves de Barros
+* Matheus Brasil Aguiar
+* Raquel Inez de Almeida Calazans
 
 ## Professores responsáveis
 
-* [Nome completo do professor 1]
-* [Nome completo do professor 2]
+* Joyce Christina de Paiva Carvalho
+* Soraia Lúcia da Silva
 
 ## Instruções de utilização
 
