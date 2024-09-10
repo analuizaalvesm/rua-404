@@ -1,6 +1,6 @@
 # Collab - Rua 4.0.4
 
-[Escreva um ou dois  parágrafo resumindo o objetivo do seu projeto.]
+O objetivo deste trabalho é capturar a essência do grupo RUA 4.0.4 e traduzi-la em uma plataforma web que funcione tanto como um portfólio para os artistas quanto como uma loja para aqueles que desejam adquirir seus produtos.
 
 ## Alunos integrantes da equipe
 
@@ -8,6 +8,7 @@
 * Lucas de Carvalho Barbosa
 * Lucas Henrique Chaves de Barros
 * Matheus Brasil Aguiar
+* Matheus Martins da Silva Porto
 * Raquel Inez de Almeida Calazans
 
 ## Professores responsáveis
