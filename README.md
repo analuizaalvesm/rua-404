@@ -8,6 +8,7 @@ O objetivo deste trabalho é capturar a essência do grupo RUA 4.0.4 e traduzi-l
 * Lucas de Carvalho Barbosa
 * Lucas Henrique Chaves de Barros
 * Matheus Brasil Aguiar
+* Matheus Martins da Silva Porto
 * Raquel Inez de Almeida Calazans
 
 ## Professores responsáveis
