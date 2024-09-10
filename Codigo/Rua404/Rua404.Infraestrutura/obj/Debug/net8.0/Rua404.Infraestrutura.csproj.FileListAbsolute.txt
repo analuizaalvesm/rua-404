@@ -1,0 +1,16 @@
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\bin\Debug\net8.0\Rua404.Infraestrutura.deps.json
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\bin\Debug\net8.0\Rua404.Infraestrutura.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\bin\Debug\net8.0\Rua404.Infraestrutura.pdb
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\bin\Debug\net8.0\Rua404.Domain.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\bin\Debug\net8.0\Rua404.Domain.pdb
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\obj\Debug\net8.0\Rua404.Infraestrutura.csproj.AssemblyReference.cache
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\obj\Debug\net8.0\Rua404.Infraestrutura.GeneratedMSBuildEditorConfig.editorconfig
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\obj\Debug\net8.0\Rua404.Infraestrutura.AssemblyInfoInputs.cache
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\obj\Debug\net8.0\Rua404.Infraestrutura.AssemblyInfo.cs
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\obj\Debug\net8.0\Rua404.Infraestrutura.csproj.CoreCompileInputs.cache
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\obj\Debug\net8.0\Rua404.Infraestrutura.sourcelink.json
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\obj\Debug\net8.0\Rua404.I.62A56C48.Up2Date
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\obj\Debug\net8.0\Rua404.Infraestrutura.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\obj\Debug\net8.0\refint\Rua404.Infraestrutura.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\obj\Debug\net8.0\Rua404.Infraestrutura.pdb
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Infraestrutura\obj\Debug\net8.0\ref\Rua404.Infraestrutura.dll
