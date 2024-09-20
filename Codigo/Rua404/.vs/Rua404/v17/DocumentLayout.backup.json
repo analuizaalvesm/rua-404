@@ -7,24 +7,24 @@
       "RelativeMoniker": "D:0:0:{8EA3140F-A1F4-4E47-A507-A51A7799F899}|Rua404\\Rua404.csproj|solutionrelative:rua404\\controllers\\testecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{94D74282-CCB4-4EC9-B64B-5BD93C46CBC0}|Rua404.Domain\\Rua404.Domain.csproj|c:\\lucas\\faculdade\\tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\codigo\\rua404\\rua404.domain\\entities\\teste.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{94D74282-CCB4-4EC9-B64B-5BD93C46CBC0}|Rua404.Domain\\Rua404.Domain.csproj|solutionrelative:rua404.domain\\entities\\teste.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EA3140F-A1F4-4E47-A507-A51A7799F899}|Rua404\\Rua404.csproj|c:\\lucas\\faculdade\\tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\codigo\\rua404\\rua404\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA3140F-A1F4-4E47-A507-A51A7799F899}|Rua404\\Rua404.csproj|solutionrelative:rua404\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CF1B8994-026E-4EA1-93BD-C91FBF55E052}|Rua404.Infraestrutura\\Rua404.Infraestrutura.csproj|c:\\lucas\\faculdade\\tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\codigo\\rua404\\rua404.infraestrutura\\rua404dbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CF1B8994-026E-4EA1-93BD-C91FBF55E052}|Rua404.Infraestrutura\\Rua404.Infraestrutura.csproj|solutionrelative:rua404.infraestrutura\\rua404dbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EA3140F-A1F4-4E47-A507-A51A7799F899}|Rua404\\Rua404.csproj|c:\\lucas\\faculdade\\tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\codigo\\rua404\\rua404\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{8EA3140F-A1F4-4E47-A507-A51A7799F899}|Rua404\\Rua404.csproj|solutionrelative:rua404\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{8EA3140F-A1F4-4E47-A507-A51A7799F899}|Rua404\\Rua404.csproj|c:\\lucas\\faculdade\\tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\codigo\\rua404\\rua404\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8EA3140F-A1F4-4E47-A507-A51A7799F899}|Rua404\\Rua404.csproj|solutionrelative:rua404\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{8EA3140F-A1F4-4E47-A507-A51A7799F899}|Rua404\\Rua404.csproj|c:\\lucas\\faculdade\\tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\codigo\\rua404\\rua404\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8EA3140F-A1F4-4E47-A507-A51A7799F899}|Rua404\\Rua404.csproj|solutionrelative:rua404\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EA3140F-A1F4-4E47-A507-A51A7799F899}|Rua404\\Rua404.csproj|c:\\lucas\\faculdade\\tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\codigo\\rua404\\rua404\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{8EA3140F-A1F4-4E47-A507-A51A7799F899}|Rua404\\Rua404.csproj|solutionrelative:rua404\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94D74282-CCB4-4EC9-B64B-5BD93C46CBC0}|Rua404.Domain\\Rua404.Domain.csproj|c:\\lucas\\faculdade\\tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\codigo\\rua404\\rua404.domain\\entities\\teste.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94D74282-CCB4-4EC9-B64B-5BD93C46CBC0}|Rua404.Domain\\Rua404.Domain.csproj|solutionrelative:rua404.domain\\entities\\teste.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +38,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "Teste.cs",
               "DocumentMoniker": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Entities\\Teste.cs",
               "RelativeDocumentMoniker": "Rua404.Domain\\Entities\\Teste.cs",
@@ -46,8 +46,7 @@
               "RelativeToolTip": "Rua404.Domain\\Entities\\Teste.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-10T00:08:58.903Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-10T00:08:58.903Z"
             },
             {
               "$type": "Document",
@@ -57,14 +56,14 @@
               "RelativeDocumentMoniker": "Rua404\\Controllers\\TesteController.cs",
               "ToolTip": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404\\Controllers\\TesteController.cs",
               "RelativeToolTip": "Rua404\\Controllers\\TesteController.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAjwBwAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAArwBwAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-10T00:28:33.992Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404\\Program.cs",
               "RelativeDocumentMoniker": "Rua404\\Program.cs",
@@ -72,21 +71,19 @@
               "RelativeToolTip": "Rua404\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-10T00:11:41.096Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-10T00:11:41.096Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404\\appsettings.json",
               "RelativeDocumentMoniker": "Rua404\\appsettings.json",
               "ToolTip": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404\\appsettings.json",
               "RelativeToolTip": "Rua404\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAdAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-09-10T00:01:46.277Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-10T00:01:46.277Z"
             },
             {
               "$type": "Document",
@@ -98,12 +95,11 @@
               "RelativeToolTip": "Rua404.Infraestrutura\\Rua404DbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-09T23:58:57.111Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-09T23:58:57.111Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "WeatherForecastController.cs",
               "DocumentMoniker": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404\\Controllers\\WeatherForecastController.cs",
               "RelativeDocumentMoniker": "Rua404\\Controllers\\WeatherForecastController.cs",
