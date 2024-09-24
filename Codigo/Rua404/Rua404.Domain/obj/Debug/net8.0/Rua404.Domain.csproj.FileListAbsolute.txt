@@ -10,3 +10,5 @@ C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404
 C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Domain\obj\Debug\net8.0\refint\Rua404.Domain.dll
 C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Domain\obj\Debug\net8.0\Rua404.Domain.pdb
 C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Domain\obj\Debug\net8.0\ref\Rua404.Domain.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Domain\bin\Debug\net8.0\Rua404.Domain.runtimeconfig.json
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404.Domain\obj\Debug\net8.0\Rua404.Domain.genruntimeconfig.cache
