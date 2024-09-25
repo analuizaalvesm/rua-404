@@ -3445,19 +3445,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lucas\\.nuget\\packages\\": {}
+    "C:\\Users\\mathe\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Lucas\\Faculdade\\novo tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404\\Rua404.csproj",
+      "projectUniqueName": "C:\\Users\\mathe\\OneDrive\\Área de Trabalho\\Tis 4\\Tis 4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404\\Rua404.csproj",
       "projectName": "Rua404",
-      "projectPath": "C:\\Lucas\\Faculdade\\novo tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404\\Rua404.csproj",
-      "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-      "outputPath": "C:\\Lucas\\Faculdade\\novo tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404\\obj\\",
+      "projectPath": "C:\\Users\\mathe\\OneDrive\\Área de Trabalho\\Tis 4\\Tis 4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404\\Rua404.csproj",
+      "packagesPath": "C:\\Users\\mathe\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mathe\\OneDrive\\Área de Trabalho\\Tis 4\\Tis 4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mathe\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3472,8 +3472,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Lucas\\Faculdade\\novo tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\Rua404.Infraestrutura.csproj": {
-              "projectPath": "C:\\Lucas\\Faculdade\\novo tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\Rua404.Infraestrutura.csproj"
+            "C:\\Users\\mathe\\OneDrive\\Área de Trabalho\\Tis 4\\Tis 4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\Rua404.Infraestrutura.csproj": {
+              "projectPath": "C:\\Users\\mathe\\OneDrive\\Área de Trabalho\\Tis 4\\Tis 4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\Rua404.Infraestrutura.csproj"
             }
           }
         }

@@ -2882,19 +2882,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lucas\\.nuget\\packages\\": {}
+    "C:\\Users\\mathe\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Lucas\\Faculdade\\novo tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Rua404.Domain.csproj",
+      "projectUniqueName": "C:\\Users\\mathe\\OneDrive\\Área de Trabalho\\Tis 4\\Tis 4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Rua404.Domain.csproj",
       "projectName": "Rua404.Domain",
-      "projectPath": "C:\\Lucas\\Faculdade\\novo tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Rua404.Domain.csproj",
-      "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-      "outputPath": "C:\\Lucas\\Faculdade\\novo tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\obj\\",
+      "projectPath": "C:\\Users\\mathe\\OneDrive\\Área de Trabalho\\Tis 4\\Tis 4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Rua404.Domain.csproj",
+      "packagesPath": "C:\\Users\\mathe\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mathe\\OneDrive\\Área de Trabalho\\Tis 4\\Tis 4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mathe\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
