@@ -15,7 +15,8 @@ namespace Rua404.Infraestrutura
         }
 
         // Defina as DbSets para suas tabelas
-        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Customer> Customer { get; set; }
+        public DbSet<Login> Login { get; set; }
         public DbSet<Staff> Staff { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Store> Stores { get; set; }
@@ -54,8 +55,10 @@ namespace Rua404.Infraestrutura
             modelBuilder.Entity<Store>()
             .HasOne(s => s.ManagerStaff)           
             .WithOne()                             
-            .HasForeignKey<Store>(s => s.ManagerStaffId); 
+            .HasForeignKey<Store>(s => s.ManagerStaffId);
 
+            modelBuilder.Entity<Login>()
+           .HasNoKey(); // Define a entidade como sem chave
 
             //modelBuilder.Entity<Customer>()
             // .HasOne(c => c.Store)
