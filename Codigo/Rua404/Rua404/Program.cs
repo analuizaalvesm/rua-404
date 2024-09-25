@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Rua404.Domain.NewFolder;
 using Rua404.Infraestrutura;
+using Rua404.Infraestrutura.Services;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -34,6 +36,7 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<IAuthRepository, AuthService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -58,7 +58,7 @@ namespace Rua404.Infraestrutura
             .HasForeignKey<Store>(s => s.ManagerStaffId);
 
             modelBuilder.Entity<Login>()
-           .HasNoKey(); // Define a entidade como sem chave
+           .HasNoKey();
 
             //modelBuilder.Entity<Customer>()
             // .HasOne(c => c.Store)

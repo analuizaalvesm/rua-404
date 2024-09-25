@@ -1,69 +1,41 @@
 ﻿namespace Rua404.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
-    using Microsoft.IdentityModel.Tokens;
+    using Rua404.Domain.NewFolder;
     using Rua404.Infraestrutura;
-    using System.IdentityModel.Tokens.Jwt;
-    using System.Security.Claims;
-    using System.Text;
+    using Rua404.Infraestrutura.Services;
     using System.Web.Http.Cors;
 
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private Rua404DbContext _db;
         private readonly IConfiguration _configuration;
-        public AuthController(Rua404DbContext db, IConfiguration configuration)
+        private readonly IAuthRepository _authRepository;
+        public AuthController(Rua404DbContext db, IConfiguration configuration, IAuthRepository authRepository)
         {
             _db = db;
             _configuration = configuration;
+            _authRepository = authRepository;
         }
 
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel loginModel)
+        public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {
-            var user = _db.Login.FirstOrDefault(u => u.Email == loginModel.Email && u.Password == loginModel.Password);
+            var token = await _authRepository.Login(loginModel.Email, loginModel.Password);
 
-            if (user == null )
+            if (token == null)
             {
                 return Unauthorized();
             }
 
-            var token = GenerateJwtToken(user.Email);
-
-            return Ok(new { token });
+            return Ok(token);
         }
 
-        private string GenerateJwtToken(string username)
-        {
-            string chaveSecreta = "EstaEhUmaChaveSecretaLongaEAleatoriaQueTemPeloMenos32Bytes";
-
-            var chaveSimetrica = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(chaveSecreta));
-
-            var credenciais = new SigningCredentials(chaveSimetrica, SecurityAlgorithms.HmacSha256);
-
-
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.Name, "NomeDoUsuario"),
-                new Claim(ClaimTypes.Role, "Usuario")
-            };
-
-
-            var token = new JwtSecurityToken(
-                issuer: "SeuIssuer",
-                audience: "SeuAudience",
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: credenciais);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+       
     }
     public class LoginModel
     {
