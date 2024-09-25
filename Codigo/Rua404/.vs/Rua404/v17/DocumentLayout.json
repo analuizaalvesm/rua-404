@@ -7,8 +7,16 @@
       "RelativeMoniker": "D:0:0:{CF1B8994-026E-4EA1-93BD-C91FBF55E052}|Rua404.Infraestrutura\\Rua404.Infraestrutura.csproj|solutionrelative:rua404.infraestrutura\\rua404dbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\Migrations\\20240924135046_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Rua404.Infraestrutura\\Migrations\\20240924135046_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8EA3140F-A1F4-4E47-A507-A51A7799F899}|Rua404\\Rua404.csproj|c:\\lucas\\faculdade\\tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\codigo\\rua404\\rua404\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8EA3140F-A1F4-4E47-A507-A51A7799F899}|Rua404\\Rua404.csproj|solutionrelative:rua404\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94D74282-CCB4-4EC9-B64B-5BD93C46CBC0}|Rua404.Domain\\Rua404.Domain.csproj|c:\\lucas\\faculdade\\tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\codigo\\rua404\\rua404.domain\\entities\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94D74282-CCB4-4EC9-B64B-5BD93C46CBC0}|Rua404.Domain\\Rua404.Domain.csproj|solutionrelative:rua404.domain\\entities\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{94D74282-CCB4-4EC9-B64B-5BD93C46CBC0}|Rua404.Domain\\Rua404.Domain.csproj|c:\\lucas\\faculdade\\tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\codigo\\rua404\\rua404.domain\\entities\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{94D74282-CCB4-4EC9-B64B-5BD93C46CBC0}|Rua404.Domain\\Rua404.Domain.csproj|solutionrelative:rua404.domain\\entities\\customer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{94D74282-CCB4-4EC9-B64B-5BD93C46CBC0}|Rua404.Domain\\Rua404.Domain.csproj|c:\\lucas\\faculdade\\tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\codigo\\rua404\\rua404.domain\\entities\\store.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -22,19 +30,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Login.cs",
+              "DocumentMoniker": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Entities\\Login.cs",
+              "RelativeDocumentMoniker": "Rua404.Domain\\Entities\\Login.cs",
+              "ToolTip": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Entities\\Login.cs",
+              "RelativeToolTip": "Rua404.Domain\\Entities\\Login.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T03:02:03.628Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Store.cs",
               "DocumentMoniker": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Entities\\Store.cs",
               "RelativeDocumentMoniker": "Rua404.Domain\\Entities\\Store.cs",
               "ToolTip": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Entities\\Store.cs",
               "RelativeToolTip": "Rua404.Domain\\Entities\\Store.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABcAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-24T14:23:26.096Z",
+              "WhenOpened": "2024-09-25T02:59:23.124Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Customer.cs",
+              "DocumentMoniker": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Entities\\Customer.cs",
+              "RelativeDocumentMoniker": "Rua404.Domain\\Entities\\Customer.cs",
+              "ToolTip": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Entities\\Customer.cs",
+              "RelativeToolTip": "Rua404.Domain\\Entities\\Customer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-25T02:52:49.161Z",
               "EditorCaption": ""
             },
             {
@@ -45,22 +79,22 @@
               "RelativeDocumentMoniker": "Rua404.Infraestrutura\\Rua404DbContext.cs",
               "ToolTip": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\Rua404DbContext.cs",
               "RelativeToolTip": "Rua404.Infraestrutura\\Rua404DbContext.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAcwDcAAAAzAAAAAAAAAA==",
+              "ViewState": "AgIAACgAAAAAAAAAAAAcwDwAAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-24T13:59:24.789Z",
+              "WhenOpened": "2024-09-25T02:47:03.904Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "20240924135046_InitialCreate.cs",
-              "DocumentMoniker": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\Migrations\\20240924135046_InitialCreate.cs",
-              "RelativeDocumentMoniker": "Rua404.Infraestrutura\\Migrations\\20240924135046_InitialCreate.cs",
-              "ToolTip": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\Migrations\\20240924135046_InitialCreate.cs",
-              "RelativeToolTip": "Rua404.Infraestrutura\\Migrations\\20240924135046_InitialCreate.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAALcAAAA2AAAAAAAAAA==",
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "Rua404\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Lucas\\Faculdade\\Tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "Rua404\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAIwBsAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-24T13:50:46.227Z",
+              "WhenOpened": "2024-09-24T18:18:27.762Z",
               "EditorCaption": ""
             }
           ]
