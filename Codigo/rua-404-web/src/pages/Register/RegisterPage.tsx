@@ -4,6 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../context/useAuth";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button/button";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { Checkbox } from "@/components/ui/Checkbox/checkbox";
 
 type Props = {};
 
@@ -14,9 +16,9 @@ type RegisterForm = {
 };
 
 const validation = Yup.object().shape({
-  email: Yup.string().email().required("Campo obrigatório."),
+  email: Yup.string().email("E-mail inválido.").required("Campo obrigatório."),
   username: Yup.string().required("Campo obrigatório."),
-  password: Yup.string().min(8).max(16).required("Campo obrigatório."),
+  password: Yup.string().min(8, "A senha deve possuir no mínimo 8 dígitos.").max(16, "A senha é grande demais.").required("Campo obrigatório."),
 });
 
 const RegisterPage = (props: Props) => {
@@ -27,6 +29,7 @@ const RegisterPage = (props: Props) => {
     formState: { errors },
   } = useForm<RegisterForm>({ resolver: yupResolver(validation) });
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
 
   const handleRegister = async (form: RegisterForm) => {
@@ -49,7 +52,7 @@ const RegisterPage = (props: Props) => {
                 Registre-se
               </h1>
               <form
-                className="space-y-4 md:space-y-6"
+                className="space-y-4 md:space-y-4"
                 onSubmit={handleSubmit(handleRegister)}
               >
                 <div>
@@ -67,7 +70,7 @@ const RegisterPage = (props: Props) => {
                     {...register("username")}
                   />
                   {errors.username ? (
-                    <p className="text-black">{errors.username.message}</p>
+                    <p className="text-red-500 text-xs pt-1">{errors.username.message}</p>
                   ) : (
                     ""
                   )}
@@ -87,7 +90,7 @@ const RegisterPage = (props: Props) => {
                     {...register("email")}
                   />
                   {errors.email ? (
-                    <p className="text-black">{errors.email.message}</p>
+                    <p className="text-red-500 text-xs pt-1">{errors.email.message}</p>
                   ) : (
                     ""
                   )}
@@ -99,15 +102,27 @@ const RegisterPage = (props: Props) => {
                   >
                     Senha
                   </label>
-                  <input
-                    type="password"
-                    id="password"
-                    placeholder="••••••••"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    {...register("password")}
-                  />
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      placeholder="••••••••"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      {...register("password")}
+                    />
+                    <div
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="bg-transparent absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 border-none cursor-pointer"
+                    >
+                      {showPassword ? (
+                        <EyeIcon className="w-5 h-5 text-gray-400" />
+                      ) : (
+                        <EyeSlashIcon className="w-5 h-5 text-gray-400" />
+                      )}
+                    </div>
+                  </div>
                   {errors.password ? (
-                    <p className="text-black">{errors.password.message}</p>
+                    <p className="text-red-500 text-xs pt-1">{errors.password.message}</p>
                   ) : (
                     ""
                   )}
@@ -119,13 +134,13 @@ const RegisterPage = (props: Props) => {
                         id="remember"
                         aria-describedby="remember"
                         type="checkbox"
-                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-black focus:bg-gray-700 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                        className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-black focus:bg-gray-700 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800 accent-black"
                         required
                       />
                     </div>
                     <div className="ml-3 text-sm">
                       <label
-                        htmlFor="remember"
+                        htmlFor="termos"
                         className="text-gray-500 dark:text-gray-300"
                       >
                         Eu aceito os <a href="#" className="text-black hover:text-slate-500">Termos de Uso</a> e{" "} <a href="#" className="text-black hover:text-slate-500">Política de Privacidade</a> e desejo continuar.
@@ -144,6 +159,14 @@ const RegisterPage = (props: Props) => {
                     "Registrar"
                   )}
                 </Button>
+                <div className="flex justify-center">
+                  <p className="text-sm text-gray-600 dark:text-gray-200">
+                    Já possui uma conta?{" "}
+                    <a href="/login" className="text-black hover:text-slate-500">
+                      Faça login
+                    </a>
+                  </p>
+                </div>
               </form>
             </div>
           </div>

@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button/button";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import { Checkbox } from "@/components/ui/Checkbox/checkbox";
 
 type Props = {};
 
@@ -15,8 +16,8 @@ type LoginForm = {
 };
 
 const validation = Yup.object().shape({
-  email: Yup.string().email().required("Campo obrigatório."),
-  password: Yup.string().min(8).max(16).required("Campo obrigatório."),
+  email: Yup.string().email("E-mail inválido.").required("Campo obrigatório."),
+  password: Yup.string().min(8, "A senha deve possuir no mínimo 8 dígitos.").max(16, "A senha é grande demais.").required("Campo obrigatório."),
 });
 
 const LoginPage = (props: Props) => {
@@ -42,7 +43,7 @@ const LoginPage = (props: Props) => {
                 Entre na sua conta
               </h1>
               <form
-                className="space-y-4 md:space-y-6"
+                className="space-y-4 md:space-y-4"
                 onSubmit={handleSubmit(handleLogin)}
               >
                 <div>
@@ -60,7 +61,7 @@ const LoginPage = (props: Props) => {
                     {...register("email")}
                   />
                   {errors.email ? (
-                    <p className="text-black">{errors.email.message}</p>
+                    <p className="text-red-500 text-xs pt-1">{errors.email.message}</p>
                   ) : (
                     ""
                   )}
@@ -92,7 +93,7 @@ const LoginPage = (props: Props) => {
                     </div>
                   </div>
                   {errors.password ? (
-                    <p className="text-black">{errors.password.message}</p>
+                    <p className="text-red-500 text-xs pt-1">{errors.password.message}</p>
                   ) : (
                     ""
                   )}
