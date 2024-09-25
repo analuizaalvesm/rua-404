@@ -2,9 +2,11 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
+    using Rua404.Domain.Entities;
     using Rua404.Domain.NewFolder;
     using Rua404.Infraestrutura;
     using Rua404.Infraestrutura.Services;
+    using System.ComponentModel.DataAnnotations;
     using System.Web.Http.Cors;
 
     [ApiController]
@@ -35,12 +37,36 @@
             return Ok(token);
         }
 
-       
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegistreModel customer)
+        {
+            //var userExists = await _authRepository.UserExists(customer.Email);
+
+            //if (userExists)
+            //{
+            //    return BadRequest("Email already exists");
+            //}
+
+            var createdUser = await _authRepository.Register(customer.Email, customer.Password, customer.UserName, customer.Id);
+
+            return StatusCode(201);
+        }
+
+
     }
     public class LoginModel
     {
         public string Email { get; set; }
         public string Password { get; set; }
+ 
+    }
+
+    public class RegistreModel
+    {
+        public int Id { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string? UserName { get; set; }
     }
 
 }

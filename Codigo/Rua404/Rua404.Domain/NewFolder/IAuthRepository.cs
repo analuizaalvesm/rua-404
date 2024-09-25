@@ -4,7 +4,7 @@ namespace Rua404.Domain.NewFolder
 {
     public interface IAuthRepository
     {
-        Task<Customer> Register(Customer user, string password);
+        Task<string> Register(string email, string password, string userName, int id);
         Task<string> Login(string email, string password);
         Task<bool> UserExists(string email);
     }

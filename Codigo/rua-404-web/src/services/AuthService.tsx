@@ -14,6 +14,7 @@ export const registerApi = async (
       username: username,
       email: email,
       password: password,
+      id: 1,
     });
     return data;
   } catch (error) {

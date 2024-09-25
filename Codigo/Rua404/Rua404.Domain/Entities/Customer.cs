@@ -37,8 +37,8 @@
         public string Password { get; set; }
 
         [ForeignKey("store_id")]
-        public Store Store { get; set; }
+        public Store? Store { get; set; }
 
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<Order>? Orders { get; set; }
     }
 }

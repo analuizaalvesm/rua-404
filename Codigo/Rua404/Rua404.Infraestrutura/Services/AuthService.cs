@@ -20,7 +20,7 @@ namespace Rua404.Infraestrutura.Services
         }
         public async Task<string> Login(string email, string password)
         {
-            var user = _db.Login.FirstOrDefault(u => u.Email == email && u.Password == password);
+            var user = _db.Login.FirstOrDefault(u => u.Email == email && u.Password == password && u.Id == 1);
 
             if (user == null)
             {
@@ -32,9 +32,31 @@ namespace Rua404.Infraestrutura.Services
         }
 
 
-        public Task<Customer> Register(Customer user, string password)
+        public async Task<string> Register(string email, string password, string userName, int id)
         {
-            throw new NotImplementedException();
+            if (email != null)
+            {
+                _db.Login.Add(new Login
+                {
+                    Email = email,
+                    Password = password,
+                    UserName = userName,
+                    Id = id
+                });
+                _db.SaveChanges();
+
+                //_db.Customer.Add(new Customer
+                //{
+                //    CreateDate = DateTime.Now,
+                //    FirstName = user.FirstName,
+                //    LastName = user.FirstName,
+                //    Email = user.Email,
+                //    Active = true,
+                //    Password = user.Password,
+                //});
+            }
+
+            return "OK";
         }
 
         public Task<bool> UserExists(string email)

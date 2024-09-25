@@ -53,12 +53,12 @@ namespace Rua404.Infraestrutura
                 .HasForeignKey(p => p.StaffId);
 
             modelBuilder.Entity<Store>()
-            .HasOne(s => s.ManagerStaff)           
-            .WithOne()                             
+            .HasOne(s => s.ManagerStaff)
+            .WithOne()
             .HasForeignKey<Store>(s => s.ManagerStaffId);
 
             modelBuilder.Entity<Login>()
-           .HasNoKey();
+         .HasKey(l => l.Id);
 
             //modelBuilder.Entity<Customer>()
             // .HasOne(c => c.Store)
