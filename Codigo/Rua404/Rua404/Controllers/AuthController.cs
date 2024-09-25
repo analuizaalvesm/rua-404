@@ -1,74 +1,72 @@
 ﻿namespace Rua404.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
-    using Microsoft.IdentityModel.Tokens;
+    using Rua404.Domain.Entities;
+    using Rua404.Domain.NewFolder;
     using Rua404.Infraestrutura;
-    using System.IdentityModel.Tokens.Jwt;
-    using System.Security.Claims;
-    using System.Text;
+    using Rua404.Infraestrutura.Services;
+    using System.ComponentModel.DataAnnotations;
     using System.Web.Http.Cors;
 
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private Rua404DbContext _db;
         private readonly IConfiguration _configuration;
-        public AuthController(Rua404DbContext db, IConfiguration configuration)
+        private readonly IAuthRepository _authRepository;
+        public AuthController(Rua404DbContext db, IConfiguration configuration, IAuthRepository authRepository)
         {
             _db = db;
             _configuration = configuration;
+            _authRepository = authRepository;
         }
 
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel loginModel)
+        public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {
-            var user = _db.Login.FirstOrDefault(u => u.Email == loginModel.Email && u.Password == loginModel.Password);
+            var token = await _authRepository.Login(loginModel.Email, loginModel.Password);
 
-            if (user == null )
+            if (token == null)
             {
                 return Unauthorized();
             }
 
-            var token = GenerateJwtToken(user.Email);
-
-            return Ok(new { token });
+            return Ok(token);
         }
 
-        private string GenerateJwtToken(string username)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegistreModel customer)
         {
-            string chaveSecreta = "EstaEhUmaChaveSecretaLongaEAleatoriaQueTemPeloMenos32Bytes";
+            //var userExists = await _authRepository.UserExists(customer.Email);
 
-            var chaveSimetrica = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(chaveSecreta));
+            //if (userExists)
+            //{
+            //    return BadRequest("Email already exists");
+            //}
 
-            var credenciais = new SigningCredentials(chaveSimetrica, SecurityAlgorithms.HmacSha256);
+            var createdUser = await _authRepository.Register(customer.Email, customer.Password, customer.UserName, customer.Id);
 
-
-            var claims = new[]
-            {
-                new Claim(ClaimTypes.Name, "NomeDoUsuario"),
-                new Claim(ClaimTypes.Role, "Usuario")
-            };
-
-
-            var token = new JwtSecurityToken(
-                issuer: "SeuIssuer",
-                audience: "SeuAudience",
-                claims: claims,
-                expires: DateTime.Now.AddMinutes(30),
-                signingCredentials: credenciais);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return StatusCode(201);
         }
+
+
     }
     public class LoginModel
     {
         public string Email { get; set; }
         public string Password { get; set; }
+ 
+    }
+
+    public class RegistreModel
+    {
+        public int Id { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string? UserName { get; set; }
     }
 
 }
