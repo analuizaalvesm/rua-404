@@ -107,3 +107,13 @@ C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404
 C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404\bin\Debug\net8.0\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404\bin\Debug\net8.0\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404\bin\Debug\net8.0\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Lucas\Faculdade\Tis4\plf-es-2024-2-ti4-1254100-rua-4-0-4\Codigo\Rua404\Rua404\bin\Debug\net8.0\BouncyCastle.Crypto.dll
