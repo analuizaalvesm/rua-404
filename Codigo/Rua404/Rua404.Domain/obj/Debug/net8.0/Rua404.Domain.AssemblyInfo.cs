@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Rua404.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b57a138385bef525ea2879d03ced4ceab0869b4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8dd2f0824c5c44a9e9e2a4d7ab51abdc6e732ffa")]
 [assembly: System.Reflection.AssemblyProductAttribute("Rua404.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Rua404.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
