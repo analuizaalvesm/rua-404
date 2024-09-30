@@ -61,7 +61,7 @@ namespace Rua404.Infraestrutura.Services
 
         public Task<bool> UserExists(string email)
         {
-            throw new NotImplementedException();
+            _db.Login.
         }
 
         private string GenerateJwtToken(string username)
