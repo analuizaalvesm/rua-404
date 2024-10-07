@@ -11,7 +11,7 @@ public class Rua404Application {
         SpringApplication.run(Rua404Application.class, args);
     }
 
-    @Bean
+    @Bean    
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
