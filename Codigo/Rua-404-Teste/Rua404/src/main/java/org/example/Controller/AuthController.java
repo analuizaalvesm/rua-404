@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("auth")
 public class AuthController {
 
-    @GetMapping("/logando")
+
+    @GetMapping("/login")
     public String login() {
         return "login";
     }
