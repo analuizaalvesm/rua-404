@@ -72,11 +72,11 @@ const Navbar = (props: Props) => {
               {isAuthenticated() ? (
                 <>
                   <DropdownMenuItem className="block px-4 py-2 text-black">
-                    Welcome, {user?.username}
+                    Welcome, {user?.email}
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     onClick={logout}
-                    className="block px-4 py-2 text-red-500 hover:bg-slate-100"
+                    className="block px-4 py-2 text-black hover:bg-slate-100"
                   >
                     Sair
                   </DropdownMenuItem>
@@ -110,10 +110,10 @@ const Navbar = (props: Props) => {
 
         {isAuthenticated() ? (
           <div className="hidden lg:flex items-center space-x-6 text-black">
-            <div className="hover:text-darkBlue">Welcome, {user?.username}</div>
+            <div className="hover:text-darkBlue">Welcome, {user?.email}</div>
             <a
               onClick={logout}
-              className="px-8 py-3 font-bold rounded text-white bg-lightGreen hover:opacity-70"
+              className="px-8 py-3 text-black hover:text-slate-600 cursor-pointer"
             >
               Sair
             </a>
