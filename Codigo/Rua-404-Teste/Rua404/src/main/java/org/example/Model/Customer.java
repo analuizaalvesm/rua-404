@@ -8,6 +8,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "customer")
@@ -44,8 +48,26 @@ public class Customer {
 
     @Column(name="password")
     private String password;
-    
 
+    @Setter
+    @Getter
+    @Column(name = "password_code", nullable = true)
+    private String recuperationCode;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "data_validation_code", nullable = true)
+    private Date dataValidationCode;
+
+    @Setter
+    @Getter
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "data_send_code", nullable = true)
+    private Date dataSendCode;
+
+    @Setter
+    @Getter
+    @Column(name = "login_token", unique = true, nullable = true)
+    private String loginToken;
     
 
 
@@ -133,11 +155,21 @@ public class Customer {
         this.password = password;
     }
 
-    
+    public String setCode(String recuperationCode) {
+        return this.recuperationCode = recuperationCode;
+    }
 
-    
-    
-    
+    public Date getCodeExpiration() {
+        return dataValidationCode;
+    }
+
+    public void setCodeExpiration(Date dataValidationCode) {
+        this.dataValidationCode = dataValidationCode;
+    }
+
+    public void setSendCode(Date data) {
+        this.dataSendCode = data;
+    }
 
 
 }
