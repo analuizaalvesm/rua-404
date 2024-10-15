@@ -14,8 +14,8 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public String login(@RequestBody String email, String password) {
-        return authService.login(email, password);
+    public String login(@RequestBody Customer customer) {
+        return authService.login(customer);
     }
 
     @PutMapping("/updateUserData/{email}")
