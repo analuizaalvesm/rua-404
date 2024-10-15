@@ -28,11 +28,19 @@ public class AuthService {
         Customer customerDb = authRepository.findByEmailAsync(email);
         try {
             if(customerDb != null){
-                // adicionar validação de presenca dos campos para ser editado
-                customerDb.setAddress(customer.getAddress());
-                customerDb.setEmail(customer.getEmail());
-                customerDb.setPassword(customer.getPassword());
-                authRepository.save(customerDb);
+                if(customer.getFirst_name() != null) {
+                    customerDb.setFirst_name(customer.getFirst_name());
+                }
+                if(customer.getLast_name() != null) {
+                    customerDb.setLast_name(customer.getLast_name());
+                }
+                if(customer.getAddress() != null) {
+                    customerDb.setAddress(customer.getAddress());
+                }
+                if(customer.getEmail() != null) {
+                    customerDb.setEmail(customer.getEmail());
+                }
+        authRepository.save(customerDb);
             }
             return "Usuário atualizado!";
         } catch (Exception e) {

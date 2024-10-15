@@ -34,6 +34,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/api/management/validate-code").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/management/change-password").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/management/update-password").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/auth/updateUserData/{email}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/hc").permitAll()
                         .anyRequest().authenticated())
                 .build();
