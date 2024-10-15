@@ -2,6 +2,7 @@ package org.example.Service;
 
 import org.example.Model.Customer;
 import org.example.Repositories.AuthRepository;
+import org.example.Repositories.CustomerRepository;
 import org.example.Repositories.UserRepository;
 import org.example.Security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +14,30 @@ import org.springframework.web.server.ResponseStatusException;
 public class AuthService {
 
     @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
     private AuthRepository authRepository;
 
     @Autowired
     private UserRepository userRepository;
+    
+    public String registerUser(Customer newCustomer){
+        if (emailExists(newCustomer.getEmail())) {
+            throw new RuntimeException("Email já está em uso.");
+        }
+    try {
+        this.customerRepository.save(newCustomer);
+        return "Usuario cadastrado";
+    } catch (Exception e) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuario nao pode ser cadastrado");
+    }
+
+    }
+    public boolean emailExists(String email) {
+        Customer customer = userRepository.findByEmailAsync(email);
+        return customer != null;
+    }    
 
     public String deleteByEmail(String email) {
         try {

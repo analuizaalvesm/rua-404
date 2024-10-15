@@ -27,7 +27,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.PUT, "/auth/updateUserData/{email}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET,"/customer").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/customer").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/auth/register").permitAll()
                         .requestMatchers(HttpMethod.DELETE,"/auth/deleteByEmail/{email}").permitAll()
                         .requestMatchers(HttpMethod.GET, "/hc").permitAll()
                         .requestMatchers(HttpMethod.GET, "/products").permitAll()

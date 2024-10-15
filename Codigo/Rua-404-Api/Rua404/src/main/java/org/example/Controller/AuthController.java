@@ -6,12 +6,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
     @Autowired
     private AuthService authService;
+    
+    @PostMapping("/register")
+    public String register(@RequestBody Customer customer){
+    return authService.registerUser(customer);
+    }
+    
+    
 
     @PostMapping("/login")
     public String login(@RequestBody Customer customer) {
