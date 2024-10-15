@@ -20,13 +20,21 @@ public class CustomerService {
     public Optional<Customer> getCustomerById(long CustomerId){
         return this.customerRepository.findById(CustomerId);
     }
-    public Customer createCustomer(Customer newCustomer){
-    try {
-        return this.customerRepository.save(newCustomer);
-    } catch (RuntimeException e) {
-        throw new RuntimeException("Não foi possivel adicionar Pedido"); 
+    public Customer createCustomer(Customer newCustomer) {
+        if (emailExists(newCustomer.getEmail())) {
+            throw new RuntimeException("Email já está em uso.");
+        }
+        try {
+            return this.customerRepository.save(newCustomer);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Não foi possível adicionar Cliente");
+        }
     }
-    }
+    
+    public boolean emailExists(String email) {
+        Customer customer = customerRepository.findByEmailAsync(email);
+        return customer != null;
+    }    
     public Customer updateCustomer(Customer CustomerObj){
         return customerRepository.findById(CustomerObj.getCustomer_id())
         .map(customer->{
