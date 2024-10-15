@@ -1,5 +1,6 @@
 package org.example.Model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -10,26 +11,35 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Products")
+@Table(name = "product")
 public class Product {
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name")
+    @Column
     private String name;
 
-    @Column(name = "price")
-    private double price;
+    @Column
+    private String productType;
+
+    @Column
+    private String size;
+
+    @Column
+    private String collab;
+
+    @Column
+    private BigDecimal price;
     
-    @Column(name = "quantity")
+    @Column
     private int quantity;
 
     @Column(name = "last_updated")
     private LocalDateTime lastUpdated;
 
-    @Column(name = "url")
+    @Column
     private String url;
 
     public Long getId() {
@@ -48,11 +58,35 @@ public class Product {
         this.name = name;
     }
 
-    public double getPrice() {
+    public String getProductType() {
+        return productType;
+    }
+
+    public void setProductType(String productType) {
+        this.productType = productType;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getCollab() {
+        return collab;
+    }
+
+    public void setCollab(String collab) {
+        this.collab = collab;
+    }
+
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -79,4 +113,6 @@ public class Product {
     public void setUrl(String url) {
         this.url = url;
     }
+
+
 }

@@ -37,6 +37,12 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.PUT, "/auth/updateUserData/{email}").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/hc").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/products").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/products/{id}").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/products").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/products/{id}").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/products/{id}").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/swagger-ui.html").permitAll()
                         .anyRequest().authenticated())
                 .build();
     }

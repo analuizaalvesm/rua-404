@@ -40,6 +40,9 @@ public class ProductService {
             .orElseThrow(() -> new RuntimeException("Produto não encontrado com id: " + id));
             
             existingProduct.setName(updatedProduct.getName());
+            existingProduct.setProductType(updatedProduct.getProductType());
+            existingProduct.setSize(updatedProduct.getSize());
+            existingProduct.setCollab(updatedProduct.getCollab());
             existingProduct.setPrice(updatedProduct.getPrice());
             existingProduct.setQuantity(updatedProduct.getQuantity());
             existingProduct.setLastUpdated(updatedProduct.getLastUpdated());
