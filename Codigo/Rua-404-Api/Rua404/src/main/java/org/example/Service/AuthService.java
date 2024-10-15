@@ -2,6 +2,8 @@ package org.example.Service;
 
 import org.example.Model.Customer;
 import org.example.Repositories.AuthRepository;
+import org.example.Repositories.UserRepository;
+import org.example.Security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,9 @@ public class AuthService {
 
     @Autowired
     private AuthRepository authRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public String deleteByEmail(String email) {
         try {
@@ -48,8 +53,14 @@ public class AuthService {
         }
     }
 
-    public String login(String email, String password) {   
-        // implementar lógica de login
-        return "Usuário logado!";
+    public String login(Customer customer) {
+        Customer newOne = userRepository.findByEmailAsync(customer.getEmail());
+        if (customer != null) {
+            if (newOne.getPassword().equals(customer.getPassword())) {
+                String token = JwtUtil.generateToken(newOne.getEmail());
+                return token; // Retorna o token ao invés de uma mensagem
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Código inválido");
     }
 }
