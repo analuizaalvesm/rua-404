@@ -2,7 +2,7 @@ import axios from "axios";
 import { handleError } from "../utils/handlers/ErrorHandler";
 import { User } from "../models/User";
 
-const api = "https://localhost:44302/api/";
+const api = "http://localhost:5142/api/";
 
 export const registerApi = async (
   username: string,

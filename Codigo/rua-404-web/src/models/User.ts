@@ -6,6 +6,6 @@ export type User = {
 };
 
 export type UserProfile = {
-  username: string;
+  // username: string;
   email: string;
 };

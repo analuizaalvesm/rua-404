@@ -39,8 +39,8 @@ export const UserProvider = ({ children }: Props) => {
             if(response) {
                 localStorage.setItem("token", response?.data.token);
                 const userObj = {
-                    username: response?.data.username,
-                    email: response?.data.email
+                    username: username,
+                    email: email,
                 }
                 localStorage.setItem("user", JSON.stringify(userObj));
                 setToken(response?.data.token!);
@@ -56,8 +56,7 @@ export const UserProvider = ({ children }: Props) => {
             if(response) {
                 localStorage.setItem("token", response?.data.token);
                 const userObj = {
-                    username: response?.data.username,
-                    email: response?.data.email
+                    email: email,
                 }
                 localStorage.setItem("user", JSON.stringify(userObj));
                 setToken(response?.data.token!);
@@ -79,7 +78,7 @@ export const UserProvider = ({ children }: Props) => {
         setUser(null);
         navigate("/");
     }
-
+    
     return (
         <UserContext.Provider value={{ login, user, register, token, logout, isAuthenticated }}>
             {isLoggedIn ? children : null}

@@ -5,7 +5,7 @@ type Props = {};
 
 const HomePage = (props: Props) => {
   return (
-    <div className="w-screen"><section className="bg-gray-50 dark:bg-gray-900 h-screen"><h1>Home</h1></section></div>
+    <div className="max-w-full"><section className="bg-gray-50 dark:bg-gray-900 h-screen"><h1>Home</h1></section></div>
   )
 };
 
