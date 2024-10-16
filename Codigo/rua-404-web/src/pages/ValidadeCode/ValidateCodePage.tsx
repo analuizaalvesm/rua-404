@@ -1,35 +1,54 @@
-import React from "react";
+import React, { useState } from 'react';
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useManagement } from "../../context/useManagement";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button/button";
-import {
-    InputOTP,
-    InputOTPGroup,
-    InputOTPSlot,
-} from "@/components/ui//input-otp";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 
 type Props = {};
 
-type RegisterForm = {
-    email: string;
+type ValidateCodeForm = {
+    code: string;
 };
 
 const validation = Yup.object().shape({
-    email: Yup.string().email("E-mail inválido.").required("Campo obrigatório.")
+    code: Yup.string().length(4, "Código inválido.").required("Campo obrigatório."),
 });
 
 const ValidadeCodePage = (props: Props) => {
+    const [otp, setOtp] = useState<string[]>(['', '', '', '']);
+    const [passkey, setPasskey] = useState("");
     const { validateCode } = useManagement();
     const {
         handleSubmit,
         formState: { errors },
-    } = useForm<RegisterForm>({ resolver: yupResolver(validation) });
+    } = useForm<ValidateCodeForm>({ resolver: yupResolver(validation) });
 
-    const handleRecoverPassword = async (form: RegisterForm) => {
-        // validateCode(form.email);
+    const handleValidateCode = async (form: ValidateCodeForm) => {
+        form.code = otp.join();
+        console.log(form.code);
+        validateCode(form.code);
     };
+
+    const handleChange = (index: number, value: string) => {
+        const newOtp = [...otp];
+        newOtp[index] = value;
+        setOtp(newOtp);
+    };
+
+    const validatePasskey = (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+      ) => {
+        e.preventDefault();
+    
+        if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
+          localStorage.setItem("accessKey", encryptedKey);
+          setOpen(false);
+        } else {
+          setError("Invalid Passkey. Please try again");
+        }
+      };
 
     return (
         <div className="max-w-full">
@@ -45,11 +64,11 @@ const ValidadeCodePage = (props: Props) => {
                             </h5>
                             <form
                                 className="space-y-4 md:space-y-4"
-                                onSubmit={handleSubmit(handleRecoverPassword)}
+                                onSubmit={handleSubmit(handleValidateCode)}
                             >
                                 <div>
                                     <label
-                                        htmlFor="codigo"
+                                        htmlFor="code"
                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >
                                         Código
@@ -62,6 +81,11 @@ const ValidadeCodePage = (props: Props) => {
                                             <InputOTPSlot index={3} />
                                         </InputOTPGroup>
                                     </InputOTP>
+                                    {errors.code ? (
+                                        <p className="text-red-500 text-xs pt-1">{errors.code.message}</p>
+                                    ) : (
+                                        ""
+                                    )}
                                 </div>
                                 <Button
                                     disabled={Object.keys(errors).length > 0}

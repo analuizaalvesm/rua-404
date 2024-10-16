@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { getCodeApi, validateCodeApi, changePasswordApi, updatePasswordApi } from "../services/ManagementService";
+import { getCodeApi, validateCodeApi, changePasswordApi } from "../services/ManagementService";
 import axios from "axios";
 
 type UserProfile = {
@@ -9,9 +9,8 @@ type UserProfile = {
 
 type UserContextType = {
     getCode: (email: string) => void;
-    validateCode: (email: string, code: string) => Promise<boolean>;
+    validateCode: (code: string) => Promise<boolean>;
     changePassword: (email: string, password: string) => void;
-    updatePassword: (email: string, password: string) => Promise<boolean>;
     user: UserProfile | null;
     token: string | null;
 };
@@ -50,9 +49,9 @@ export const UserProvider = ({ children }: Props) => {
         return { getCode };
     };
 
-    const validateCode = async (email: string, code: string): Promise<boolean> => {
+    const validateCode = async (code: string): Promise<boolean> => {
         try {
-            const response = await validateCodeApi(email, code);
+            const response = await validateCodeApi(code);
             return response ? true : false;
         } catch (e) {
             window.alert("ERRO");
@@ -72,22 +71,8 @@ export const UserProvider = ({ children }: Props) => {
         }
     };
 
-    const updatePassword = async (email: string, password: string): Promise<boolean> => {
-        try {
-            const response = await updatePasswordApi(email, password);
-            if (response) {
-                window.alert("Password updated successfully!");
-                return true;
-            }
-            return false;
-        } catch (e) {
-            window.alert("ERRO");
-            return false;
-        }
-    };
-
     return (
-        <UserContext.Provider value={{ getCode, validateCode, changePassword, updatePassword, token, user }}>
+        <UserContext.Provider value={{ getCode, validateCode, changePassword, token, user }}>
             {children}
         </UserContext.Provider>
     );

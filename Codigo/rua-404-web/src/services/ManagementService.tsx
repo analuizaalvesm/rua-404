@@ -15,10 +15,9 @@ export const getCodeApi = async (email: string) => {
     }
 };
 
-export const validateCodeApi = async (email: string, code: string) => {
+export const validateCodeApi = async (code: string) => {
     try {
         const data = await axios.post<User>(api + "management/validate-code", {
-            email: email,
             code: code,
         });
         return data;
@@ -30,18 +29,6 @@ export const validateCodeApi = async (email: string, code: string) => {
 export const changePasswordApi = async (email: string, password: string) => {
     try {
         const data = await axios.post<User>(api + "management/change-password", {
-            email: email,
-            password: password,
-        });
-        return data;
-    } catch (error) {
-        handleError(error);
-    }
-};
-
-export const updatePasswordApi = async (email: string, password: string) => {
-    try {
-        const data = await axios.post<User>(api + "management/update-password", {
             email: email,
             password: password,
         });

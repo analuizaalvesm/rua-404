@@ -3,9 +3,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button/button";
-import { useManagement } from "../../context/useManagement";
-
-type Props = {};
+// import { useManagement } from "../../context/useManagement";
 
 type GetCodeForm = {
     email: string;
@@ -15,8 +13,8 @@ const validation = Yup.object().shape({
     email: Yup.string().email("E-mail inválido.").required("Campo obrigatório.")
 });
 
-const GetCodePage = (props: Props) => {
-    const { getCode } = useManagement();
+const GetCodePage = () => {
+    // const { getCode } = useManagement();
     const {
         register,
         handleSubmit,
@@ -24,7 +22,25 @@ const GetCodePage = (props: Props) => {
     } = useForm<GetCodeForm>({ resolver: yupResolver(validation) });
 
     const handleGetCode = async (form: GetCodeForm) => {
-        getCode(form.email);
+        console.log(form.email);
+        try {
+            const response = await fetch('http://localhost:8080/management/get-code', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: form.email }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Erro ao enviar o código');
+            }
+
+            const data = await response.json();
+            console.log('Código enviado com sucesso:', data);
+        } catch (error) {
+            console.error('Erro:', error);
+        }
     };
 
     return (
