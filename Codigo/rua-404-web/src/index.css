@@ -83,6 +83,33 @@ button:focus-visible {
   }
 }
 
+.range-thumb::-webkit-slider-thumb {
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  background-color: black;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Para Firefox */
+.range-thumb::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  background-color: black;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Para Internet Explorer */
+.range-thumb::-ms-thumb {
+  height: 20px;
+  width: 20px;
+  background-color: black;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
