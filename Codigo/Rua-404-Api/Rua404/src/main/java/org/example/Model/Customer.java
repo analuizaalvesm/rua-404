@@ -171,5 +171,7 @@ public class Customer {
         this.dataSendCode = data;
     }
 
+    
+
 
 }

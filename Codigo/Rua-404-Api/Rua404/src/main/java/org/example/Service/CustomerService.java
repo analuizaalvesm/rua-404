@@ -17,8 +17,8 @@ public class CustomerService {
     public List<Customer> getAllCustomers(){
         return this.customerRepository.findAll();
     }
-    public Optional<Customer> getCustomerById(long CustomerId){
-        return this.customerRepository.findById(CustomerId);
+    public Optional<Customer> getCustomerById(long id){
+        return this.customerRepository.findById(id);
     }
     public Customer createCustomer(Customer newCustomer) {
         if (emailExists(newCustomer.getEmail())) {
@@ -50,7 +50,7 @@ public class CustomerService {
         try {
             this.customerRepository.deleteById(id);
         } catch (RuntimeException e) {
-            throw new RuntimeException("Não foi possivel adicionar Cliente");
+            throw new RuntimeException("Não foi possivel delete Cliente");
         }
     }
 }
