@@ -52,9 +52,9 @@ public class CustomerController {
        }
     }   
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer CustomerUpdated){
+    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customerUpdated,@PathVariable long id){
         try {
-            Customer customer= this.customerService.updateCustomer(CustomerUpdated);
+            Customer customer= this.customerService.updateCustomer(customerUpdated,id);
             return ResponseEntity.ok(customer);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();

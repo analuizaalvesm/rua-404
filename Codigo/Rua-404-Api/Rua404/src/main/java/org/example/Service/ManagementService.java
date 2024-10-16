@@ -1,15 +1,14 @@
 package org.example.Service;
 
+import java.util.Date;
+import java.util.Random;
+
 import org.example.Model.Customer;
 import org.example.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.Date;
-import java.util.Random;
 
 @Service
 public class ManagementService {
@@ -81,8 +80,7 @@ public class ManagementService {
     public String updatePassword(Customer user) {
         Customer userBd = userRepository.findByEmailAsync(user.getEmail());
         if (userBd != null) {
-            userBd.setPassword(user.getPassword()); // Encoder de senha:
-            // passwordEncoder.encode().
+            userBd.setPassword(user.getPassword()); 
             userRepository.saveAndFlush(userBd);
             return "Senha alterada com sucesso!";
         } else {
