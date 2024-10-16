@@ -5,6 +5,7 @@ import StorePage from "@/pages/Store/StorePage";
 import LoginPage from "@/pages/Login/LoginPage";
 import ProfilePage from "@/pages/Profile/ProfilePage";
 import RegisterPage from "@/pages/Register/RegisterPage";
+import ProductPage from "@/pages/Product/ProductPage";
 import ProfileSection from "@/pages/Profile/ProfileSection";
 
 export const router = createBrowserRouter([
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
             { path: "login", element: <LoginPage /> },
             { path: "register", element: <RegisterPage /> },
             { path: "store", element: <StorePage /> },
+            { path: "product/:id", element: <ProductPage /> },
             {
                 path: "profile",
                 element: <ProfilePage />, // Página base de perfil
