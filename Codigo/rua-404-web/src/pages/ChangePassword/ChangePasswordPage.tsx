@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button/button";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { useRecoverPassword } from "@/context/useRecoverPassword";
+import { useManagement } from "../../context/useManagement";
 import "./ChangePasswordPage.css";
 
 type Props = {};
@@ -18,7 +18,7 @@ const validation = Yup.object().shape({
 });
 
 const ChangePasswordPage = (props: Props) => {
-    const { changePassword } = useRecoverPassword();
+    const { changePassword } = useManagement();
     const {
         register,
         handleSubmit,

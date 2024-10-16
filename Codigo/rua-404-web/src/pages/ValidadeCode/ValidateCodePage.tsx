@@ -1,9 +1,14 @@
-import React, { CSSProperties, useState } from "react";
+import React from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRecoverPassword } from "../../../context/useRecoverPassword";
+import { useManagement } from "../../context/useManagement";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button/button";
+import {
+    InputOTP,
+    InputOTPGroup,
+    InputOTPSlot,
+} from "@/components/ui//input-otp";
 
 type Props = {};
 
@@ -15,16 +20,15 @@ const validation = Yup.object().shape({
     email: Yup.string().email("E-mail inválido.").required("Campo obrigatório.")
 });
 
-const GetCodePage = (props: Props) => {
-    const { getCode } = useRecoverPassword();
+const ValidadeCodePage = (props: Props) => {
+    const { validateCode } = useManagement();
     const {
-        register,
         handleSubmit,
         formState: { errors },
     } = useForm<RegisterForm>({ resolver: yupResolver(validation) });
 
     const handleRecoverPassword = async (form: RegisterForm) => {
-        getCode(form.email);
+        // validateCode(form.email);
     };
 
     return (
@@ -34,10 +38,10 @@ const GetCodePage = (props: Props) => {
                     <div className="w-full bg-white rounded-lg shadow dark:border md:my-24 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-                                Recuperar senha
+                                Verificação
                             </h1>
                             <h5>
-                                Para sua segurança, enviaremos um código de 4 dígitos no seu e-mail para validar a redefinição da senha.
+                                Enviamos um código de verificação para o e-mail <b>exemplo@email.com</b>
                             </h5>
                             <form
                                 className="space-y-4 md:space-y-4"
@@ -45,23 +49,19 @@ const GetCodePage = (props: Props) => {
                             >
                                 <div>
                                     <label
-                                        htmlFor="email"
+                                        htmlFor="codigo"
                                         className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                                     >
-                                        E-mail
+                                        Código
                                     </label>
-                                    <input
-                                        type="text"
-                                        id="email"
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                        placeholder="example@email.com"
-                                        {...register("email")}
-                                    />
-                                    {errors.email ? (
-                                        <p className="text-red-500 text-xs pt-1">{errors.email.message}</p>
-                                    ) : (
-                                        ""
-                                    )}
+                                    <InputOTP maxLength={4} className={`border w-20 h-auto text-white p-3 rounded-md block bg-black focus:border-2 focus:outline-none appearance-none`} >
+                                        <InputOTPGroup>
+                                            <InputOTPSlot index={0} />
+                                            <InputOTPSlot index={1} />
+                                            <InputOTPSlot index={2} />
+                                            <InputOTPSlot index={3} />
+                                        </InputOTPGroup>
+                                    </InputOTP>
                                 </div>
                                 <Button
                                     disabled={Object.keys(errors).length > 0}
@@ -70,6 +70,17 @@ const GetCodePage = (props: Props) => {
                                 >
                                     Continuar
                                 </Button>
+                                <div className="flex justify-center">
+                                    <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+                                        Não recebeu um código?{" "}
+                                        <a
+                                            href="/get-code"
+                                            className="font-medium text-black hover:text-slate-500"
+                                        >
+                                            Reenviar
+                                        </a>
+                                    </p>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -79,4 +90,4 @@ const GetCodePage = (props: Props) => {
     );
 };
 
-export default GetCodePage;
+export default ValidadeCodePage;

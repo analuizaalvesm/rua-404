@@ -4,9 +4,9 @@ import HomePage from "@/pages/Home/HomePage";
 import StorePage from "@/pages/Store/StorePage";
 import LoginPage from "@/pages/Login/LoginPage";
 import RegisterPage from "@/pages/Register/RegisterPage";
-import GetCodePage from "@/pages/RecoverPassword/GetCode/GetCodePage";
-import ValidadeCodePage from "@/pages/RecoverPassword/ValidadeCode/ValidateCodePage";
-import ChangePasswordPage from "@/pages/RecoverPassword/ChangePassword/ChangePasswordPage";
+import GetCodePage from "@/pages/GetCode/GetCodePage";
+import ValidadeCodePage from "@/pages/ValidadeCode/ValidateCodePage";
+import ChangePasswordPage from "@/pages/ChangePassword/ChangePasswordPage";
 import ProductPage from "@/pages/Product/ProductPage";
 
 export const router = createBrowserRouter([
