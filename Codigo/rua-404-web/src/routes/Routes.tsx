@@ -4,7 +4,9 @@ import HomePage from "@/pages/Home/HomePage";
 import StorePage from "@/pages/Store/StorePage";
 import LoginPage from "@/pages/Login/LoginPage";
 import RegisterPage from "@/pages/Register/RegisterPage";
-import RecoverPasswordPage from "@/pages/RecoverPassword/GetCode/GetCodePage";
+import GetCodePage from "@/pages/RecoverPassword/GetCode/GetCodePage";
+import ValidadeCodePage from "@/pages/RecoverPassword/ValidadeCode/ValidateCodePage";
+import ChangePasswordPage from "@/pages/RecoverPassword/ChangePassword/ChangePasswordPage";
 
 export const router = createBrowserRouter([
     {
@@ -15,7 +17,9 @@ export const router = createBrowserRouter([
             { path: "login", element: <LoginPage />},
             { path: "register", element: <RegisterPage />},
             { path: "store", element: <StorePage />},
-            { path: "recover-password", element: <RecoverPasswordPage />}
+            { path: "get-code", element: <GetCodePage />},
+            { path: "validate-code", element: <ValidadeCodePage />},
+            { path: "change-password", element: <ChangePasswordPage />}
         ]
     }
 ]);

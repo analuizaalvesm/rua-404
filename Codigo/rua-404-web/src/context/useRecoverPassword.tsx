@@ -1,7 +1,7 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
 import { UserProfile } from "../models/User";
 import { useNavigate } from "react-router-dom";
-import { getCodeApi, validateCodeApi, changePasswordApi, updatePasswordApi } from "../services/RecoverPasswordService";
+import { getCodeApi, validateCodeApi, changePasswordApi, updatePasswordApi } from "../services/ManagementService";
 import axios from "axios";
 
 type UserContextType = {
