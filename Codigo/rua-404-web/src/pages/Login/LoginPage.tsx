@@ -4,9 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../context/useAuth";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button/button";
-import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { Checkbox } from "@/components/ui/Checkbox/checkbox";
 
 type Props = {};
 
@@ -30,6 +28,8 @@ const LoginPage = (props: Props) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (form: LoginForm) => {
+    localStorage.setItem("userEmail", form.email);
+
     login(form.email, form.password);
   };
 
