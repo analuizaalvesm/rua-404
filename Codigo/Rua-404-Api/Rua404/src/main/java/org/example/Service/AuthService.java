@@ -20,7 +20,16 @@ public class AuthService {
     private AuthRepository authRepository;
 
     @Autowired
+
     private UserRepository userRepository;
+
+    public Customer getByEmail(String email){
+       try {
+        return userRepository.findByEmailAsync(email);
+       } catch (Exception e) {
+        throw new RuntimeException("Usuario não encontrado.");
+       }
+    }
     
     public String registerUser(Customer newCustomer){
         if (emailExists(newCustomer.getEmail())) {

@@ -33,7 +33,7 @@ public class CustomerController {
 
     
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> findById(Long id){
+    public ResponseEntity<Customer> findById(@PathVariable Long id){
     Optional<Customer> Customer= this.customerService.getCustomerById(id);
     if(Customer.isPresent()){
         return ResponseEntity.ok(Customer.get());
