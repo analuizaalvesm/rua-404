@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
             { path: "store", element: <StorePage />},
             { path: "get-code", element: <GetCodePage />},
             { path: "validate-code", element: <ValidadeCodePage />},
-            { path: "change-password", element: <ChangePasswordPage />}
+            { path: "change-password", element: <ChangePasswordPage />},
             { path: "product/:id", element: <ProductPage /> }
         ]
     }
