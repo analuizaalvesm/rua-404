@@ -2,13 +2,41 @@ import axios from "axios";
 import { handleError } from "../utils/handlers/ErrorHandler";
 import { User } from "../models/User";
 
-const api = "http://localhost:8080/customer/";
+const api = "http://localhost:8080/auth/";
+const customerApi = "http://localhost:8080/customer/";
 
-export const getUserProfile = async (id: string) => {
+export const getUserProfile = async () => {
   try {
-    const response = await axios.get<User>(`${api}${id}`);
+    let email = localStorage.getItem("userEmail");
+    if (!email) {
+      throw new Error("Nenhum email encontrado no localStorage.");
+    }
+
+    email = "string"
+
+    const response = await axios.get<User>(`${api}${email}`);
     return response.data;
   } catch (error) {
     handleError(error);
+  }
+};
+
+export const updateUserProfile = async (user: User) => {
+  try {
+    const response = await axios.put(`${customerApi}${user.customer_id}`, user);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+
+export const deleteUserProfile = async (customerId: number) => {
+  try {
+    await axios.delete(`${customerApi}${customerId}`);
+    return true;
+  } catch (error) {
+    handleError(error);
+    return false;
   }
 };
