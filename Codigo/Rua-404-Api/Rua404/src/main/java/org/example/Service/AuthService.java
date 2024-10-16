@@ -79,7 +79,7 @@ public class AuthService {
         if (customer != null) {
             if (newOne.getPassword().equals(customer.getPassword())) {
                 String token = JwtUtil.generateToken(newOne.getEmail());
-                return token; // Retorna o token ao invés de uma mensagem
+                return token;
             }
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Código inválido");
