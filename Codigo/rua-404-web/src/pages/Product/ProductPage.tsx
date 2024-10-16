@@ -225,61 +225,62 @@ const ProductPage: React.FC = () => {
 
       {/* Produtos Relacionados */}
       <section className="bg-gray-100 py-10 mx-4">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-center">
-              Produtos Relacionados
-            </h2>
-            <div
-              className="flex items-center cursor-pointer"
-              onClick={() => navigate("/store")}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-8 h-8 text-gray-600"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </div>
-          </div>
-          <div className="flex justify-around gap-6">
-            {randomProducts.slice(0, 5).map((relatedProduct: any) => (
-              <div
-                key={relatedProduct.id}
-                className="bg-white border border-gray-300 rounded-none shadow-md p-4 w-72 cursor-pointer hover:shadow-lg transition-shadow duration-300"
-                onClick={() =>
-                  navigate(`/product/${relatedProduct.id}`, {
-                    state: { productId: relatedProduct.id, products },
-                  })
-                }
-              >
-                <img
-                  src={relatedProduct.url}
-                  alt={relatedProduct.name}
-                  className="h-32 w-full object-cover rounded-md mb-2"
-                />
-                <h3 className="text-lg font-semibold mb-2 text-center">
-                  {relatedProduct.name}
-                </h3>
-                <p className="text-gray-600 mb-1 text-center">{`R$ ${relatedProduct.price
-                  .toFixed(2)
-                  .replace(".", ",")}`}</p>
-                <button className="bg-black text-white w-full py-1 mt-2 rounded-none hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                  Ver Produto
-                </button>
-              </div>
-            ))}
-          </div>
+  <div className="container mx-auto px-4">
+    <div className="flex flex-row justify-between items-center mb-3">
+      <h2 className="text-2xl font-bold text-center md:mb-0">
+        Produtos Relacionados
+      </h2>
+      <div
+        className="flex items-center cursor-pointer"
+        onClick={() => navigate("/store")}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          className="w-8 h-8 text-gray-600"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M8.25 4.5l7.5 7.5-7.5 7.5"
+          />
+        </svg>
+      </div>
+    </div>
+    <div className="flex flex-wrap justify-center md:justify-around">
+      {randomProducts.slice(0, 5).map((relatedProduct: any) => (
+        <div
+          key={relatedProduct.id}
+          className="bg-white border border-gray-300 rounded-none shadow-md p-4 w-full sm:w-72 m-1 cursor-pointer hover:shadow-lg transition-shadow duration-300"
+          onClick={() =>
+            navigate(`/product/${relatedProduct.id}`, {
+              state: { productId: relatedProduct.id, products },
+            })
+          }
+        >
+          <img
+            src={relatedProduct.url}
+            alt={relatedProduct.name}
+            className="h-32 w-full object-cover rounded-none mb-2"
+          />
+          <h3 className="text-lg font-semibold mb-2 text-center">
+            {relatedProduct.name}
+          </h3>
+          <p className="text-gray-600 mb-1 text-center">{`R$ ${relatedProduct.price
+            .toFixed(2)
+            .replace(".", ",")}`}</p>
+          <button className="bg-black text-white w-full py-2 mt-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            Ver Produto
+          </button>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
+
     </div>
   );
 };

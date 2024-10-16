@@ -44,7 +44,9 @@ const StorePage = (props: Props) => {
   const navigate = useNavigate();
 
   // Estados separados para cada filtro
-  const [selectedProductTypes, setSelectedProductTypes] = useState<string[]>([]);
+  const [selectedProductTypes, setSelectedProductTypes] = useState<string[]>(
+    []
+  );
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedCollabs, setSelectedCollabs] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -90,7 +92,9 @@ const StorePage = (props: Props) => {
 
   const handleCollabChange = (collab: string) => {
     setSelectedCollabs((prev) =>
-      prev.includes(collab) ? prev.filter((c) => c !== collab) : [...prev, collab]
+      prev.includes(collab)
+        ? prev.filter((c) => c !== collab)
+        : [...prev, collab]
     );
     setCurrentPage(1);
   };
@@ -106,11 +110,11 @@ const StorePage = (props: Props) => {
         selectedSizes.length > 0 ? selectedSizes.includes(product.size) : true
       )
       .filter((product) =>
-        selectedCollabs.length > 0 ? selectedCollabs.includes(product.collab) : true
+        selectedCollabs.length > 0
+          ? selectedCollabs.includes(product.collab)
+          : true
       )
-      .filter((product) =>
-        product.price >= priceRange
-      )
+      .filter((product) => product.price >= priceRange)
       .filter((product) =>
         product.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -137,18 +141,20 @@ const StorePage = (props: Props) => {
   };
 
   const handleNavigateProductDetails = (productId: number, products: any) => {
-    navigate(`/product/${productId}`, { state: { productId: productId, products: products } });
+    navigate(`/product/${productId}`, {
+      state: { productId: productId, products: products },
+    });
   };
 
   return (
     <div className="max-w-full">
       <section className="bg-gray-50 dark:bg-gray-900 pb-10">
         <div className="mx-auto px-16">
-          <div className="flex justify-between items-center w-full mb-4 pt-6">
-            <div className="text-left">
+          <div className="flex flex-col md:flex-row justify-between items-center w-full mb-4 pt-6">
+            <div className="text-left mb-2 md:mb-0 hidden md:block">
               <p className="text-lg leading-8 font-semibold">Filtros</p>
             </div>
-            <div className="flex items-center w-1/4">
+            <div className="flex items-center w-full md:w-1/4">
               <input
                 type="text"
                 placeholder="Pesquisar produtos..."
@@ -182,7 +188,12 @@ const StorePage = (props: Props) => {
                     <Card
                       key={product.id}
                       {...props}
-                      onClick={() => handleNavigateProductDetails(product.id, currentProducts)}
+                      onClick={() =>
+                        handleNavigateProductDetails(
+                          product.id,
+                          currentProducts
+                        )
+                      }
                       className="relative group transition-transform duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
                     >
                       <div className="relative">
@@ -199,7 +210,10 @@ const StorePage = (props: Props) => {
                         <CardHeader>
                           <CardTitle className="pt-4">{product.name}</CardTitle>
                           <CardDescription>
-                            {product.productType === "Print" ? "Impressão" : product.productType} da primeira coleção autoral lançada em 2024.
+                            {product.productType === "Print"
+                              ? "Impressão"
+                              : product.productType}{" "}
+                            da primeira coleção autoral lançada em 2024.
                           </CardDescription>
                         </CardHeader>
                         <CardContent>
@@ -211,7 +225,9 @@ const StorePage = (props: Props) => {
                     </Card>
                   ))
                 ) : (
-                  <p className="col-span-full text-center">Nenhum produto encontrado.</p>
+                  <p className="col-span-full text-center">
+                    Nenhum produto encontrado.
+                  </p>
                 )}
               </div>
             </main>
