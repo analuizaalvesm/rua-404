@@ -52,22 +52,20 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border: none;
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: none;
+  box-shadow: none;
 }
 
 @media (prefers-color-scheme: light) {
@@ -81,6 +79,33 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.range-thumb::-webkit-slider-thumb {
+  appearance: none;
+  height: 20px;
+  width: 20px;
+  background-color: black;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Para Firefox */
+.range-thumb::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  background-color: black;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Para Internet Explorer */
+.range-thumb::-ms-thumb {
+  height: 20px;
+  width: 20px;
+  background-color: black;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 @layer base {
