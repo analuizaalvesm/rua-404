@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
@@ -14,7 +14,7 @@ const validation = Yup.object().shape({
 });
 
 const GetCodePage = () => {
-    // const { getCode } = useManagement();
+    const [loading, setLoading] = useState<boolean>(true);
     const {
         register,
         handleSubmit,
@@ -22,9 +22,9 @@ const GetCodePage = () => {
     } = useForm<GetCodeForm>({ resolver: yupResolver(validation) });
 
     const handleGetCode = async (form: GetCodeForm) => {
-        console.log(form.email);
         try {
-            const response = await fetch('http://localhost:8080/management/get-code', {
+            setLoading(true);
+            const response = await fetch('http://localhost:8080/api/management/get-code', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -32,14 +32,16 @@ const GetCodePage = () => {
                 body: JSON.stringify({ email: form.email }),
             });
 
-            if (!response.ok) {
-                throw new Error('Erro ao enviar o código');
+            if (response.status === 200) {  
+                window.alert("Código enviado com sucesso!");
+                console.log(response);
+                // navigate("/validate-code");
             }
 
-            const data = await response.json();
-            console.log('Código enviado com sucesso:', data);
-        } catch (error) {
-            console.error('Erro:', error);
+        } catch (err) {
+            window.alert("ERRO");
+        } finally {
+            setLoading(false);
         }
     };
 
