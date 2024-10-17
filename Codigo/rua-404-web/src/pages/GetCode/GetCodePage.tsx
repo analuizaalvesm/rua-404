@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button/button";
-// import { useManagement } from "../../context/useManagement";
+import { useNavigate } from "react-router-dom";
 
 type GetCodeForm = {
     email: string;
@@ -14,6 +14,7 @@ const validation = Yup.object().shape({
 });
 
 const GetCodePage = () => {
+    const navigate = useNavigate();
     const [loading, setLoading] = useState<boolean>(true);
     const {
         register,
@@ -22,8 +23,9 @@ const GetCodePage = () => {
     } = useForm<GetCodeForm>({ resolver: yupResolver(validation) });
 
     const handleGetCode = async (form: GetCodeForm) => {
+        localStorage.setItem("userEmail", form.email);
+
         try {
-            setLoading(true);
             const response = await fetch('http://localhost:8080/api/management/get-code', {
                 method: 'POST',
                 headers: {
@@ -34,8 +36,7 @@ const GetCodePage = () => {
 
             if (response.status === 200) {  
                 window.alert("Código enviado com sucesso!");
-                console.log(response);
-                // navigate("/validate-code");
+                navigate("/validate-code");
             }
 
         } catch (err) {

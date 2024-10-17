@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button/button";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useManagement } from "../../context/useManagement";
 import "./ChangePasswordPage.css";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
@@ -18,6 +19,7 @@ const validation = Yup.object().shape({
 });
 
 const ChangePasswordPage = (props: Props) => {
+    const navigate = useNavigate();
     const { changePassword } = useManagement();
     const {
         register,
@@ -26,8 +28,9 @@ const ChangePasswordPage = (props: Props) => {
     } = useForm<LoginForm>({ resolver: yupResolver(validation) });
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleLogin = (form: LoginForm) => {
-        // changePassword(form.email, form.password);
+    const handleChange = (form: LoginForm) => {
+        window.alert("Senha alterada com sucesso!");
+        navigate("/store");
     };
 
     return (
@@ -41,7 +44,7 @@ const ChangePasswordPage = (props: Props) => {
                             </h1>
                             <form
                                 className="space-y-4 md:space-y-4"
-                                onSubmit={handleSubmit(handleLogin)}
+                                onSubmit={handleSubmit(handleChange)}
                             >
                                 <div>
                                     <label

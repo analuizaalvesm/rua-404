@@ -1,54 +1,68 @@
-import React, { useState } from 'react';
-import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useManagement } from "../../context/useManagement";
-import { useForm } from "react-hook-form";
+import React, { useState, useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { Button } from "@/components/ui/Button/button";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import { useNavigate } from 'react-router-dom';
+import { OTPInput, SlotProps } from 'input-otp'
 
-type Props = {};
+interface Response {
+    message: string;
+}
+
+const validation = yup.object().shape({
+    code: yup.string().required('Código é obrigatório'),
+});
 
 type ValidateCodeForm = {
     code: string;
 };
 
-const validation = Yup.object().shape({
-    code: Yup.string().length(4, "Código inválido.").required("Campo obrigatório."),
-});
+type Props = {};
 
 const ValidadeCodePage = (props: Props) => {
-    const [otp, setOtp] = useState<string[]>(['', '', '', '']);
-    const [passkey, setPasskey] = useState("");
-    const { validateCode } = useManagement();
+    const formRef = useRef<HTMLFormElement>(null)
+    const [loading, setLoading] = useState<boolean>(true);
+    const navigate = useNavigate();
+    const [otp, setOtp] = useState('');
+    const email = localStorage.getItem("userEmail");
     const {
         handleSubmit,
         formState: { errors },
     } = useForm<ValidateCodeForm>({ resolver: yupResolver(validation) });
 
-    const handleValidateCode = async (form: ValidateCodeForm) => {
-        form.code = otp.join();
-        console.log(form.code);
-        validateCode(form.code);
-    };
 
-    const handleChange = (index: number, value: string) => {
-        const newOtp = [...otp];
-        newOtp[index] = value;
-        setOtp(newOtp);
-    };
+    const handleValidateCode = async () => {
+        window.alert("Código validado!");
+        navigate("/change-password");
 
-    const validatePasskey = (
-        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-      ) => {
-        e.preventDefault();
-    
-        if (passkey === process.env.NEXT_PUBLIC_ADMIN_PASSKEY) {
-          localStorage.setItem("accessKey", encryptedKey);
-          setOpen(false);
-        } else {
-          setError("Invalid Passkey. Please try again");
+        try {
+            const response = await axios.post<AxiosResponse>(
+                `http://localhost:8080/api/management/validate-code`,
+                {
+                    email: email,
+                    code: otp,
+                },
+            );
+
+            console.log("Resposta recebida:", response);
+
+            if (response.status === 200) {
+                window.alert("Código validado!");
+                navigate("/change-password");
+            } else {
+                const errorData = await response;
+                console.error("Erro na validação do código:", errorData);
+                window.alert("Erro na validação do código: " + errorData);
+            }
+
+        } catch (err) {
+            console.error("Erro capturado no catch:", err);
+            window.alert("ERRO");
+        } finally {
+            // setLoading(false);
         }
-      };
+    };
 
     return (
         <div className="max-w-full">
@@ -60,11 +74,12 @@ const ValidadeCodePage = (props: Props) => {
                                 Verificação
                             </h1>
                             <h5>
-                                Enviamos um código de verificação para o e-mail <b>exemplo@email.com</b>
+                                Enviamos um código de verificação para o e-mail <b>{email}</b>
                             </h5>
                             <form
+                                ref={formRef}
                                 className="space-y-4 md:space-y-4"
-                                onSubmit={handleSubmit(handleValidateCode)}
+                            // onSubmit={handleSubmit(handleValidateCode)}
                             >
                                 <div>
                                     <label
@@ -73,14 +88,33 @@ const ValidadeCodePage = (props: Props) => {
                                     >
                                         Código
                                     </label>
-                                    <InputOTP maxLength={4} className={`border w-20 h-auto text-white p-3 rounded-md block bg-black focus:border-2 focus:outline-none appearance-none`} >
-                                        <InputOTPGroup>
-                                            <InputOTPSlot index={0} />
-                                            <InputOTPSlot index={1} />
-                                            <InputOTPSlot index={2} />
-                                            <InputOTPSlot index={3} />
-                                        </InputOTPGroup>
-                                    </InputOTP>
+                                    <div className="flex space-x-2">
+                                        <OTPInput
+                                            value={otp}
+                                            onChange={setOtp}
+                                            maxLength={4}
+                                            containerClassName="group flex items-center has-[:disabled]:opacity-30"
+                                            render={({ slots }) => (
+                                                <>
+                                                    <div className="flex">
+                                                        {slots.slice(0, 4).map((slot, idx) => (
+                                                            <Slot key={idx} {...slot} />
+                                                        ))}
+                                                    </div>
+                                                </>
+                                            )}
+                                        />
+                                        {/* <InputOTPGroup>
+                                            {otp.map((_, index) => (
+                                                <InputOTPSlot
+                                                    key={index}
+                                                    index={index}
+                                                    value={otp[index]}
+                                                    onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(index, e.target.value)}
+                                                />
+                                            ))}
+                                        </InputOTPGroup> */}
+                                    </div>
                                     {errors.code ? (
                                         <p className="text-red-500 text-xs pt-1">{errors.code.message}</p>
                                     ) : (
@@ -91,6 +125,7 @@ const ValidadeCodePage = (props: Props) => {
                                     disabled={Object.keys(errors).length > 0}
                                     type="submit"
                                     className="w-full py-5 rounded-lg"
+                                    onClick={handleValidateCode}
                                 >
                                     Continuar
                                 </Button>
@@ -113,5 +148,61 @@ const ValidadeCodePage = (props: Props) => {
         </div>
     );
 };
+
+function Slot(props: SlotProps) {
+    return (
+        <div
+            className={cn(
+                'relative w-10 h-14 text-[2rem]',
+                'flex items-center justify-center',
+                'transition-all duration-300',
+                'border-border border-y border-r first:border-l first:rounded-l-md last:rounded-r-md',
+                'group-hover:border-accent-foreground/20 group-focus-within:border-accent-foreground/20',
+                'outline outline-0 outline-accent-foreground/20',
+                { 'outline-4 outline-accent-foreground': props.isActive },
+            )}
+        >
+            {props.char !== null && <div>{props.char}</div>}
+            {props.hasFakeCaret && <FakeCaret />}
+        </div>
+    )
+}
+
+// You can emulate a fake textbox caret!
+function FakeCaret() {
+    return (
+        <div className="absolute pointer-events-none inset-0 flex items-center justify-center animate-caret-blink">
+            <div className="w-px h-8 bg-white" />
+        </div>
+    )
+}
+
+// tailwind.config.ts for the blinking caret animation.
+const config = {
+    theme: {
+        extend: {
+            keyframes: {
+                'caret-blink': {
+                    '0%,70%,100%': { opacity: '1' },
+                    '20%,50%': { opacity: '0' },
+                },
+            },
+            animation: {
+                'caret-blink': 'caret-blink 1.2s ease-out infinite',
+            },
+        },
+    },
+}
+
+// Small utility to merge class names.
+import { clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+import type { ClassValue } from "clsx";
+import axios, { Axios, AxiosResponse } from 'axios';
+
+export function cn(...inputs: ClassValue[]) {
+    return twMerge(clsx(inputs));
+}
 
 export default ValidadeCodePage;
