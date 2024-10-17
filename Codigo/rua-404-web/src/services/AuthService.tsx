@@ -11,10 +11,10 @@ export const registerApi = async (
 ) => {
   try {
     const data = await axios.post<User>(api + "auth/register", {
-      username: username,
+      first_name: username,
+      last_name: username,
       email: email,
-      password: password,
-      id: 1,
+      password: password
     });
     return data;
   } catch (error) {
