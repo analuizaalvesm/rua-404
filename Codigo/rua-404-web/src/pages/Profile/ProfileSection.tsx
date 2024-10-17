@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { getUserProfile, updateUserProfile } from "@/services/ProfileService";
+import { useAuth } from "@/context/useAuth";
 
 type User = {
   customer_id: number;
@@ -25,28 +26,33 @@ type ProfileSectionProps = {
 };
 
 const ProfileSection: FC<ProfileSectionProps> = ({ section }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const { isAuthenticated, user, logout } = useAuth();
+  // const [user, setUser] = useState<User | null>(null);
+  const [userData, setUserData] = useState<User | null>(null);
   const [editableUser, setEditableUser] = useState<User | null>(null);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  console.log("user logado", user);
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const userData = await getUserProfile();
-        if (userData) {
-          setUser(userData);
+        const userData = await getUserProfile(user?.email || "");
+        console.log(userData);
+        if(userData) {
+          setUserData(userData);
           setEditableUser({ ...userData });
         }
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
     };
-
-    if (!user) {
+    if (user) {
       fetchUserProfile();
     }
   }, [user]);
+
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -61,9 +67,10 @@ const ProfileSection: FC<ProfileSectionProps> = ({ section }) => {
   const handleSaveChanges = async () => {
     if (user && editableUser && JSON.stringify(user) !== JSON.stringify(editableUser)) {
       try {
+        console.log("userEditable", editableUser);
         await updateUserProfile(editableUser);
         alert("As informações foram atualizadas com sucesso!");
-        setUser({ ...editableUser });
+        setUserData({ ...editableUser });
       } catch (error) {
         console.error("Erro ao atualizar as informações:", error);
         alert("Ocorreu um erro ao tentar salvar as alterações.");
@@ -74,8 +81,8 @@ const ProfileSection: FC<ProfileSectionProps> = ({ section }) => {
   };
 
   const resetEditableUser = () => {
-    if (user) {
-      setEditableUser({ ...user });
+    if (userData) {
+      setEditableUser({ ...userData });
     }
   };
 

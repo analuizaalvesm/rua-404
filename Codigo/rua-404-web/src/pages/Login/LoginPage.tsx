@@ -100,7 +100,7 @@ const LoginPage = (props: Props) => {
                 </div>
                 <div className="flex items-center justify-end">
                   <a
-                    href="#"
+                    href="/get-code"
                     className="text-sm text-black font-medium text-primary-600 hover:text-slate-500 dark:text-primary-500"
                   >
                     Esqueceu a senha?

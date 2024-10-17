@@ -35,9 +35,11 @@ public class CustomerService {
         Customer customer = customerRepository.findByEmailAsync(email);
         return customer != null;
     }    
-    public Customer updateCustomer(Customer CustomerObj){
-        return customerRepository.findById(CustomerObj.getCustomer_id())
+    public Customer updateCustomer(Customer CustomerObj,long id){
+        return customerRepository.findById(id)
         .map(customer->{
+            customer.setFirst_name(CustomerObj.getFirst_name());
+            customer.setLast_name(CustomerObj.getLast_name());
             customer.setActive(CustomerObj.getActive());
             customer.setAddress(CustomerObj.getAddress());
             customer.setEmail(CustomerObj.getEmail());

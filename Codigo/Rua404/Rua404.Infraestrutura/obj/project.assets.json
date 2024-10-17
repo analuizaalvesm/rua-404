@@ -2978,19 +2978,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lucas\\.nuget\\packages\\": {}
+    "C:\\Users\\mathe\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Lucas\\Faculdade\\novo tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\Rua404.Infraestrutura.csproj",
+      "projectUniqueName": "C:\\Users\\mathe\\Repositorios\\Rua404\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\Rua404.Infraestrutura.csproj",
       "projectName": "Rua404.Infraestrutura",
-      "projectPath": "C:\\Lucas\\Faculdade\\novo tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\Rua404.Infraestrutura.csproj",
-      "packagesPath": "C:\\Users\\lucas\\.nuget\\packages\\",
-      "outputPath": "C:\\Lucas\\Faculdade\\novo tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\obj\\",
+      "projectPath": "C:\\Users\\mathe\\Repositorios\\Rua404\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\Rua404.Infraestrutura.csproj",
+      "packagesPath": "C:\\Users\\mathe\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mathe\\Repositorios\\Rua404\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Infraestrutura\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\lucas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\mathe\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -3005,8 +3005,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Lucas\\Faculdade\\novo tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Rua404.Domain.csproj": {
-              "projectPath": "C:\\Lucas\\Faculdade\\novo tis4\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Rua404.Domain.csproj"
+            "C:\\Users\\mathe\\Repositorios\\Rua404\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Rua404.Domain.csproj": {
+              "projectPath": "C:\\Users\\mathe\\Repositorios\\Rua404\\plf-es-2024-2-ti4-1254100-rua-4-0-4\\Codigo\\Rua404\\Rua404.Domain\\Rua404.Domain.csproj"
             }
           }
         }
