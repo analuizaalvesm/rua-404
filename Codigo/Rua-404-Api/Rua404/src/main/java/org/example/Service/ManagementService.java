@@ -55,7 +55,7 @@ public class ManagementService {
                 userRepository.saveAndFlush(userBd);
                 return HttpStatus.OK.toString();
             } else {
-               return HttpStatus.valueOf("Código expirado! Solicite um novo código!").toString();
+               return HttpStatus.UNAUTHORIZED.toString();
             }
         } else {
             return HttpStatus.BAD_REQUEST.toString();
