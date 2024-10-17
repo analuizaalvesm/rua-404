@@ -54,12 +54,12 @@ public class ManagementService {
                 userBd.setSendCode(null);
                 userBd.setCodeExpiration(null);
                 userRepository.saveAndFlush(userBd);
-                return "Senha alterada com sucesso!";
+                return HttpStatus.OK.toString();
             } else {
-                return "Código expirado! Solicite um novo código!";
+               return HttpStatus.valueOf("Código expirado! Solicite um novo código!").toString();
             }
         } else {
-            return "Email ou código não encontrado!";
+            return HttpStatus.BAD_REQUEST.toString();
         }
     }
 
