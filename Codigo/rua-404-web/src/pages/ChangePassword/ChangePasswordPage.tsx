@@ -4,31 +4,69 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button/button";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { useManagement } from "../../context/useManagement";
 import "./ChangePasswordPage.css";
 import { useNavigate } from "react-router-dom";
-
-type Props = {};
+import axios from "axios";
 
 type LoginForm = {
     password: string;
 };
 
 const validation = Yup.object().shape({
-    password: Yup.string().min(8, "A senha deve possuir no mínimo 8 dígitos.").max(16, "A senha é grande demais.").required("Campo obrigatório."),
+    password: Yup
+        .string()
+        .min(8, "A senha deve possuir no mínimo 8 dígitos.")
+        .max(16, "A senha é grande demais.")
+        .required("Campo obrigatório."),
 });
 
-const ChangePasswordPage = (props: Props) => {
+const ChangePasswordPage = () => {
+    const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
-    const { changePassword } = useManagement();
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm<LoginForm>({ resolver: yupResolver(validation) });
-    const [showPassword, setShowPassword] = useState(false);
 
-    const handleChange = (form: LoginForm) => {
+    const handleChangePassword = (form: LoginForm) => {
+        try {
+            const response = await axios.post<AxiosResponse>(
+                `http://localhost:8080/api/management/validate-code`,
+                {
+                    email: email,
+                    code: otp,
+                },
+            );
+
+            console.log("Resposta recebida:", response);
+
+            if (response.status === 200) {
+                window.alert(response.data);
+
+                // const stringResponse = JSON.stringify(response.data);
+                // console.log("stringResponse:", stringResponse);
+
+                // if (stringResponse == 'Código válido!') {
+                //     console.log("entrou no if");
+                // } else {
+                //     console.log("entrou no else");
+                // }
+
+                navigate("/change-password");
+
+            } else {
+                console.error("Erro na validação do código:", response);
+                window.alert("Erro na validação do código, tente novamente.");
+            }
+
+        } catch (err) {
+            console.error("Erro capturado no catch:", err);
+            window.alert("Erro na validação do código, tente novamente.");
+        } finally {
+            setLoading(false);
+        }
+
         window.alert("Senha alterada com sucesso!");
         navigate("/store");
     };
@@ -44,7 +82,7 @@ const ChangePasswordPage = (props: Props) => {
                             </h1>
                             <form
                                 className="space-y-4 md:space-y-4"
-                                onSubmit={handleSubmit(handleChange)}
+                                onSubmit={handleSubmit(handleChangePassword)}
                             >
                                 <div>
                                     <label

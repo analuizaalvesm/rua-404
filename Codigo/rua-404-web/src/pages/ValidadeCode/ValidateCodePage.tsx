@@ -6,21 +6,18 @@ import { Button } from "@/components/ui/Button/button";
 import { useNavigate } from 'react-router-dom';
 import { OTPInput, SlotProps } from 'input-otp'
 
-interface Response {
-    message: string;
-}
-
-const validation = yup.object().shape({
-    code: yup.string().required('Código é obrigatório'),
-});
+// const validation = yup.object().shape({
+//     code: yup
+//         .string()
+//         .required('Código é obrigatório')
+//         .length(4, 'Código deve ter exatamente 4 dígitos'),
+// });
 
 type ValidateCodeForm = {
     code: string;
 };
 
-type Props = {};
-
-const ValidadeCodePage = (props: Props) => {
+const ValidadeCodePage = () => {
     const formRef = useRef<HTMLFormElement>(null)
     const [loading, setLoading] = useState<boolean>(true);
     const navigate = useNavigate();
@@ -29,13 +26,9 @@ const ValidadeCodePage = (props: Props) => {
     const {
         handleSubmit,
         formState: { errors },
-    } = useForm<ValidateCodeForm>({ resolver: yupResolver(validation) });
-
+    } = useForm<ValidateCodeForm>();
 
     const handleValidateCode = async () => {
-        window.alert("Código validado!");
-        navigate("/change-password");
-
         try {
             const response = await axios.post<AxiosResponse>(
                 `http://localhost:8080/api/management/validate-code`,
@@ -48,19 +41,29 @@ const ValidadeCodePage = (props: Props) => {
             console.log("Resposta recebida:", response);
 
             if (response.status === 200) {
-                window.alert("Código validado!");
+                window.alert(response.data);
+
+                // const stringResponse = JSON.stringify(response.data);
+                // console.log("stringResponse:", stringResponse);
+
+                // if (stringResponse == 'Código válido!') {
+                //     console.log("entrou no if");
+                // } else {
+                //     console.log("entrou no else");
+                // }
+
                 navigate("/change-password");
+
             } else {
-                const errorData = await response;
-                console.error("Erro na validação do código:", errorData);
-                window.alert("Erro na validação do código: " + errorData);
+                console.error("Erro na validação do código:", response);
+                window.alert("Erro na validação do código, tente novamente.");
             }
 
         } catch (err) {
             console.error("Erro capturado no catch:", err);
-            window.alert("ERRO");
+            window.alert("Erro na validação do código, tente novamente.");
         } finally {
-            // setLoading(false);
+            setLoading(false);
         }
     };
 
@@ -79,7 +82,7 @@ const ValidadeCodePage = (props: Props) => {
                             <form
                                 ref={formRef}
                                 className="space-y-4 md:space-y-4"
-                            // onSubmit={handleSubmit(handleValidateCode)}
+                                onSubmit={handleSubmit(handleValidateCode)}
                             >
                                 <div>
                                     <label
@@ -104,16 +107,6 @@ const ValidadeCodePage = (props: Props) => {
                                                 </>
                                             )}
                                         />
-                                        {/* <InputOTPGroup>
-                                            {otp.map((_, index) => (
-                                                <InputOTPSlot
-                                                    key={index}
-                                                    index={index}
-                                                    value={otp[index]}
-                                                    onChange={(e: ChangeEvent<HTMLInputElement>) => handleChange(index, e.target.value)}
-                                                />
-                                            ))}
-                                        </InputOTPGroup> */}
                                     </div>
                                     {errors.code ? (
                                         <p className="text-red-500 text-xs pt-1">{errors.code.message}</p>
@@ -125,7 +118,7 @@ const ValidadeCodePage = (props: Props) => {
                                     disabled={Object.keys(errors).length > 0}
                                     type="submit"
                                     className="w-full py-5 rounded-lg"
-                                    onClick={handleValidateCode}
+                                    // onClick={handleValidateCode}
                                 >
                                     Continuar
                                 </Button>
