@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button/button";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import "./ChangePasswordPage.css";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 type LoginForm = {
     password: string;
@@ -28,33 +28,24 @@ const ChangePasswordPage = () => {
         handleSubmit,
         formState: { errors },
     } = useForm<LoginForm>({ resolver: yupResolver(validation) });
+    const email = localStorage.getItem("userEmail");
+    const code = localStorage.getItem("userCode");
 
-    const handleChangePassword = (form: LoginForm) => {
+    const handleChangePassword = async (form: LoginForm) => {
         try {
             const response = await axios.post<AxiosResponse>(
-                `http://localhost:8080/api/management/validate-code`,
+                `http://localhost:8080/api/management/change-password`,
                 {
                     email: email,
-                    code: otp,
+                    code: code,
+                    password: form.password,
                 },
             );
-
             console.log("Resposta recebida:", response);
 
             if (response.status === 200) {
                 window.alert(response.data);
-
-                // const stringResponse = JSON.stringify(response.data);
-                // console.log("stringResponse:", stringResponse);
-
-                // if (stringResponse == 'Código válido!') {
-                //     console.log("entrou no if");
-                // } else {
-                //     console.log("entrou no else");
-                // }
-
-                navigate("/change-password");
-
+                navigate("/login");
             } else {
                 console.error("Erro na validação do código:", response);
                 window.alert("Erro na validação do código, tente novamente.");
@@ -63,12 +54,7 @@ const ChangePasswordPage = () => {
         } catch (err) {
             console.error("Erro capturado no catch:", err);
             window.alert("Erro na validação do código, tente novamente.");
-        } finally {
-            setLoading(false);
         }
-
-        window.alert("Senha alterada com sucesso!");
-        navigate("/store");
     };
 
     return (

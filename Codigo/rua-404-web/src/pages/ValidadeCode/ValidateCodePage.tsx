@@ -42,30 +42,28 @@ const ValidadeCodePage = () => {
 
             if (response.status === 200) {
                 window.alert(response.data);
-
-                // const stringResponse = JSON.stringify(response.data);
-                // console.log("stringResponse:", stringResponse);
-
-                // if (stringResponse == 'Código válido!') {
-                //     console.log("entrou no if");
-                // } else {
-                //     console.log("entrou no else");
-                // }
-
+                localStorage.setItem("userCode", otp);
                 navigate("/change-password");
 
             } else {
+                cleanCode();
                 console.error("Erro na validação do código:", response);
                 window.alert("Erro na validação do código, tente novamente.");
             }
 
         } catch (err) {
+            cleanCode();
             console.error("Erro capturado no catch:", err);
             window.alert("Erro na validação do código, tente novamente.");
         } finally {
             setLoading(false);
         }
     };
+
+    const cleanCode = () => {
+        setOtp('');
+        formRef.current?.reset();
+    }
 
     return (
         <div className="max-w-full">
