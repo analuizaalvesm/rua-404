@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Rua404.Infraestrutura")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0ced395027391a198c082d53f42fe6b5ccb3c333")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bb1ff3aa105663c26d9b7ca0bcd49b3db70de7b6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Rua404.Infraestrutura")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Rua404.Infraestrutura")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
