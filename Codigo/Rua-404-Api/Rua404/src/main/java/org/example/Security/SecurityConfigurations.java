@@ -38,6 +38,7 @@ public class SecurityConfigurations {
                        .requestMatchers(HttpMethod.POST, "/products").permitAll()
                        .requestMatchers(HttpMethod.PUT, "/products/{id}").permitAll()
                        .requestMatchers(HttpMethod.DELETE, "/products/{id}").permitAll()
+                       .requestMatchers(HttpMethod.GET, "/payment").permitAll()
                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/swagger-ui.html").permitAll()
                        .anyRequest().authenticated())
                .build();
