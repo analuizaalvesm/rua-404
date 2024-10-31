@@ -28,18 +28,18 @@ public class ShoppingCartService {
         }
     }
 
-    public String post(Pedido pedido){
-       try{
-           if(pedido.getEmail() == null){
-               return HttpStatus.BAD_REQUEST.toString();
-           }
-           shoppingCartRepository.save(pedido);
-           return HttpStatus.OK + pedido.toString();
-
-       }catch (Exception e){
-           return HttpStatus.BAD_REQUEST.toString();
-       }
-    }
+//    public String post(Pedido pedido){
+//       try{
+//           if(pedido.getEmail() == null){
+//               return HttpStatus.BAD_REQUEST.toString();
+//           }
+//           shoppingCartRepository.save(pedido);
+//           return HttpStatus.OK + pedido.toString();
+//
+//       }catch (Exception e){
+//           return HttpStatus.BAD_REQUEST.toString();
+//       }
+//    }
 
     public String delete(Long id){
         try{
