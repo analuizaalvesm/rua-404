@@ -2,7 +2,84 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Ensure box-sizing is border-box */
+@font-face {
+  font-family: "Light";
+  src: local("Inter"),
+    url("./assets/fonts/inter/Inter-Light.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Regular";
+  src: local("Inter"),
+    url("./assets/fonts/inter/Inter-Regular.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Medium";
+  src: local("Inter"),
+    url("./assets/fonts/inter/Inter-Medium.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SemiBold";
+  src: local("Inter"),
+    url("./assets/fonts/inter/Inter-SemiBold.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bold";
+  src: local("Inter"),
+    url("./assets/fonts/inter/Inter-Bold.woff2") format("woff2");
+  font-display: swap;
+}
+
+/* Orbitron fonts */
+@font-face {
+  font-family: "Orbitron-Regular";
+  src: local("Orbitron"),
+    url("./assets/fonts/orbitron/Orbitron-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Orbitron-Medium";
+  src: local("Orbitron"),
+    url("./assets/fonts/orbitron/Orbitron-Medium.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Orbitron-SemiBold";
+  src: local("Orbitron"),
+    url("./assets/fonts/orbitron/Orbitron-SemiBold.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Orbitron-Bold";
+  src: local("Orbitron"),
+    url("./assets/fonts/orbitron/Orbitron-Bold.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Orbitron-Black";
+  src: local("Orbitron"),
+    url("./assets/fonts/orbitron/Orbitron-Black.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Orbitron-ExtraBold";
+  src: local("Orbitron"),
+    url("./assets/fonts/orbitron/Orbitron-ExtraBold.ttf") format("truetype");
+  font-display: swap;
+}
+
 *,
 *::before,
 *::after {
@@ -13,8 +90,6 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  /* color-scheme: light dark; */
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
 
@@ -171,4 +246,30 @@ button:focus-visible {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee2 {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 10s linear infinite;
+}
+
+.animate-marquee2 {
+  animation: marquee2 10s linear infinite;
 }
