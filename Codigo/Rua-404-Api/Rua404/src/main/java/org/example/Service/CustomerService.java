@@ -14,18 +14,12 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getAllCustomers(){
         return this.customerRepository.findAll();
     }
-
-    public Optional<Customer> getCustomerById(long id) {
+    public Optional<Customer> getCustomerById(long id){
         return this.customerRepository.findById(id);
     }
-
-    public Customer getCustomerByEmail(String email) {
-        return this.customerRepository.findByEmailAsync(email);
-    }
-
     public Customer createCustomer(Customer newCustomer) {
         if (emailExists(newCustomer.getEmail())) {
             throw new RuntimeException("Email já está em uso.");
@@ -36,26 +30,25 @@ public class CustomerService {
             throw new RuntimeException("Não foi possível adicionar Cliente");
         }
     }
-
+    
     public boolean emailExists(String email) {
         Customer customer = customerRepository.findByEmailAsync(email);
         return customer != null;
-    }
-
-    public Customer updateCustomer(Customer CustomerObj, long id) {
+    }    
+    public Customer updateCustomer(Customer CustomerObj,long id){
         return customerRepository.findById(id)
-                .map(customer -> {
-                    customer.setFirst_name(CustomerObj.getFirst_name());
-                    customer.setLast_name(CustomerObj.getLast_name());
-                    customer.setActive(CustomerObj.getActive());
-                    customer.setAddress(CustomerObj.getAddress());
-                    customer.setEmail(CustomerObj.getEmail());
-                    customer.setPassword(CustomerObj.getPassword());
-                    return customerRepository.save(customer);
-                }).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+        .map(customer->{
+            customer.setFirst_name(CustomerObj.getFirst_name());
+            customer.setLast_name(CustomerObj.getLast_name());
+            customer.setActive(CustomerObj.getActive());
+            customer.setAddress(CustomerObj.getAddress());
+            customer.setEmail(CustomerObj.getEmail());
+            customer.setPassword(CustomerObj.getPassword());
+            return customerRepository.save(customer);
+        }).orElseThrow(()-> new RuntimeException("Cliente não encontrado"));
     }
 
-    public void deleteCustomer(Long id) {
+    public void deleteCustomer(Long id){
         try {
             this.customerRepository.deleteById(id);
         } catch (RuntimeException e) {
