@@ -7,9 +7,9 @@ import {
 } from "@/components/ui/Accordion/accordion";
 
 type SideBarProps = {
-  productType: string[];
-  sizes: string[];
-  collabs: string[];
+  productType: readonly string[];
+  sizes: readonly string[];
+  collabs: readonly string[];
   maxPrice: number;
   selectedProductTypes: string[];
   handleProductTypeChange: (type: string) => void;
@@ -36,11 +36,15 @@ const SideBar: React.FC<SideBarProps> = ({
   setPriceRange,
 }) => {
   return (
-    <aside className="w-full md:w-1/6">
-      <div className="bg-white dark:bg-gray-800 rounded shadow mb-4 pt-2">
+    <aside className="w-full md:w-1/5">
+      <div className="bg-white dark:bg-gray-800 shadow mb-4">
         <div className="mb-4">
-          <Accordion type="multiple" className="w-full" defaultValue={["item-1", "item-2", "item-3"]}>
-            <AccordionItem value="item-1">
+          <Accordion
+            type="multiple"
+            className="w-full"
+            defaultValue={["item-1", "item-2", "item-3"]}
+          >
+            <AccordionItem value="item-1" className="py-1">
               <AccordionTrigger>Tipo de Produto</AccordionTrigger>
               <AccordionContent>
                 {productType.map((product) => (
@@ -61,7 +65,7 @@ const SideBar: React.FC<SideBarProps> = ({
                 ))}
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-2">
+            <AccordionItem value="item-2" className="py-1">
               <AccordionTrigger>Tamanhos</AccordionTrigger>
               <AccordionContent>
                 {sizes.map((size) => (
@@ -82,7 +86,7 @@ const SideBar: React.FC<SideBarProps> = ({
                 ))}
               </AccordionContent>
             </AccordionItem>
-            <AccordionItem value="item-3">
+            <AccordionItem value="item-3" className="py-1">
               <AccordionTrigger>Collabs</AccordionTrigger>
               <AccordionContent>
                 {collabs.map((collab) => (

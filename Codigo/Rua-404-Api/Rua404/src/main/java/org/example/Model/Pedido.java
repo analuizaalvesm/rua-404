@@ -4,16 +4,17 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Primary;
 
 @Entity
-@Table(name = "endereco")
+@Table(name = "pedido")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Endereco {
+public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String email;
 
 }

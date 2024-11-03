@@ -1,104 +1,87 @@
-import { Link, Outlet } from "react-router-dom";
-import { useState } from "react";
-import { deleteUserProfile } from "@/services/ProfileService";
+import {
+  FiUser,
+  FiMapPin,
+  FiShoppingBag,
+  FiLock,
+  FiLayers,
+} from "react-icons/fi";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
-const ProfilePage = () => {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [customerId, setCustomerId] = useState<number | null>(null);
-
-  const openDeleteModal = (id: number) => {
-    setCustomerId(id);
-    setShowDeleteModal(true);
-  };
-
-  const closeDeleteModal = () => {
-    setShowDeleteModal(false);
-    setCustomerId(null);
-  };
-
-  const handleDeleteAccount = async () => {
-    if (customerId) {
-      const success = await deleteUserProfile(customerId);
-      if (success) {
-        alert("Sua conta foi deletada com sucesso.");
-
-        setCustomerId(null);
-        setShowDeleteModal(false);
-      } else {
-        alert("Ocorreu um erro ao tentar deletar a conta.");
-      }
-    }
-  };
+const JobProfile = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const menuItems = [
+    {
+      name: "Visão Geral",
+      path: "/profile/overall",
+      icon: <FiLayers size={18} />,
+    },
+    {
+      name: "Perfil",
+      path: "/profile/edit-profile",
+      icon: <FiUser size={18} />,
+    },
+    {
+      name: "Endereço",
+      path: "/profile/edit-address",
+      icon: <FiMapPin size={18} />,
+    },
+    {
+      name: "Pedidos",
+      path: "/profile/orders",
+      icon: <FiShoppingBag size={18} />,
+    },
+    {
+      name: "Segurança",
+      path: "/profile/edit-address",
+      icon: <FiLock size={18} />,
+    },
+  ];
 
   return (
-    <div className="w-full min-h-screen p-6 bg-gray-50">
-      <h1 className="text-2xl font-bold mb-1">Minha conta</h1>
-      <p className="text-gray-600 mb-8">
-        Gerencie as configurações da sua conta e defina as suas preferências.
-      </p>
-
-      <div className="flex bg-gray-100 rounded-lg shadow w-full">
-        {/* Menu lateral */}
-        <aside className="w-1/4 bg-gray-200 p-6 rounded-l-lg">
-          <ul>
-            <li className="mb-4">
-              <Link to="perfil" className="block font-bold text-gray-700 hover:bg-gray-300 p-2 rounded">
-                Perfil
-              </Link>
-            </li>
-            <li className="mb-4">
-              <Link to="endereco" className="block font-bold text-gray-700 hover:bg-gray-300 p-2 rounded">
-                Endereço
-              </Link>
-            </li>
-            <li className="mb-4">
-              <Link to="seguranca" className="block font-bold text-gray-700 hover:bg-gray-300 p-2 rounded">
-                Segurança
-              </Link>
-            </li>
-            <li className="text-red-500">
-              <button
-                className="block w-full text-left font-bold hover:bg-red-100 p-2 rounded"
-                onClick={() => openDeleteModal(1)} // Substitua "1" pelo ID real do usuário
-              >
-                Deletar conta
-              </button>
-            </li>
-          </ul>
-        </aside>
-        <main className="w-3/4 p-6">
-          <Outlet />
-        </main>
-      </div>
-
-      {showDeleteModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
-          <div className="bg-white p-6 rounded shadow-lg w-96">
-            <h3 className="text-xl font-bold mb-4">Confirmar Exclusão</h3>
-            <p className="mb-4">
-              Tem certeza de que deseja deletar sua conta? Esta ação não pode ser desfeita.
-            </p>
-            <div className="flex justify-end">
-              <button
-                type="button"
-                onClick={handleDeleteAccount}
-                className="bg-red-600 text-white font-semibold rounded px-4 py-2 mr-2"
-              >
-                Confirmar
-              </button>
-              <button
-                type="button"
-                onClick={closeDeleteModal}
-                className="bg-gray-300 text-black font-semibold rounded px-4 py-2"
-              >
-                Cancelar
-              </button>
-            </div>
-          </div>
+    <div className="max-w-full bg-[#fafafa]">
+      <div className="mx-auto max-w-screen-2xl">
+        <div className="pt-12 pb-4">
+          <h2 className="text-2xl font-medium">Minha conta</h2>
+          <p className="text-[#6A6A6A]">
+            Gerencie as configurações da sua conta e defina as suas
+            preferências.
+          </p>
         </div>
-      )}
+        <div className="flex min-h-screen border-t border-gray-200">
+          <aside className="w-2/12 bg-transparent border-r border-gray-200 pt-4">
+            <nav>
+              <ul className="space-y-2">
+                {menuItems.map((item) => (
+                  <li key={item.path}>
+                    <div className="relative w-full">
+                      {location.pathname === item.path && (
+                        <span className="absolute left-0 top-0 bottom-0 w-[3px] bg-black" />
+                      )}
+                      <button
+                        onClick={() => navigate(item.path)}
+                        className={`w-full text-left bg-[#fafafa] text-[15px]/[15px] font-regular flex flex-row items-center py-3 px-4 gap-3 ${
+                          location.pathname === item.path
+                            ? "bg-[#F5F5F5] !font-medium text-black"
+                            : "text-gray-500 hover:bg-[#F5F5F5] hover:text-gray-800"
+                        }`}
+                      >
+                        {item.icon}
+                        {item.name}
+                      </button>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </aside>
+          <main className="w-10/12 pl-6 pt-6">
+            <Outlet />
+          </main>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default ProfilePage;
+export default JobProfile;
