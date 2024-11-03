@@ -40,7 +40,7 @@ const ProfileSection: FC<ProfileSectionProps> = ({ section }) => {
       try {
         const userData = await getUserProfile(user?.email || "");
         console.log(userData);
-        if(userData) {
+        if (userData) {
           setUserData(userData);
           setEditableUser({ ...userData });
         }
@@ -53,7 +53,6 @@ const ProfileSection: FC<ProfileSectionProps> = ({ section }) => {
     }
   }, [user]);
 
-
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     if (editableUser) {
@@ -65,9 +64,12 @@ const ProfileSection: FC<ProfileSectionProps> = ({ section }) => {
   };
 
   const handleSaveChanges = async () => {
-    if (user && editableUser && JSON.stringify(user) !== JSON.stringify(editableUser)) {
+    if (
+      user &&
+      editableUser &&
+      JSON.stringify(user) !== JSON.stringify(editableUser)
+    ) {
       try {
-        console.log("userEditable", editableUser);
         await updateUserProfile(editableUser);
         alert("As informações foram atualizadas com sucesso!");
         setUserData({ ...editableUser });
@@ -113,7 +115,9 @@ const ProfileSection: FC<ProfileSectionProps> = ({ section }) => {
           <form className="space-y-6">
             <div className="flex space-x-4">
               <div className="w-1/2">
-                <label className="block text-gray-700 mb-2">Primeiro nome</label>
+                <label className="block text-gray-700 mb-2">
+                  Primeiro nome
+                </label>
                 <input
                   type="text"
                   name="first_name"
@@ -213,7 +217,9 @@ const ProfileSection: FC<ProfileSectionProps> = ({ section }) => {
         </div>
       );
     default:
-      return <div className="text-center text-gray-600">Seção não encontrada</div>;
+      return (
+        <div className="text-center text-gray-600">Seção não encontrada</div>
+      );
   }
 };
 

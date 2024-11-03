@@ -8,14 +8,12 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        // Primary font (Inter)
         light: ["Light", ...defaultTheme.fontFamily.sans],
         regular: ["Regular", ...defaultTheme.fontFamily.sans],
         medium: ["Medium", ...defaultTheme.fontFamily.sans],
         semibold: ["SemiBold", ...defaultTheme.fontFamily.sans],
         bold: ["Bold", ...defaultTheme.fontFamily.sans],
 
-        // Secondary font (Orbitron)
         "orbitron-regular": [
           "Orbitron-Regular",
           ...defaultTheme.fontFamily.sans,

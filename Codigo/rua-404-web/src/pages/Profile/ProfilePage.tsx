@@ -38,21 +38,29 @@ const ProfilePage = () => {
       </p>
 
       <div className="flex bg-gray-100 rounded-lg shadow w-full">
-        {/* Menu lateral */}
         <aside className="w-1/4 bg-gray-200 p-6 rounded-l-lg">
           <ul>
             <li className="mb-4">
-              <Link to="perfil" className="block font-bold text-gray-700 hover:bg-gray-300 p-2 rounded">
+              <Link
+                to="perfil"
+                className="block font-bold text-gray-700 hover:bg-gray-300 p-2 rounded"
+              >
                 Perfil
               </Link>
             </li>
             <li className="mb-4">
-              <Link to="endereco" className="block font-bold text-gray-700 hover:bg-gray-300 p-2 rounded">
+              <Link
+                to="endereco"
+                className="block font-bold text-gray-700 hover:bg-gray-300 p-2 rounded"
+              >
                 Endereço
               </Link>
             </li>
             <li className="mb-4">
-              <Link to="seguranca" className="block font-bold text-gray-700 hover:bg-gray-300 p-2 rounded">
+              <Link
+                to="seguranca"
+                className="block font-bold text-gray-700 hover:bg-gray-300 p-2 rounded"
+              >
                 Segurança
               </Link>
             </li>
@@ -76,7 +84,8 @@ const ProfilePage = () => {
           <div className="bg-white p-6 rounded shadow-lg w-96">
             <h3 className="text-xl font-bold mb-4">Confirmar Exclusão</h3>
             <p className="mb-4">
-              Tem certeza de que deseja deletar sua conta? Esta ação não pode ser desfeita.
+              Tem certeza de que deseja deletar sua conta? Esta ação não pode
+              ser desfeita.
             </p>
             <div className="flex justify-end">
               <button
