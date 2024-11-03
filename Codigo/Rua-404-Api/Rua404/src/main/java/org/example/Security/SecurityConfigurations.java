@@ -39,6 +39,10 @@ public class SecurityConfigurations {
                        .requestMatchers(HttpMethod.PUT, "/products/{id}").permitAll()
                        .requestMatchers(HttpMethod.DELETE, "/products/{id}").permitAll()
                        .requestMatchers(HttpMethod.GET, "/payment").permitAll()
+                       .requestMatchers(HttpMethod.POST, "/carinho").permitAll()
+                       .requestMatchers(HttpMethod.GET, "/carinho").permitAll()
+                       .requestMatchers(HttpMethod.PUT, "/carinho").permitAll()
+                       .requestMatchers(HttpMethod.DELETE, "/carinho").permitAll()
                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/swagger-ui.html").permitAll()
                        .anyRequest().authenticated())
                .build();

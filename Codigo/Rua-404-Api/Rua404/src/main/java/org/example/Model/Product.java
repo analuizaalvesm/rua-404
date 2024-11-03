@@ -36,7 +36,7 @@ public class Product {
     @Column
     private int quantity;
 
-    @Column(name = "last_updated")
+    @Column(name = "last_updated", nullable = true)
     private LocalDateTime lastUpdated;
 
     @Column

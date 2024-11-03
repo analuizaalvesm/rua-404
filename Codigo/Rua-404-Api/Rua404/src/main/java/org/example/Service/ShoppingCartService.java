@@ -1,12 +1,17 @@
 package org.example.Service;
 
+import org.example.Model.Product;
 import org.example.Model.ShoppingCart;
 import org.example.Repositories.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShoppingCartService {
@@ -18,24 +23,22 @@ public class ShoppingCartService {
         return shoppingCartRepository.findAll();
     }
 
-    public List<ShoppingCart> getByUserId(String userId){
+    public Optional<ShoppingCart> getByUserId(Long id){
         try{
-            return shoppingCartRepository.findAllByUserID(userId);
+            return shoppingCartRepository.findById(id);
         }catch(Exception e){
             return null;
         }
     }
 
-    public String post(ShoppingCart pedido){
-       try{
-
-           shoppingCartRepository.save(pedido);
-           return HttpStatus.OK + pedido.toString();
-
-       }catch (Exception e){
-           return HttpStatus.BAD_REQUEST.toString();
-       }
+    public ShoppingCart post(ShoppingCart pedido) {
+        try {
+            return this.shoppingCartRepository.save(pedido);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Não foi possível adicionar Cliente");
+        }
     }
+
 
     public String delete(Long id){
         try{
@@ -46,15 +49,13 @@ public class ShoppingCartService {
         }
     }
 
-    public String put(ShoppingCart pedido){
-        try {
-            shoppingCartRepository.save(pedido);
-            return HttpStatus.OK.toString();
-        }
-        catch (Exception e){
-            return HttpStatus.BAD_REQUEST.toString();
-        }
+    public ShoppingCart put(ShoppingCart pedido) {
+    try {
+        return shoppingCartRepository.save(pedido);
+    } catch (Exception e) {
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to update ShoppingCart", e);
     }
+}
 
 
 

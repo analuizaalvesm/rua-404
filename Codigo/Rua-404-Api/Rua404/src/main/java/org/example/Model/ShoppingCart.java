@@ -27,15 +27,15 @@ public class ShoppingCart {
     @Column
     private Double valor_por_produto;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private Customer user;
-
-    @ManyToOne
-    @JoinColumn(name = "user_endereco_id", referencedColumnName = "id")
-    private Endereco userEndereco;
-
-    @ManyToOne
-    @JoinColumn(name = "produto_id", referencedColumnName = "id")
-    private Product produto;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id", referencedColumnName = "customer_id")
+//    private Customer user;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "user_endereco_id", referencedColumnName = "id")
+//    private Endereco userEndereco;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "produto_id", referencedColumnName = "id")
+//    private Product produto;
 }
