@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
-
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
@@ -27,44 +24,54 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping
-    public List<Customer> getAll(){
-       return this.customerService.getAllCustomers();
+    public List<Customer> getAll() {
+        return this.customerService.getAllCustomers();
     }
 
-    
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> findById(@PathVariable Long id){
-    Optional<Customer> Customer= this.customerService.getCustomerById(id);
-    if(Customer.isPresent()){
-        return ResponseEntity.ok(Customer.get());
-    }else{
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Customer> findById(@PathVariable Long id) {
+        Optional<Customer> Customer = this.customerService.getCustomerById(id);
+        if (Customer.isPresent()) {
+            return ResponseEntity.ok(Customer.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
-}
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<Customer> findByEmail(@PathVariable String email) {
+        Customer customer = this.customerService.getCustomerByEmail(email);
+        if (customer != null) {
+            return ResponseEntity.ok(customer);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @PostMapping
-    public ResponseEntity<Customer> createCustomer(@RequestBody Customer newCustomer){
-       try {
-        Customer CustomerNew=this.customerService.createCustomer(newCustomer);
-        return ResponseEntity.ok().body(CustomerNew);
-       } catch (Exception e) {
-        return ResponseEntity.badRequest().build();
-       }
-    }   
-    @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customerUpdated,@PathVariable long id){
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer newCustomer) {
         try {
-            Customer customer= this.customerService.updateCustomer(customerUpdated,id);
+            Customer CustomerNew = this.customerService.createCustomer(newCustomer);
+            return ResponseEntity.ok().body(CustomerNew);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customerUpdated, @PathVariable long id) {
+        try {
+            Customer customer = this.customerService.updateCustomer(customerUpdated, id);
             return ResponseEntity.ok(customer);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
-    } 
-    @DeleteMapping("/{id}")
-        public ResponseEntity<Void> removeCustomer(@PathVariable Long id){
-            this.customerService.deleteCustomer(id);
-            return ResponseEntity.noContent().build();
     }
 
-    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> removeCustomer(@PathVariable Long id) {
+        this.customerService.deleteCustomer(id);
+        return ResponseEntity.noContent().build();
+    }
+
 }
