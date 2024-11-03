@@ -1,13 +1,14 @@
 package org.example.Service;
 
-import org.example.Model.Customer;
-import org.example.Model.Pedido;
+import java.util.List;
+import java.util.Optional;
+
+import org.example.Model.ShoppingCart;
 import org.example.Repositories.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ShoppingCartService {
@@ -15,51 +16,42 @@ public class ShoppingCartService {
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
 
-    public List<Pedido> get(){
+    public List<ShoppingCart> get() {
         return shoppingCartRepository.findAll();
     }
 
-    public List<Pedido> getByEmail(String email){
-        try{
-            return shoppingCartRepository.findAllByEmail(email);
-        }catch(Exception e){
+    public Optional<ShoppingCart> getByUserId(Long id) {
+        try {
+            return shoppingCartRepository.findById(id);
+        } catch (Exception e) {
             return null;
-                    //List<HttpStatus.BAD_REQUEST.toString()>; //retorna um erro 400
+            //List<HttpStatus.BAD_REQUEST.toString()>; //retorna um erro 400
         }
     }
 
-//    public String post(Pedido pedido){
-//       try{
-//           if(pedido.getEmail() == null){
-//               return HttpStatus.BAD_REQUEST.toString();
-//           }
-//           shoppingCartRepository.save(pedido);
-//           return HttpStatus.OK + pedido.toString();
-//
-//       }catch (Exception e){
-//           return HttpStatus.BAD_REQUEST.toString();
-//       }
-//    }
+    public ShoppingCart post(ShoppingCart pedido) {
+        try {
+            return this.shoppingCartRepository.save(pedido);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Não foi possível adicionar Cliente");
+        }
+    }
 
-    public String delete(Long id){
-        try{
+    public String delete(Long id) {
+        try {
             shoppingCartRepository.deleteById(id);
             return HttpStatus.OK.toString();
-        }catch (Exception e){
+        } catch (Exception e) {
             return HttpStatus.BAD_REQUEST.toString();
         }
     }
 
-    public String put(Pedido pedido){
+    public ShoppingCart put(ShoppingCart pedido) {
         try {
-            shoppingCartRepository.save(pedido);
-            return HttpStatus.OK.toString();
-        }
-        catch (Exception e){
-            return HttpStatus.BAD_REQUEST.toString();
+            return shoppingCartRepository.save(pedido);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to update ShoppingCart", e);
         }
     }
-
-
 
 }
