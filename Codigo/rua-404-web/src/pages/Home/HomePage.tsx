@@ -1,8 +1,6 @@
-import React from "react";
-import { CirclePlusIcon, Heart } from "lucide-react";
-import { FaCirclePlus, FaChevronRight } from "react-icons/fa6";
+import { Heart } from "lucide-react";
+import { FaCirclePlus } from "react-icons/fa6";
 import { BiChevronsRight } from "react-icons/bi";
-import logo from "../../assets/y2k_star.png";
 import logoWhite from "../../assets/y2k_star_white.png";
 import MarqueeDemo from "@/components/custom/Marquee/Marquee";
 import chevronRight from "../../assets/mdi_chevron-right.svg";
@@ -97,13 +95,11 @@ const Home = () => {
       <Banner404 />
       <MarqueeDemo />
 
-      {/* Store Section */}
       <section className="mx-auto max-w-screen-2xl px-16 pt-8 pb-24">
         <h2 className="text-5xl font-orbitron-bold mb-8">RUA STORE</h2>
         <div className="grid grid-cols-4 gap-6">
           {products.map((product) => (
             <div className="bg-white border border-gray-200 w-full max-w-sm">
-              {/* Image container with aspect ratio */}
               <div className="relative bg-gray-200 aspect-[6/3] border border-black">
                 <img
                   src="https://placehold.co/600x400/EEE/31343C"
@@ -115,7 +111,6 @@ const Home = () => {
                 </button>
               </div>
 
-              {/* Content container with padding */}
               <div className="p-6">
                 <h3 className="text-xl font-orbitron-medium mb-2">
                   {product.name}
@@ -133,13 +128,6 @@ const Home = () => {
             </div>
           ))}
         </div>
-        {/* <div className="flex flex-row justify-between">
-          <div className="absolute">
-            <img src={logoWhite} className="w-40 h-40 mt-4" />
-          </div>
-
-          <img src={chevronRight} className="w-20 h-20 mt-4" />
-        </div> */}
 
         <div className="relative flex flex-row justify-between items-start">
           <div className="absolute left-0">
@@ -150,7 +138,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      {/* Events Section */}
+
       <div className="bg-gray-100 border border-y-black pb-14">
         <section className="mx-auto max-w-screen-2xl px-16 py-8">
           <h2 className="text-5xl font-orbitron-bold mb-8 flex justify-end items-center">
@@ -250,7 +238,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Latest Collections */}
       <div className="text-center py-8">
         <div className="flex justify-center">
           <div className="flex flex-row">
@@ -283,7 +270,7 @@ const Home = () => {
           </div>
         </div>
 
-        <button className="w-[100vh] bg-black text-black px-3 py-2 mt-8">
+        <button className="w-[70vh] bg-black text-black px-3 py-2 mt-8">
           <p className="text-lg font-orbitron-medium text-white text-center">
             CONFIRA
           </p>

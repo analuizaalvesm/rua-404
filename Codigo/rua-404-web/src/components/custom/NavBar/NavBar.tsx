@@ -36,16 +36,28 @@ const Navbar = (props: Props) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-20">
               <div className="hidden font-bold lg:flex space-x-6">
-                <Link to="/" className="font-orbitron-medium">
+                <Link
+                  to="/"
+                  className="font-orbitron-medium border-b-2 border-transparent hover:border-b-2 hover:border-black"
+                >
                   HOME
                 </Link>
-                <Link to="/store" className="font-orbitron-medium">
+                <Link
+                  to="/store"
+                  className="font-orbitron-medium border-b-2 border-transparent hover:border-b-2 hover:border-black"
+                >
                   STORE
                 </Link>
-                <Link to="/gallery" className="font-orbitron-medium">
+                <Link
+                  to="/gallery"
+                  className="font-orbitron-medium border-b-2 border-transparent hover:border-b-2 hover:border-black"
+                >
                   GALLERY
                 </Link>
-                <Link to="/about-us" className="font-orbitron-medium">
+                <Link
+                  to="/about-us"
+                  className="font-orbitron-medium border-b-2 border-transparent hover:border-b-2 hover:border-black"
+                >
                   ABOUT US
                 </Link>
               </div>
@@ -162,20 +174,20 @@ const Navbar = (props: Props) => {
               <div className="hidden lg:flex items-center space-x-4 text-black">
                 <Link
                   to="/login"
-                  className={`text-white border-2 border-black font-medium text-sm py-2.5 focus:outline-none ${
+                  className={`text-white border-2 border-black font-medium text-sm py-2 px-2 focus:outline-none ${
                     isHomeRoute
                       ? "group-hover:bg-white group-hover:text-black group-hover:border-2 group-hover:border-black transition-colors duration-300"
-                      : "bg-black"
+                      : "bg-white border-black !text-black"
                   }`}
                 >
                   LOGIN
                 </Link>
                 <Link
                   to="/register"
-                  className={`text-white font-semibold text-sm border-2 border-white py-2.5 ${
+                  className={`text-white font-semibold text-sm border-2 border-white py-2 px-2 ${
                     isHomeRoute
                       ? "group-hover:bg-black group-hover:border-2 group-hover:border-black group-hover:text-white transition-colors duration-300"
-                      : "bg-black"
+                      : "bg-black !border-black !text-white"
                   }`}
                 >
                   REGISTER
