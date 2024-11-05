@@ -40,6 +40,9 @@ public class CustomerService {
         .map(customer->{
             customer.setFirst_name(CustomerObj.getFirst_name());
             customer.setLast_name(CustomerObj.getLast_name());
+            customer.setCpf(CustomerObj.getCpf());
+            customer.setTelefone(CustomerObj.getTelefone());
+            customer.setDataNascimento(CustomerObj.getDataNascimento());
             customer.setActive(CustomerObj.getActive());
             customer.setAddress(CustomerObj.getAddress());
             customer.setEmail(CustomerObj.getEmail());
