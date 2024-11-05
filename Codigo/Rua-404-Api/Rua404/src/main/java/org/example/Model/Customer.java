@@ -31,6 +31,15 @@ public class Customer {
     @Column(name="last_name")
     private String last_name;
 
+    @Column(name="cpf")
+    private String cpf;
+
+    @Column(name="telefone")
+    private String telefone;
+
+    @Column(name="data_nascimento")
+    private String dataNascimento;
+
     @Column(name="email")
     private String email;
 
@@ -101,6 +110,30 @@ public class Customer {
 
     public void setLast_name(String last_name) {
         this.last_name = last_name;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(String dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public String getEmail() {
