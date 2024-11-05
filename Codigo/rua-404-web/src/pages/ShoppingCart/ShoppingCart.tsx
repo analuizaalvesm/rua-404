@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { products, defaultProducts } from "./products";
+import { defaultProducts } from "./products";
 import ProductSection from "./Components/ProductSection";
-import CartItem from "./Components/CartItem";
 import OrderSummary from "./Components/OrderSummary";
 import CartTable from "./Components/CartTable";
+import { useCart } from "@/context/useCart";
 
 const ShoppingCart = () => {
-  const [cartItems, setCartItems] = useState(products);
+  const { cartItems, updateQuantity, removeItem } = useCart();
 
   const calculateSummary = () => {
     const subtotal = cartItems.reduce(
@@ -27,19 +26,6 @@ const ShoppingCart = () => {
     };
   };
 
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity < 1) return;
-    setCartItems(
-      cartItems.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const removeItem = (id: number) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-  };
-
   const summary = calculateSummary();
 
   return (
@@ -54,21 +40,12 @@ const ShoppingCart = () => {
 
         <div className="mt-4 sm:mt-2 md:gap-6 lg:flex lg:items-start xl:gap-8">
           <div className="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
-            <div className="border border-gray-200 bg-white rounded-sm p-4">
+            <div className="border border-gray-200 bg-[#fdfdfd] rounded-sm p-4">
               <CartTable
                 items={cartItems}
                 updateQuantity={updateQuantity}
                 removeItem={removeItem}
               />
-              {/* {cartItems.map((item, index) => (
-                <CartItem
-                  key={item.id}
-                  item={item}
-                  index={index}
-                  updateQuantity={updateQuantity}
-                  removeItem={removeItem}
-                />
-              ))} */}
             </div>
             <ProductSection products={defaultProducts} />
           </div>

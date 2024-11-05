@@ -9,12 +9,14 @@ import {
 import logo from "../../../assets/logo_rua.png";
 import logoWhite from "../../../assets/logo_rua_white.png";
 import { useState } from "react";
-import { FiUser, FiShoppingCart, FiHeart } from "react-icons/fi";
+import { FiUser, FiHeart } from "react-icons/fi";
+import { useCart } from "@/context/useCart";
+import CartDropdown from "./components/CartDropdown";
 
-interface Props {}
-
-const Navbar = (props: Props) => {
+const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth();
+  const { cartCount, cartItems } = useCart();
+
   const [isHovering, setIsHovering] = useState(false);
   const currentRoute = window.location.pathname;
 
@@ -161,13 +163,10 @@ const Navbar = (props: Props) => {
                     <FiHeart size={20} />
                     <span className="pl-2">0</span>
                   </div>
-                  <div className="flex items-center relative">
-                    <FiShoppingCart size={20} />
-                    <span className="pl-2">0</span>
-                  </div>
-                  <a href="/profile" className="flex items-center">
+                  <CartDropdown cartItems={cartItems} cartCount={cartCount} />
+                  <Link to="/profile/edit-profile">
                     <FiUser size={20} />
-                  </a>
+                  </Link>
                 </div>
               </div>
             ) : (
@@ -198,8 +197,8 @@ const Navbar = (props: Props) => {
         </nav>
       </div>
 
-      {/* Full-width green banner for /store route */}
-      {location.pathname === "/store" && (
+      {(location.pathname === "/store" ||
+        location.pathname === "/shopping-cart") && (
         <div className="bg-[#37CA7F] text-white text-center p-2 w-full">
           15% OFF NA PRIMEIRA COMPRA
         </div>
