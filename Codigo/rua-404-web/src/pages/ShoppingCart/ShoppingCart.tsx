@@ -1,11 +1,13 @@
-import { defaultProducts } from "./products";
 import ProductSection from "./Components/ProductSection";
 import OrderSummary from "./Components/OrderSummary";
 import CartTable from "./Components/CartTable";
 import { useCart } from "@/context/useCart";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const ShoppingCart = () => {
   const { cartItems, updateQuantity, removeItem } = useCart();
+  const [products, setProducts] = useState([]);
 
   const calculateSummary = () => {
     const subtotal = cartItems.reduce(
@@ -28,6 +30,17 @@ const ShoppingCart = () => {
 
   const summary = calculateSummary();
 
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/products")
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return (
     <section className="bg-[#fafafa] border-t border-gray-200 py-8 antialiased dark:bg-gray-900 md:py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
@@ -47,7 +60,7 @@ const ShoppingCart = () => {
                 removeItem={removeItem}
               />
             </div>
-            <ProductSection products={defaultProducts} />
+            <ProductSection products={products} />
           </div>
 
           <div className="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
