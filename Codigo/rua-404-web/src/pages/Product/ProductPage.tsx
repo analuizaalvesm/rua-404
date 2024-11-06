@@ -17,10 +17,22 @@ const ProductPage: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [productList, setProductList] = useState<Product[]>([]);
 
   const productId = state?.productId;
-  const products = state?.products;
-  const randomProducts = products.sort(() => Math.random() - Math.random());
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/products")
+      .then((response) => {
+        setProductList(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const randomProducts = productList.sort(() => Math.random() - Math.random());
 
   useEffect(() => {
     if (!productId) {
@@ -234,7 +246,7 @@ const ProductPage: React.FC = () => {
                 className="bg-white border border-gray-300 rounded-none shadow-md p-4 w-full sm:w-72 m-1 cursor-pointer hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between min-h-[300px]" // Ajuste a altura mínima conforme necessário
                 onClick={() =>
                   navigate(`/product/${relatedProduct.id}`, {
-                    state: { productId: relatedProduct.id, products },
+                    state: { productId: relatedProduct.id, productList },
                   })
                 }
               >

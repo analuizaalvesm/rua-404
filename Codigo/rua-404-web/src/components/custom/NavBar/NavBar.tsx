@@ -6,8 +6,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/DropdownMenu/dropdown-menu";
-import logo from "../../../assets/logo_rua.png";
-import logoWhite from "../../../assets/logo_rua_white.png";
+import logo from "../../../assets/images/logo_rua.png";
+import logoWhite from "../../../assets/images/logo_rua_white.png";
 import { useState } from "react";
 import { FiUser, FiHeart } from "react-icons/fi";
 import { useCart } from "@/context/useCart";
