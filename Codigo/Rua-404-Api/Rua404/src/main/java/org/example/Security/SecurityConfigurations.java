@@ -19,6 +19,7 @@ import jakarta.servlet.DispatcherType;
 @EnableWebSecurity
 public class SecurityConfigurations {
 
+    @SuppressWarnings("removal")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -38,6 +39,7 @@ public class SecurityConfigurations {
                 .requestMatchers(HttpMethod.GET, "/customer").permitAll()
                 .requestMatchers(HttpMethod.GET, "/customer/{id}").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/customer/{id}").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/customer/{id}").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/auth/deleteByEmail/{email}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/hc").permitAll()
                 .requestMatchers(HttpMethod.GET, "/products").permitAll()

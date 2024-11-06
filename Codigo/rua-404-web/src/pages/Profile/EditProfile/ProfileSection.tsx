@@ -1,45 +1,21 @@
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getUserProfile, updateUserProfile } from "@/services/ProfileService";
 import { useAuth } from "@/context/useAuth";
+import { User } from "@/models/User";
 
-type User = {
-  customer_id: number;
-  store_id?: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  address: string;
-  active: boolean;
-  create_data?: string;
-  last_update?: string;
-  password?: string;
-  recuperationCode?: string;
-  dataSendCode?: string;
-  loginToken?: string;
-  code?: string;
-  sendCode?: string;
-  codeExpiration?: string;
-};
-
-type ProfileSectionProps = {
-  section: "perfil" | "endereco" | "seguranca";
-};
-
-const EditProfile = () => {
-  const { isAuthenticated, user, logout } = useAuth();
-  // const [user, setUser] = useState<User | null>(null);
+const Profile = () => {
+  const { user } = useAuth();
   const [userData, setUserData] = useState<User | null>(null);
   const [editableUser, setEditableUser] = useState<User | null>(null);
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  console.log("user logado", user);
+  const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
+        console.log("user?.email", user?.email);
         const userData = await getUserProfile(user?.email || "");
-        console.log(userData);
         if (userData) {
           setUserData(userData);
           setEditableUser({ ...userData });
@@ -63,7 +39,23 @@ const EditProfile = () => {
     }
   };
 
-  const handleSaveChanges = async () => {
+  const handleProfilePictureChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const imageUrl = URL.createObjectURL(file);
+      setProfilePictureUrl(imageUrl);
+      if (editableUser) {
+        setEditableUser({ ...editableUser, profilePicture: imageUrl });
+      }
+    }
+  };
+
+  const handleSaveChanges = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
     if (
       user &&
       editableUser &&
@@ -74,7 +66,6 @@ const EditProfile = () => {
         alert("As informações foram atualizadas com sucesso!");
         setUserData({ ...editableUser });
       } catch (error) {
-        console.error("Erro ao atualizar as informações:", error);
         alert("Ocorreu um erro ao tentar salvar as alterações.");
       }
     } else {
@@ -88,119 +79,151 @@ const EditProfile = () => {
     }
   };
 
-  const handleChangePassword = async () => {
-    if (newPassword !== confirmPassword) {
-      alert("As senhas não coincidem. Por favor, verifique.");
-      return;
-    }
-
-    if (editableUser) {
-      try {
-        await updateUserProfile({ ...editableUser, password: newPassword });
-        alert("Senha alterada com sucesso!");
-        setNewPassword("");
-        setConfirmPassword("");
-      } catch (error) {
-        console.error("Erro ao alterar a senha:", error);
-        alert("Ocorreu um erro ao tentar alterar a senha.");
-      }
-    }
-  };
-
   return (
-    <div className="max-w-2xl">
-      <h1 className="text-2xl font-bold mb-6">Editar Perfil</h1>
+    <div className="max-w-xl">
+      <div className="mb-6">
+        <h1 className="text-2xl font-semibold mb-1">Meu perfil</h1>
+        <p className="text-sm text-gray-500 font-regular">
+          Aqui estão as informações básicas da sua conta. Atualize seus dados
+          quando quiser.{" "}
+        </p>
+      </div>
       <form className="space-y-6">
-        {/* Nome do Job */}
+        <div className="flex flex-row items-center bg-white border border-gray-300 rounded-sm p-4 space-x-4">
+          {profilePictureUrl ? (
+            <img
+              src={profilePictureUrl}
+              alt="Profile"
+              className="w-24 h-24 rounded-full object-cover"
+            />
+          ) : (
+            <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-4xl">
+              {editableUser?.first_name?.[0].toUpperCase() || ""}
+            </div>
+          )}
+          <div>
+            <input
+              className="block w-full text-sm text-gray-500 border border-gray-300 rounded-sm cursor-pointer bg-gray-50 focus:outline-none pr-3
+              file:mr-3 file:py-1.5 file:px-2 file:rounded-sm file:border-0 file:text-[14px] file:font-medium file:bg-gray-200 file:text-gray-700 hover:file:bg-gray-100"
+              id="file_input"
+              type="file"
+              onChange={handleProfilePictureChange}
+            />
+            <p
+              className="mt-1 text-xs text-gray-400 dark:text-gray-300"
+              id="file_input_help"
+            >
+              Pelo menos 800x800 px recomendado.
+              <br />
+              JPG ou PNG é permitido.
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-row justify-between space-x-2">
+          <div className="w-full">
+            <label
+              htmlFor="nome"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Nome
+            </label>
+            <input
+              type="text"
+              name="first_name"
+              value={editableUser?.first_name || ""}
+              onChange={handleInputChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              placeholder="Nome"
+            />
+          </div>
+          <div className="w-full">
+            <label
+              htmlFor="sobrenome"
+              className="block text-sm font-medium text-gray-700"
+            >
+              Sobrenome
+            </label>
+            <input
+              type="text"
+              name="last_name"
+              value={editableUser?.last_name || ""}
+              onChange={handleInputChange}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              placeholder="Sobrenome"
+            />
+          </div>
+        </div>
         <div>
           <label
-            htmlFor="nome-job"
+            htmlFor="email"
             className="block text-sm font-medium text-gray-700"
           >
-            Nome do Job
+            E-mail
           </label>
           <input
-            type="text"
-            id="nome-job"
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            placeholder="Ex.: Recepção para evento corporativo"
+            type="email"
+            name="email"
+            value={editableUser?.email || ""}
+            onChange={handleInputChange}
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            placeholder="email@exemplo.com"
           />
         </div>
-        <div>
+        <div className="w-3/6 pr-1">
           <label
-            htmlFor="descricao-job"
+            htmlFor="data"
             className="block text-sm font-medium text-gray-700"
           >
-            Descrição
-          </label>
-          <textarea
-            id="descricao-job"
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            rows={4}
-            placeholder="Descreva as responsabilidades, requisitos e outros detalhes importantes..."
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="local-job"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Local
-          </label>
-          <input
-            type="text"
-            id="local-job"
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            placeholder="Ex.: Belo Horizonte, MG"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="remuneracao-job"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Remuneração (R$)
-          </label>
-          <input
-            type="number"
-            id="remuneracao-job"
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            placeholder="Ex.: 700"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="vagas-job"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Número de vagas
-          </label>
-          <input
-            type="number"
-            id="vagas-job"
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            placeholder="Ex.: 4"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="data-job"
-            className="block text-sm font-medium text-gray-700"
-          >
-            Data do Job
+            Data de nascimento
           </label>
           <input
             type="date"
-            id="data-job"
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            id="data"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
-        <div>
+        <div className="w-3/6 pr-1">
+          <label
+            htmlFor="cpf"
+            className="block text-sm font-medium text-gray-700"
+          >
+            CPF
+          </label>
+          <input
+            type="text"
+            name="cpf"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            placeholder="123.456.789-00"
+          />
+        </div>
+        <div className="w-3/6 pr-1">
+          <label
+            htmlFor="celular"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Celular
+          </label>
+          <input
+            type="text"
+            name="celular"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            placeholder="(11) 99999-9999"
+          />
+        </div>
+        <div className="flex flex-row gap-2 pt-2">
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            onClick={handleSaveChanges}
+            className="bg-black text-white text-sm px-6 py-2.5 rounded-sm hover:bg-gray-800"
           >
-            Criar Job
+            Salvar
+          </button>
+          <button
+            type="submit"
+            onClick={resetEditableUser}
+            className="text-red-500 text-sm px-4 py-2 bg-transparent hover:underline"
+          >
+            Descartar alterações
           </button>
         </div>
       </form>
@@ -208,4 +231,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default Profile;

@@ -7,7 +7,12 @@ import axios from "axios";
 type UserContextType = {
   user: UserProfile | null;
   token: string | null;
-  register: (email: string, password: string, username: string) => void;
+  register: (
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string
+  ) => void;
   login: (email: string, password: string) => void;
   logout: () => void;
   isAuthenticated: () => boolean;
@@ -43,18 +48,21 @@ export const UserProvider = ({ children }: Props) => {
   const register = async (
     email: string,
     password: string,
-    username: string
+    firstName: string,
+    lastName: string
   ) => {
-    await registerApi(email, password, username)
+    await registerApi(firstName, lastName, email, password)
       .then((response) => {
         if (response) {
           if (response?.data.token) {
             localStorage.setItem("token", response.data.token);
           }
           const userObj = {
-            username: username,
+            firstName: firstName,
+            lastName: lastName,
             email: email,
           };
+          console.log(userObj);
           localStorage.setItem("user", JSON.stringify(userObj));
           setToken(response?.data.token!);
           setUser(userObj!);

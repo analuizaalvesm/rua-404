@@ -4,7 +4,6 @@ import {
   FiMapPin,
   FiShoppingBag,
   FiLock,
-  FiLayers,
   FiLogOut,
 } from "react-icons/fi";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
@@ -16,9 +15,9 @@ const JobProfile = () => {
 
   const menuItems = [
     {
-      name: "Visão Geral",
-      path: "/profile/overall",
-      icon: <FiLayers size={18} />,
+      name: "Pedidos",
+      path: "/profile/orders",
+      icon: <FiShoppingBag size={18} />,
     },
     {
       name: "Perfil",
@@ -31,20 +30,15 @@ const JobProfile = () => {
       icon: <FiMapPin size={18} />,
     },
     {
-      name: "Pedidos",
-      path: "/profile/orders",
-      icon: <FiShoppingBag size={18} />,
-    },
-    {
       name: "Segurança",
-      path: "/profile/edit-address",
+      path: "/profile/security",
       icon: <FiLock size={18} />,
     },
   ];
 
   return (
     <div className="max-w-full bg-[#fafafa]">
-      <div className="mx-auto max-w-screen-2xl">
+      <div className="mx-auto max-w-screen-xl">
         <div className="pt-12 pb-4">
           <h2 className="text-2xl font-medium">Minha conta</h2>
           <p className="text-[#6A6A6A]">
