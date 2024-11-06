@@ -1,5 +1,6 @@
 package org.example.Controller;
 
+import org.example.Model.Product;
 import org.example.Model.ShoppingCart;
 import org.example.Service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -17,9 +19,9 @@ public class ShoppingCartController {
     private ShoppingCartService shoppingCartService;
 
     @GetMapping
-    public ResponseEntity<Optional<ShoppingCart>> getAll(Long id) {
+    public ResponseEntity<List<ShoppingCart>> getAll(Long id) {
         try {
-            Optional<ShoppingCart> products = shoppingCartService.getByUserId(id);
+            List<ShoppingCart> products = shoppingCartService.getByUserId(id);
             return ResponseEntity.ok(products);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -27,10 +29,10 @@ public class ShoppingCartController {
     }
 
     @PostMapping
-    public ResponseEntity<ShoppingCart> addAtCart(ShoppingCart product) {
+    public ResponseEntity<String> addAtCart(@RequestBody Product product, @RequestParam Long id){
         try {
-            ShoppingCart cart = this.shoppingCartService.post(product);
-           return  ResponseEntity.ok().body(cart);
+             this.shoppingCartService.post(product, id);
+           return  ResponseEntity.ok().body("Produto adicionado ao carrinho");
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
