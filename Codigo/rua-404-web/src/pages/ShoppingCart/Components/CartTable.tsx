@@ -5,7 +5,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../components/ui/table";
+} from "../../../components/ui/Table/table";
 
 type CartItemProps = {
   item: {
@@ -25,7 +25,7 @@ const CartItemRow = ({ item, updateQuantity, removeItem }: CartItemProps) => (
     <TableCell>
       <a href="#" className="flex items-center gap-4">
         <img
-          className="h-24 w-24 rounded-md object-cover"
+          className="h-24 w-24 rounded-sm object-cover"
           src={item.image}
           alt={item.name}
         />
