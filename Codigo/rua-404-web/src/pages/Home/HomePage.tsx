@@ -1,10 +1,10 @@
 import { Heart } from "lucide-react";
 import { FaCirclePlus } from "react-icons/fa6";
 import { BiChevronsRight } from "react-icons/bi";
-import logoWhite from "../../assets/y2k_star_white.png";
+import logoWhite from "../../assets/images/y2k_star_white.png";
 import MarqueeDemo from "@/components/custom/Marquee/Marquee";
-import chevronRight from "../../assets/mdi_chevron-right.svg";
-import stars from "../../assets/stars.png";
+import chevronRight from "../../assets/icons/mdi_chevron-right.svg";
+import stars from "../../assets/images/stars.png";
 
 const Home = () => {
   const products = [
