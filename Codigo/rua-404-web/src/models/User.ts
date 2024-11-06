@@ -18,6 +18,7 @@ export type User = {
   username?: string;
   token?: string;
   id?: number;
+  profilePicture?: any;
 };
 
 
