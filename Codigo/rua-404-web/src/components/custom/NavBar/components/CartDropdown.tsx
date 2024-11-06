@@ -4,7 +4,7 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
-} from "@/components/ui/popover";
+} from "@/components/ui/Popover/popover";
 import { FiShoppingCart } from "react-icons/fi";
 
 interface CartItem {
@@ -64,7 +64,11 @@ const CartDropdown = ({ cartItems, cartCount }: CartDropdownProps) => {
                   }`}
                   onClick={() => navigate(`/product/${item.id}`)}
                 >
-                  <img src={item.image} alt={item.name} className="w-20 h-20" />
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-20 h-20 rounded-sm"
+                  />
                   <div className="pl-3">
                     <p className="text-xs font-regular text-gray-400">
                       {item.quantity} unidade(s)

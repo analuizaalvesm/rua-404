@@ -86,8 +86,7 @@ const Address = () => {
       <div className="mb-6">
         <h1 className="text-2xl font-semibold mb-1">Endereço</h1>
         <p className="text-sm text-gray-500 font-regular">
-          Gerencie as informações do seu endereço. Os dados serão utilizados
-          para entrega dos pedidos.
+          Os endereço cadastrado será utilizado para entrega dos pedidos.
         </p>
       </div>
       <form className="space-y-5">
