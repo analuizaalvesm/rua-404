@@ -14,7 +14,7 @@ public class Endereco {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="customer_id")
+    @Column(name="endereco_id")
     private Long idEndereco;
 
     @Column
@@ -40,9 +40,6 @@ public class Endereco {
 
     @Column
     private String cep;
-
-    @Column
-    private Long idCustomer;
 
     public Long getIdEndereco() {
         return idEndereco;
@@ -114,13 +111,5 @@ public class Endereco {
 
     public void setCep(String cep) {
         this.cep = cep;
-    }
-
-    public Long getIdCustomer() {
-        return idCustomer;
-    }
-
-    public void setIdCustomer(Long idCustomer) {
-        this.idCustomer = idCustomer;
     }
 }

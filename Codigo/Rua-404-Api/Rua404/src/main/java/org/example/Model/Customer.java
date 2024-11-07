@@ -10,6 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -43,8 +46,9 @@ public class Customer {
     @Column(name="email")
     private String email;
 
-    @Column(name="address")
-    private String address;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address", referencedColumnName = "endereco_id")
+    private Endereco address;
 
     @Column(name="active")
     private boolean active;
@@ -144,11 +148,11 @@ public class Customer {
         this.email = email;
     }
 
-    public String getAddress() {
-        return this.address;
+    public Endereco getAddress() {
+        return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Endereco address) {
         this.address = address;
     }
 
