@@ -19,10 +19,11 @@ import jakarta.servlet.DispatcherType;
 @EnableWebSecurity
 public class SecurityConfigurations {
 
+    @SuppressWarnings("removal")
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .cors().and() // Adiciona o suporte a CORS
+                .cors().and()
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
@@ -32,11 +33,13 @@ public class SecurityConfigurations {
                 .requestMatchers(HttpMethod.POST, "/api/management/change-password").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/management/update-password").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/auth/updateUserData/{email}").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                 .requestMatchers(HttpMethod.GET, "/auth/{email}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/customer").permitAll()
                 .requestMatchers(HttpMethod.GET, "/customer/{id}").permitAll()
-                .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/customer/{id}").permitAll()
+                .requestMatchers(HttpMethod.DELETE, "/customer/{id}").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/auth/deleteByEmail/{email}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/hc").permitAll()
                 .requestMatchers(HttpMethod.GET, "/products").permitAll()
@@ -57,10 +60,10 @@ public class SecurityConfigurations {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // Origem do frontend React
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Métodos permitidos
-        configuration.setAllowedHeaders(List.of("*")); // Todos os headers permitidos
-        configuration.setAllowCredentials(true); // Permitir envio de credenciais
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

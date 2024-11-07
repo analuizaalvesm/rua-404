@@ -1,61 +1,75 @@
-import React from "react";
-import { CirclePlusIcon, Heart } from "lucide-react";
-import { FaCirclePlus, FaChevronRight } from "react-icons/fa6";
+import { Heart } from "lucide-react";
+import { FaCirclePlus } from "react-icons/fa6";
 import { BiChevronsRight } from "react-icons/bi";
-import logo from "../../assets/y2k_star.png";
-import logoWhite from "../../assets/y2k_star_white.png";
+import logoWhite from "../../assets/images/y2k_star_white.png";
 import MarqueeDemo from "@/components/custom/Marquee/Marquee";
-import chevronRight from "../../assets/mdi_chevron-right.svg";
-import stars from "../../assets/stars.png";
+import chevronRight from "../../assets/icons/mdi_chevron-right.svg";
+import stars from "../../assets/images/stars.png";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   const products = [
     {
       id: 1,
-      name: "Produto 1",
+      name: "Pack de Stickers - Rua 4.0.4 x NOID",
       price: 29.9,
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      description: "O pack de stickers contém 10 adesivos exclusivos.",
+      url: "https://i.postimg.cc/wxDv7WL1/353431933-928363248425229-3676118437973366747-n-2.jpg",
     },
     {
       id: 2,
-      name: "Produto 1",
+      name: "Pack de Stickers - Rua 4.0.4 x Caxim",
       price: 29.9,
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      description: "O pack de stickers contém 10 adesivos exclusivos.",
+      url: "https://i.postimg.cc/dVn1BLVr/439959573-278219802010402-6715365152263004301-n.jpg",
     },
     {
       id: 3,
-      name: "Produto 1",
-      price: 29.9,
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      name: "Print He4rtz - Rua 4.0.4 ORIGINALS",
+      price: 39.9,
+      description:
+        "O print é feito em papel de alta qualidade, possui 30x40cm.",
+      url: "https://i.postimg.cc/W179zf70/369410471-3538119029767978-1999375231937910149-n-1.jpg",
     },
     {
       id: 4,
-      name: "Produto 1",
-      price: 29.9,
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      name: "Print D0ggyStyl3 - Rua 4.0.4 ORIGINALS",
+      price: 59.9,
+      description:
+        "O print é feito em papel de alta qualidade, possui 30x40cm.",
+      url: "https://i.postimg.cc/Xqzhr0vq/367947548-872009731261392-8560140716422544110-n.jpg",
     },
   ];
 
   const events = [
     {
       id: 1,
-      name: "Nome do Evento",
-      description: "Essa é uma descrição do evento Lorem ipsum dolor sit amet.",
+      name: "BH Sticker",
+      description:
+        "O BH Sticker é um evento que reúne artistas de rua de BH, com foco em colantes, adesivos, stickers, pegatinas e lambe-lambe.",
+      url: "https://scontent.fplu41-1.fna.fbcdn.net/v/t1.6435-9/64508182_2312031355509716_759115429250596864_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=0327a3&_nc_ohc=LL_oltatlosQ7kNvgFdOodQ&_nc_zt=23&_nc_ht=scontent.fplu41-1.fna&_nc_gid=AqbE-9K_HsrivdYc4aMvOHW&oh=00_AYASzAYQoTquQu_gmJW-ZbzysgZHnMUlTV352PQ_BrjeLw&oe=674E1867",
     },
     {
       id: 2,
-      name: "Nome do Evento",
-      description: "Essa é uma descrição do evento Lorem ipsum dolor sit amet.",
+      name: "Festival de Colantes",
+      description:
+        "Festival internacional de arte de rua - 3a edição, 16 de novembro de 2024",
+      url: "https://images.sympla.com.br/66d8c3b32339d.png",
     },
     {
       id: 3,
-      name: "Nome do Evento",
-      description: "Essa é uma descrição do evento Lorem ipsum dolor sit amet.",
+      name: "Graffitei",
+      description:
+        "O Graffitei está em sua 5a edição e reúne artistas de rua de todo o Brasil.",
+      url: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRD3aepNKUVsLXSs2v3P96umqvnDupAKjzrw&s",
     },
     {
       id: 4,
-      name: "Nome do Evento",
-      description: "Essa é uma descrição do evento Lorem ipsum dolor sit amet.",
+      name: "UFMG Aberta",
+      description: "Evento de arte público na UFMG, 20 de outubro de 2024",
+      url: "https://ufmg.br/thumbor/xbQ-RF3VI9hOwOORFLbVpfAmiow=/582x0:1642x712/712x474/https://ufmg.br/storage/f/6/f/3/f6f34e51447a53ba803c46f05480f64a_16298404783736_616673285.jpg",
     },
   ];
 
@@ -97,25 +111,22 @@ const Home = () => {
       <Banner404 />
       <MarqueeDemo />
 
-      {/* Store Section */}
       <section className="mx-auto max-w-screen-2xl px-16 pt-8 pb-24">
         <h2 className="text-5xl font-orbitron-bold mb-8">RUA STORE</h2>
         <div className="grid grid-cols-4 gap-6">
           {products.map((product) => (
             <div className="bg-white border border-gray-200 w-full max-w-sm">
-              {/* Image container with aspect ratio */}
               <div className="relative bg-gray-200 aspect-[6/3] border border-black">
                 <img
-                  src="https://placehold.co/600x400/EEE/31343C"
+                  src={product.url}
                   alt={product.name}
-                  className="w-full h-[full] object-cover"
+                  className="w-full h-72 object-cover"
                 />
                 <button className="absolute top-2 right-0 bg-transparent hover:scale-110 transition-transform">
                   <Heart className="w-6 h-6" />
                 </button>
               </div>
 
-              {/* Content container with padding */}
               <div className="p-6">
                 <h3 className="text-xl font-orbitron-medium mb-2">
                   {product.name}
@@ -126,20 +137,16 @@ const Home = () => {
                 <p className="text-2xl font-bold mb-4">
                   R$ {product.price.toFixed(2)}
                 </p>
-                <button className="w-full bg-black text-white py-2.5 text-center hover:bg-gray-800 transition-colors">
+                <button
+                  onClick={() => navigate(`/store`)}
+                  className="w-full bg-black text-white py-2.5 text-center hover:bg-gray-800 transition-colors"
+                >
                   Ver na loja
                 </button>
               </div>
             </div>
           ))}
         </div>
-        {/* <div className="flex flex-row justify-between">
-          <div className="absolute">
-            <img src={logoWhite} className="w-40 h-40 mt-4" />
-          </div>
-
-          <img src={chevronRight} className="w-20 h-20 mt-4" />
-        </div> */}
 
         <div className="relative flex flex-row justify-between items-start">
           <div className="absolute left-0">
@@ -150,7 +157,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-      {/* Events Section */}
+
       <div className="bg-gray-100 border border-y-black pb-14">
         <section className="mx-auto max-w-screen-2xl px-16 py-8">
           <h2 className="text-5xl font-orbitron-bold mb-8 flex justify-end items-center">
@@ -160,19 +167,17 @@ const Home = () => {
             {events.map((event) => (
               <div className="relative bg-gray-100 w-full max-w-screen overflow-hidden shadow-lg min-h-[400px]">
                 <img
-                  src="https://scontent.fplu41-1.fna.fbcdn.net/v/t1.6435-9/64508182_2312031355509716_759115429250596864_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=0327a3&_nc_ohc=LL_oltatlosQ7kNvgFdOodQ&_nc_zt=23&_nc_ht=scontent.fplu41-1.fna&_nc_gid=AqbE-9K_HsrivdYc4aMvOHW&oh=00_AYASzAYQoTquQu_gmJW-ZbzysgZHnMUlTV352PQ_BrjeLw&oe=674E1867"
+                  // src="https://scontent.fplu41-1.fna.fbcdn.net/v/t1.6435-9/64508182_2312031355509716_759115429250596864_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=0327a3&_nc_ohc=LL_oltatlosQ7kNvgFdOodQ&_nc_zt=23&_nc_ht=scontent.fplu41-1.fna&_nc_gid=AqbE-9K_HsrivdYc4aMvOHW&oh=00_AYASzAYQoTquQu_gmJW-ZbzysgZHnMUlTV352PQ_BrjeLw&oe=674E1867"
+                  src={event.url}
                   alt="Event Background"
                   className="absolute inset-0 w-full h-full object-cover opacity-90 brightness-[0.4]"
                 />
                 <div className="relative p-8 flex flex-col justify-between h-full text-white">
                   <div>
                     <h3 className="text-2xl font-orbitron-medium mb-4">
-                      Nome do Evento
+                      {event.name}
                     </h3>
-                    <p className="text-sm ">
-                      Essa é uma descrição do evento. Lorem ipsum dolor sit
-                      amet.
-                    </p>
+                    <p className="text-sm ">{event.description}</p>
                   </div>
                   <button className=" px-4 py-3 border border-white bg-transparent text-white text-sm uppercase tracking-wide hover:bg-white hover:text-black transition">
                     Ver mais
@@ -250,7 +255,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Latest Collections */}
       <div className="text-center py-8">
         <div className="flex justify-center">
           <div className="flex flex-row">
@@ -283,7 +287,7 @@ const Home = () => {
           </div>
         </div>
 
-        <button className="w-[100vh] bg-black text-black px-3 py-2 mt-8">
+        <button className="w-[70vh] bg-black text-black px-3 py-2 mt-8">
           <p className="text-lg font-orbitron-medium text-white text-center">
             CONFIRA
           </p>

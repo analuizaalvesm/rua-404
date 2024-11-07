@@ -6,15 +6,17 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/DropdownMenu/dropdown-menu";
-import logo from "../../../assets/logo_rua.png";
-import logoWhite from "../../../assets/logo_rua_white.png";
+import logo from "../../../assets/images/logo_rua.png";
+import logoWhite from "../../../assets/images/logo_rua_white.png";
 import { useState } from "react";
-import { FiUser, FiShoppingCart, FiHeart } from "react-icons/fi";
+import { FiUser, FiHeart } from "react-icons/fi";
+import { useCart } from "@/context/useCart";
+import CartDropdown from "./components/CartDropdown";
 
-interface Props {}
-
-const Navbar = (props: Props) => {
+const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth();
+  const { cartCount, cartItems } = useCart();
+
   const [isHovering, setIsHovering] = useState(false);
   const currentRoute = window.location.pathname;
 
@@ -36,16 +38,28 @@ const Navbar = (props: Props) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-20">
               <div className="hidden font-bold lg:flex space-x-6">
-                <Link to="/" className="font-orbitron-medium">
+                <Link
+                  to="/"
+                  className="font-orbitron-medium border-b-2 border-transparent hover:border-b-2 hover:border-black"
+                >
                   HOME
                 </Link>
-                <Link to="/store" className="font-orbitron-medium">
+                <Link
+                  to="/store"
+                  className="font-orbitron-medium border-b-2 border-transparent hover:border-b-2 hover:border-black"
+                >
                   STORE
                 </Link>
-                <Link to="/gallery" className="font-orbitron-medium">
+                <Link
+                  to="/gallery"
+                  className="font-orbitron-medium border-b-2 border-transparent hover:border-b-2 hover:border-black"
+                >
                   GALLERY
                 </Link>
-                <Link to="/about-us" className="font-orbitron-medium">
+                <Link
+                  to="/about-us"
+                  className="font-orbitron-medium border-b-2 border-transparent hover:border-b-2 hover:border-black"
+                >
                   ABOUT US
                 </Link>
               </div>
@@ -149,33 +163,30 @@ const Navbar = (props: Props) => {
                     <FiHeart size={20} />
                     <span className="pl-2">0</span>
                   </div>
-                  <div className="flex items-center relative">
-                    <FiShoppingCart size={20} />
-                    <span className="pl-2">0</span>
-                  </div>
-                  <a href="/profile" className="flex items-center">
+                  <CartDropdown cartItems={cartItems} cartCount={cartCount} />
+                  <Link to="/profile/edit-profile">
                     <FiUser size={20} />
-                  </a>
+                  </Link>
                 </div>
               </div>
             ) : (
               <div className="hidden lg:flex items-center space-x-4 text-black">
                 <Link
                   to="/login"
-                  className={`text-white border-2 border-black font-medium text-sm py-2.5 focus:outline-none ${
+                  className={`text-white border-2 border-black font-medium text-sm py-2 px-2 focus:outline-none ${
                     isHomeRoute
                       ? "group-hover:bg-white group-hover:text-black group-hover:border-2 group-hover:border-black transition-colors duration-300"
-                      : "bg-black"
+                      : "bg-white border-black !text-black"
                   }`}
                 >
                   LOGIN
                 </Link>
                 <Link
                   to="/register"
-                  className={`text-white font-semibold text-sm border-2 border-white py-2.5 ${
+                  className={`text-white font-semibold text-sm border-2 border-white py-2 px-2 ${
                     isHomeRoute
                       ? "group-hover:bg-black group-hover:border-2 group-hover:border-black group-hover:text-white transition-colors duration-300"
-                      : "bg-black"
+                      : "bg-black !border-black !text-white"
                   }`}
                 >
                   REGISTER
@@ -186,8 +197,8 @@ const Navbar = (props: Props) => {
         </nav>
       </div>
 
-      {/* Full-width green banner for /store route */}
-      {location.pathname === "/store" && (
+      {(location.pathname === "/store" ||
+        location.pathname === "/shopping-cart") && (
         <div className="bg-[#37CA7F] text-white text-center p-2 w-full">
           15% OFF NA PRIMEIRA COMPRA
         </div>
