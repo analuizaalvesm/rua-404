@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { FiHeart, FiShoppingCart } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface Product {
@@ -16,10 +17,22 @@ const ProductPage: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [productList, setProductList] = useState<Product[]>([]);
 
   const productId = state?.productId;
-  const products = state?.products;
-  const randomProducts = products.sort(() => Math.random() - Math.random());
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/products")
+      .then((response) => {
+        setProductList(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const randomProducts = productList.sort(() => Math.random() - Math.random());
 
   useEffect(() => {
     if (!productId) {
@@ -92,7 +105,7 @@ const ProductPage: React.FC = () => {
             <div className="w-full md:w-1/2 px-4 mb-8 flex flex-col items-end ">
               <div>
                 <img
-                  src="https://via.placeholder.com/600"
+                  src={product.url}
                   alt={product.name}
                   className="h-auto rounded-lg shadow-md mb-4 transition-opacity duration-300"
                   id="mainImage"
@@ -104,7 +117,7 @@ const ProductPage: React.FC = () => {
                   style={{ width: "500px" }}
                 />
 
-                <div className="flex gap-4 py-4 justify-center overflow-x-auto">
+                {/* <div className="flex gap-4 py-4 justify-center overflow-x-auto">
                   {arrayOfImages(product).map((url, index) => (
                     <img
                       key={index}
@@ -114,7 +127,7 @@ const ProductPage: React.FC = () => {
                       onClick={() => changeImage(url)}
                     />
                   ))}
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -172,39 +185,13 @@ const ProductPage: React.FC = () => {
                 />
               </div>
 
-              <div className="flex space-x-4 mb-6">
-                <button className="bg-black flex gap-2 items-center text-white px-12 py-2 rounded-none hover:bg-gray-600 focus:outline-none focus:ring-0 focus:border-0">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                    />
-                  </svg>
+              <div className="flex space-x-2 mb-6">
+                <button className="bg-black flex gap-3 items-center text-white px-12 py-2 rounded-none hover:bg-gray-600 focus:outline-none focus:ring-0 focus:border-0">
+                  <FiShoppingCart size={20} />
                   Adicionar ao carrinho
                 </button>
-                <button className="bg-gray-200 flex gap-2 items-center text-gray-800 px-4 py-2 rounded-none hover:bg-gray-300 focus:outline-none focus:ring-0 focus:border-0">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-                    />
-                  </svg>
+                <button className="bg-transparent flex items-center text-gray-800 px-2.5 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-0 focus:border-0">
+                  <FiHeart size={20} />
                 </button>
               </div>
 
@@ -256,10 +243,10 @@ const ProductPage: React.FC = () => {
             {randomProducts.slice(0, 5).map((relatedProduct: any) => (
               <div
                 key={relatedProduct.id}
-                className="bg-white border border-gray-300 rounded-none shadow-md p-4 w-full sm:w-72 m-1 cursor-pointer hover:shadow-lg transition-shadow duration-300"
+                className="bg-white border border-gray-300 rounded-none shadow-md p-4 w-full sm:w-72 m-1 cursor-pointer hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between min-h-[300px]" // Ajuste a altura mínima conforme necessário
                 onClick={() =>
                   navigate(`/product/${relatedProduct.id}`, {
-                    state: { productId: relatedProduct.id, products },
+                    state: { productId: relatedProduct.id, productList },
                   })
                 }
               >

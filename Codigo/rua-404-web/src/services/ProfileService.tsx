@@ -6,6 +6,7 @@ const api = "http://localhost:8080/auth/";
 const customerApi = "http://localhost:8080/customer/";
 
 export const getUserProfile = async (email: String) => {
+  console.log("email", email);
   try {
     const response = await axios.get<User>(`${api}${email}`);
     return response.data;
