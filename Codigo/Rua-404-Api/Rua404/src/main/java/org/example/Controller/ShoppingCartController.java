@@ -2,6 +2,7 @@ package org.example.Controller;
 
 import org.example.Model.Product;
 import org.example.Model.ShoppingCart;
+import org.example.Model.ShoppingUpdate;
 import org.example.Service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,9 +40,9 @@ public class ShoppingCartController {
     }
 
     @PutMapping
-    public ResponseEntity<ShoppingCart> editCart(ShoppingCart carrinho){
+    public ResponseEntity<ShoppingCart> editCart(ShoppingUpdate carrinho, Long idCarrinho){
         try {
-            ShoppingCart cart = shoppingCartService.put(carrinho);
+            ShoppingCart cart = shoppingCartService.put(carrinho, idCarrinho);
             return ResponseEntity.ok(cart);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
