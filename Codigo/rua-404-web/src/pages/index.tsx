@@ -13,5 +13,3 @@ export { default as Profile } from "./Profile/EditProfile/ProfileSection";
 export { default as Orders } from "./Profile/Orders/Orders";
 export { default as Security } from "./Profile/Security/Security";
 export { default as NotFoundPage } from "./NotFound/NotFoundPage";
-export { default as AdminDashboard } from "./Admin/Dashboard/Dashboard";
-export { default as AdminLogin } from "./Admin/Login/AdminLogin";

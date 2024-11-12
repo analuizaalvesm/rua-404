@@ -1,147 +1,68 @@
-import { Calendar, Loader, Settings } from "lucide-react";
-import { ReactNode, useEffect, useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
-import DefaultLayout from "./DefaultLayout";
-import PageTitle from "@/components/admin/components/PageTitle";
-import ECommerce from "../Dashboard copy/ECommerce";
-import Profile from "../Profile";
-import FormElements from "../Form/FormElements";
-import FormLayout from "../Form/FormLayout";
-import Tables from "../Tables";
-import Chart from "../Chart";
-import Alerts from "../UiElements/Alerts";
-import Buttons from "../UiElements/Buttons";
-import SignIn from "../Authentication/SignIn";
-import SignUp from "../Authentication/SignUp";
+import React from "react";
+import CardDataStats from "@/components/admin/components/CardDataStats";
+import ChartOne from "@/components/admin/components/Charts/ChartOne";
+import ChartThree from "@/components/admin/components/Charts/ChartThree";
+import ChartTwo from "@/components/admin/components/Charts/ChartTwo";
+import TableOne from "@/components/admin/components/Tables/TableOne";
+import { FiEye, FiShoppingBag, FiUser } from "react-icons/fi";
+import { BsCurrencyDollar } from "react-icons/bs";
 
-const AdminDashboard = () => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const { pathname } = useLocation();
+const stats = [
+  {
+    title: "Total de visualizações",
+    total: "3.450",
+    rate: "0.43%",
+    levelUp: true,
+    icon: <FiEye size={20} />,
+  },
+  {
+    title: "Lucro total",
+    total: "R$ 2.450,00",
+    rate: "4.35%",
+    levelUp: true,
+    icon: <BsCurrencyDollar size={20} />,
+  },
+  {
+    title: "Total de compras",
+    total: "542",
+    rate: "2.59%",
+    levelUp: true,
+    icon: <FiShoppingBag size={20} />,
+  },
+  {
+    title: "Total de usuários",
+    total: "200",
+    rate: "0.95%",
+    levelDown: true,
+    icon: <FiUser size={20} />,
+  },
+];
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+const Dashboard: React.FC = () => {
+  return (
+    <>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+        {stats.map((stat, index) => (
+          <CardDataStats
+            key={index}
+            title={stat.title}
+            total={stat.total}
+            rate={stat.rate}
+            levelUp={stat.levelUp}
+            levelDown={stat.levelDown}
+            icon={stat.icon}
+          />
+        ))}
+      </div>
 
-  useEffect(() => {
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
-
-  return loading ? (
-    <Loader />
-  ) : (
-    <DefaultLayout>
-      <Routes>
-        <Route
-          index
-          element={
-            <>
-              <PageTitle title="eCommerce Dashboard | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <ECommerce />
-            </>
-          }
-        />
-        <Route
-          path="/calendar"
-          element={
-            <>
-              <PageTitle title="Calendar | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Calendar />
-            </>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <>
-              <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Profile />
-            </>
-          }
-        />
-        <Route
-          path="/forms/form-elements"
-          element={
-            <>
-              <PageTitle title="Form Elements | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <FormElements />
-            </>
-          }
-        />
-        <Route
-          path="/forms/form-layout"
-          element={
-            <>
-              <PageTitle title="Form Layout | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <FormLayout />
-            </>
-          }
-        />
-        <Route
-          path="/tables"
-          element={
-            <>
-              <PageTitle title="Tables | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Tables />
-            </>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <>
-              <PageTitle title="Settings | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Settings />
-            </>
-          }
-        />
-        <Route
-          path="/chart"
-          element={
-            <>
-              <PageTitle title="Basic Chart | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Chart />
-            </>
-          }
-        />
-        <Route
-          path="/ui/alerts"
-          element={
-            <>
-              <PageTitle title="Alerts | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Alerts />
-            </>
-          }
-        />
-        <Route
-          path="/ui/buttons"
-          element={
-            <>
-              <PageTitle title="Buttons | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <Buttons />
-            </>
-          }
-        />
-        <Route
-          path="/auth/signin"
-          element={
-            <>
-              <PageTitle title="Signin | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <SignIn />
-            </>
-          }
-        />
-        <Route
-          path="/auth/signup"
-          element={
-            <>
-              <PageTitle title="Signup | TailAdmin - Tailwind CSS Admin Dashboard Template" />
-              <SignUp />
-            </>
-          }
-        />
-      </Routes>
-    </DefaultLayout>
+      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+        <ChartOne />
+        <ChartTwo />
+        <ChartThree />
+        <TableOne />
+      </div>
+    </>
   );
 };
 
-export default AdminDashboard;
+export default Dashboard;

@@ -261,7 +261,7 @@ const ProductPage: React.FC = () => {
                 <p className="text-gray-600 mb-1 text-center">{`R$ ${relatedProduct.price
                   .toFixed(2)
                   .replace(".", ",")}`}</p>
-                <button className="bg-black text-white w-full py-2 mt-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button className="bg-black text-white w-full py-2 mt-2 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                   Ver Produto
                 </button>
               </div>

@@ -2,7 +2,12 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { App } from "../App";
 import * as Route from "../pages/index";
 import { useAuth } from "../context/useAuth";
-import { AdminLayout } from "@/Admin";
+import {
+  AdminDashboard,
+  AdminRoutes,
+  AdminStock,
+} from "@/pages/Admin/Dashboard/AdminRoutes";
+import AdminLogin from "@/pages/Admin/Login/AdminLogin";
 
 type RouteConfig = {
   path: string;
@@ -67,16 +72,25 @@ const routeConfig: RouteConfig[] = [
     ],
   },
   {
-    path: "/admin/*",
-    element: <AdminLayout />,
+    path: "/admin/login",
+    element: <AdminLogin />,
+    isPrivate: false,
+  },
+  {
+    path: "/admin",
+    element: <AdminRoutes />,
     children: [
       {
         path: "dashboard",
-        element: <Route.AdminDashboard />,
+        element: <AdminDashboard />,
       },
       {
-        path: "login",
-        element: <Route.AdminLogin />,
+        path: "stock",
+        element: <AdminStock />,
+      },
+      {
+        path: "",
+        element: <Navigate to="dashboard" replace />,
       },
     ],
   },
