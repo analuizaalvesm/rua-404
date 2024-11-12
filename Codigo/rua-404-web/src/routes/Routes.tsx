@@ -1,56 +1,99 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import { App } from "../App";
-import HomePage from "@/pages/Home/HomePage";
-import StorePage from "@/pages/Store/StorePage";
-import LoginPage from "@/pages/Login/LoginPage";
-import ProfilePage from "@/pages/Profile/ProfilePage";
-import RegisterPage from "@/pages/Register/RegisterPage";
-import GetCodePage from "@/pages/GetCode/GetCodePage";
-import ValidadeCodePage from "@/pages/ValidadeCode/ValidateCodePage";
-import ChangePasswordPage from "@/pages/ChangePassword/ChangePasswordPage";
-import ProductPage from "@/pages/Product/ProductPage";
-import ShoppingCart from "@/pages/ShoppingCart/ShoppingCart";
-import Address from "@/pages/Profile/Address/Address";
-import Profile from "@/pages/Profile/EditProfile/ProfileSection";
-import Orders from "@/pages/Profile/Orders/Orders";
-import Security from "@/pages/Profile/Security/Security";
+import * as Route from "../pages/index";
+import { useAuth } from "../context/useAuth";
+import {
+  AdminDashboard,
+  AdminRoutes,
+  AdminStock,
+} from "@/pages/Admin/Dashboard/AdminRoutes";
+import AdminLogin from "@/pages/Admin/Login/AdminLogin";
 
-export const router = createBrowserRouter([
+type RouteConfig = {
+  path: string;
+  element: React.ReactNode;
+  children?: RouteConfig[];
+  isPrivate?: boolean;
+};
+
+const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated() ? <>{children}</> : <Navigate to="/login" replace />;
+};
+
+const publicRoutes: RouteConfig[] = [
+  { path: "", element: <Route.HomePage /> },
+  { path: "login", element: <Route.LoginPage /> },
+  { path: "register", element: <Route.RegisterPage /> },
+  { path: "store", element: <Route.StorePage /> },
+  { path: "get-code", element: <Route.GetCodePage /> },
+  { path: "validate-code", element: <Route.ValidadeCodePage /> },
+  { path: "change-password", element: <Route.ChangePasswordPage /> },
+  { path: "product/:id", element: <Route.ProductPage /> },
+];
+
+const profileRoutes: RouteConfig[] = [
+  { path: "edit-profile", element: <Route.Profile />, isPrivate: true },
+  { path: "orders", element: <Route.Orders />, isPrivate: true },
+  { path: "edit-address", element: <Route.Address />, isPrivate: true },
+  { path: "security", element: <Route.Security />, isPrivate: true },
+];
+
+const wrapPrivateRoute = (route: RouteConfig): RouteConfig => ({
+  ...route,
+  element: route.isPrivate ? (
+    <PrivateRoute>{route.element}</PrivateRoute>
+  ) : (
+    route.element
+  ),
+  ...(route.children && {
+    children: route.children.map(wrapPrivateRoute),
+  }),
+});
+
+const routeConfig: RouteConfig[] = [
   {
     path: "/",
     element: <App />,
     children: [
-      { path: "", element: <HomePage /> },
-      { path: "login", element: <LoginPage /> },
-      { path: "register", element: <RegisterPage /> },
-      { path: "store", element: <StorePage /> },
-      { path: "get-code", element: <GetCodePage /> },
-      { path: "validate-code", element: <ValidadeCodePage /> },
-      { path: "change-password", element: <ChangePasswordPage /> },
-      { path: "product/:id", element: <ProductPage /> },
-      { path: "shopping-cart", element: <ShoppingCart /> },
+      ...publicRoutes,
+      {
+        path: "shopping-cart",
+        element: <Route.ShoppingCart />,
+        isPrivate: true,
+      },
       {
         path: "profile",
-        element: <ProfilePage />,
-        children: [
-          {
-            path: "edit-profile",
-            element: <Profile />,
-          },
-          {
-            path: "orders",
-            element: <Orders />,
-          },
-          {
-            path: "edit-address",
-            element: <Address />,
-          },
-          {
-            path: "security",
-            element: <Security />,
-          },
-        ],
+        element: <Route.ProfilePage />,
+        isPrivate: true,
+        children: profileRoutes,
+      },
+      { path: "*", element: <Route.NotFoundPage /> },
+    ],
+  },
+  {
+    path: "/admin/login",
+    element: <AdminLogin />,
+    isPrivate: false,
+  },
+  {
+    path: "/admin",
+    element: <AdminRoutes />,
+    children: [
+      {
+        path: "dashboard",
+        element: <AdminDashboard />,
+      },
+      {
+        path: "stock",
+        element: <AdminStock />,
+      },
+      {
+        path: "",
+        element: <Navigate to="dashboard" replace />,
       },
     ],
   },
-]);
+];
+
+export const router = createBrowserRouter(routeConfig.map(wrapPrivateRoute));

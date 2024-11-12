@@ -58,21 +58,6 @@ const ProductPage: React.FC = () => {
     fetchProduct();
   }, [productId]);
 
-  const arrayOfImages = (product: { url: string }) => [
-    product.url,
-    product.url,
-    product.url,
-    product.url,
-  ];
-
-  // será utilizado quando o back-end retornar mais imagens de um produto
-  const changeImage = (url: string) => {
-    const mainImage = document.getElementById("mainImage") as HTMLImageElement;
-    if (mainImage) {
-      mainImage.src = url;
-    }
-  };
-
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -261,7 +246,7 @@ const ProductPage: React.FC = () => {
                 <p className="text-gray-600 mb-1 text-center">{`R$ ${relatedProduct.price
                   .toFixed(2)
                   .replace(".", ",")}`}</p>
-                <button className="bg-black text-white w-full py-2 mt-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button className="bg-black text-white w-full py-2 mt-2 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                   Ver Produto
                 </button>
               </div>
