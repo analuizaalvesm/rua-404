@@ -58,21 +58,6 @@ const ProductPage: React.FC = () => {
     fetchProduct();
   }, [productId]);
 
-  const arrayOfImages = (product: { url: string }) => [
-    product.url,
-    product.url,
-    product.url,
-    product.url,
-  ];
-
-  // será utilizado quando o back-end retornar mais imagens de um produto
-  const changeImage = (url: string) => {
-    const mainImage = document.getElementById("mainImage") as HTMLImageElement;
-    if (mainImage) {
-      mainImage.src = url;
-    }
-  };
-
   if (loading) {
     return (
       <div className="flex justify-center items-center h-screen">

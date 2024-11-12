@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import DropdownUser from "../Dropdowns/DropdownUser";
 import DarkModeSwitcher from "./DarkModeSwitcher";
-import LogoIcon from "../../../../assets/general/logo/logo.svg";
 import { FiSearch } from "react-icons/fi";
 
 const Header = (props: {
@@ -54,7 +53,9 @@ const Header = (props: {
           </button>
 
           <Link className="block flex-shrink-0 lg:hidden" to="/">
-            <img src={LogoIcon} alt="Logo" />
+            <div className="flex items-center justify-center w-10 h-10 rounded-md bg-black">
+              <span className="text-white font-bold text-xl">R</span>
+            </div>
           </Link>
         </div>
 

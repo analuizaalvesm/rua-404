@@ -1,17 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import SidebarLinkGroup from "./SidebarLinkGroup";
-import Logo from "../../../../assets/general/logo/logo.svg";
-import {
-  FiDownloadCloud,
-  FiFile,
-  FiGrid,
-  FiLayers,
-  FiSettings,
-} from "react-icons/fi";
-import { BsGrid, BsShop } from "react-icons/bs";
+import { FiFile, FiLayers, FiSettings } from "react-icons/fi";
+import { BsGrid } from "react-icons/bs";
 import { ShoppingBag, Users } from "lucide-react";
-import { DocumentIcon } from "@heroicons/react/24/outline";
 import { BiColor } from "react-icons/bi";
 
 interface SidebarProps {
@@ -27,11 +18,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const sidebar = useRef<any>(null);
 
   const storedSidebarExpanded = localStorage.getItem("sidebar-expanded");
-  const [sidebarExpanded, setSidebarExpanded] = useState(
+  const [sidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === "true"
   );
 
-  // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
       if (!sidebar.current || !trigger.current) return;
@@ -47,7 +37,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     return () => document.removeEventListener("click", clickHandler);
   });
 
-  // close if the esc key is pressed
   useEffect(() => {
     const keyHandler = ({ keyCode }: KeyboardEvent) => {
       if (!sidebarOpen || keyCode !== 27) return;
@@ -74,7 +63,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
       }`}
     >
       <div className="flex items-center justify-between gap-2 px-4 py-5.5 lg:py-6.5">
-        <NavLink to="/" className="flex items-center gap-3">
+        <NavLink to="/admin/dashboard" className="flex items-center gap-3">
           <div className="flex items-center justify-center w-10 h-10 rounded-md bg-gray-100">
             <span className="text-black font-bold text-xl">R</span>
           </div>
@@ -94,9 +83,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             <ul className="mb-6 flex flex-col gap-1.5 text-gray-300">
               <li>
                 <NavLink
-                  to="#"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    (pathname === "/" || pathname.includes("dashboard")) &&
+                  to="/admin/dashboard"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/dashboard") &&
                     "bg-gray-800 dark:bg-meta-4"
                   }`}
                 >
@@ -107,9 +96,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/admin/stock"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("admin/stock") &&
-                    "bg-graydark dark:bg-meta-4"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/stock") &&
+                    "bg-gray-800 dark:bg-meta-4"
                   }`}
                 >
                   <ShoppingBag size={20} />
@@ -119,8 +108,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/admin/reports"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("admin/stock") &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/reports") &&
                     "bg-graydark dark:bg-meta-4"
                   }`}
                 >
@@ -131,8 +120,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/admin/cms"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("admin/stock") &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/cms") &&
                     "bg-graydark dark:bg-meta-4"
                   }`}
                 >
@@ -143,8 +132,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/admin/settings"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("settings") &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/settings") &&
                     "bg-graydark dark:bg-meta-4"
                   }`}
                 >
@@ -163,8 +152,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/chart"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("chart") && "bg-graydark dark:bg-meta-4"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/users") &&
+                    "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <Users size={20} />
@@ -174,8 +164,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="#"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    (pathname === "/ui" || pathname.includes("ui")) &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/products") &&
                     "bg-graydark dark:bg-meta-4"
                   }`}
                 >

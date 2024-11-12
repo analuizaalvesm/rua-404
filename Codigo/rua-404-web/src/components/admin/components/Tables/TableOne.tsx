@@ -94,10 +94,7 @@ const TableOne = () => {
             >
               <div className="flex items-center gap-3 p-2.5 xl:p-3">
                 {brand.icon && (
-                  <div className="flex-shrink-0">
-                    {/* <img src={brand.logo} alt="Brand" className="h-8 w-8" /> */}
-                    {brand.icon}
-                  </div>
+                  <div className="flex-shrink-0">{brand.icon}</div>
                 )}
                 <p className="hidden text-black dark:text-white sm:block">
                   {brand.name}
