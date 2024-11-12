@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\Rua404.props" />
-</Project>

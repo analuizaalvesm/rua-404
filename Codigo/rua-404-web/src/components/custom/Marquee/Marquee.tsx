@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, ReactNode } from "react";
-import logoWhite from "../../../assets/orelhudo_white.png";
+import logoWhite from "../../../assets/images/orelhudo_white.png";
 
 interface InfiniteMarqueeProps {
   children: ReactNode;

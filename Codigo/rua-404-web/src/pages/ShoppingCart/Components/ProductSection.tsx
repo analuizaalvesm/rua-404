@@ -1,34 +1,43 @@
 import { FiHeart } from "react-icons/fi";
-import { defaultProducts } from "../products";
+import { Products } from "@/models/Product";
+import { useNavigate } from "react-router-dom";
 
-const ProductSection = ({ products = defaultProducts }) => {
+interface ProductSectionProps {
+  products: Products[];
+}
+
+const ProductSection = ({ products }: ProductSectionProps) => {
+  const navigate = useNavigate();
+
   return (
     <div className="hidden xl:mt-8 xl:block">
       <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
         As pessoas também compraram
       </h3>
       <div className="mt-6 grid grid-cols-3 gap-4 sm:mt-8">
-        {products.map((product, index) => (
+        {products.slice(0, 3).map((product, index) => (
           <div
             key={product.id}
-            className="space-y-6 overflow-hidden rounded-sm border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+            className="space-y-3 overflow-hidden rounded-sm border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800"
           >
-            <a href={product.href} className="overflow-hidden rounded">
+            <a
+              onClick={() =>
+                navigate(`/product/${product.id}`, {
+                  state: { productId: product.id },
+                })
+              }
+              className="overflow-hidden rounded"
+            >
               <img
-                className="mx-auto h-44 w-44 dark:hidden"
-                src={product.imageLightMode}
-                alt={`${product.name} image`}
-              />
-              <img
-                className="mx-auto hidden h-44 w-44 dark:block"
-                src={product.imageDarkMode}
+                className="mx-auto h-44 w-full object-cover rounded-sm"
+                src={product.url}
                 alt={`${product.name} image`}
               />
             </a>
             <div>
               <a
                 href={product.href}
-                className="text-lg font-semibold leading-tight text-gray-900 hover:underline dark:text-white"
+                className="text-lg font-orbitron-semibold pr-8 leading-tight text-gray-900 hover:underline dark:text-white"
               >
                 {product.name}
               </a>
@@ -38,10 +47,12 @@ const ProductSection = ({ products = defaultProducts }) => {
             </div>
             <div>
               <p className="text-lg font-bold text-gray-900 dark:text-white">
-                <span className="line-through">${product.originalPrice}</span>
-              </p>
-              <p className="text-lg font-bold leading-tight text-red-600 dark:text-red-500">
-                ${product.salePrice}
+                <span className="">
+                  {product.price.toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}
+                </span>
               </p>
             </div>
             <div className="mt-6 flex items-center gap-2.5">

@@ -37,7 +37,6 @@
   font-display: swap;
 }
 
-/* Orbitron fonts */
 @font-face {
   font-family: "Orbitron-Regular";
   src: local("Orbitron"),
@@ -101,22 +100,18 @@
 
 a {
   font-weight: 500;
-  /* color: #646cff; */
   text-decoration: inherit;
 }
 a:hover {
-  /* color: #535bf2; */
 }
 
 html {
-  /* Remove width: 100%; */
 }
 
 body {
-  /* Remove width: 100%; */
   margin: 0;
   display: flex;
-  flex-direction: column; /* Added flex direction */
+  flex-direction: column;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -133,9 +128,6 @@ button {
   font-family: inherit;
   background-color: #1a1a1a;
   cursor: pointer;
-}
-button:hover {
-  /* border: none; */
 }
 button:focus,
 button:focus-visible {
@@ -165,7 +157,6 @@ button:focus-visible {
   cursor: pointer;
 }
 
-/* Para Firefox */
 .range-thumb::-moz-range-thumb {
   height: 20px;
   width: 20px;
@@ -174,7 +165,6 @@ button:focus-visible {
   cursor: pointer;
 }
 
-/* Para Internet Explorer */
 .range-thumb::-ms-thumb {
   height: 20px;
   width: 20px;
@@ -246,51 +236,4 @@ button:focus-visible {
   body {
     @apply bg-background text-foreground;
   }
-}
-
-@keyframes marquee {
-  0% {
-    transform: translateX(0%);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes marquee2 {
-  0% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(0%);
-  }
-}
-
-.animate-marquee {
-  animation: marquee 10s linear infinite;
-}
-
-.animate-marquee2 {
-  animation: marquee2 10s linear infinite;
-}
-
-/* width */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: #999;
-  border-radius: 5px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #222;
 }

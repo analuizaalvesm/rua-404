@@ -1,9 +1,13 @@
 package org.example.Service;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.example.Model.Product;
 import org.example.Model.ShoppingCart;
+import org.example.Repositories.CustomerRepository;
 import org.example.Repositories.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,22 +20,30 @@ public class ShoppingCartService {
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
     public List<ShoppingCart> get() {
         return shoppingCartRepository.findAll();
     }
 
-    public Optional<ShoppingCart> getByUserId(Long id) {
-        try {
-            return shoppingCartRepository.findById(id);
-        } catch (Exception e) {
-            return null;
-            //List<HttpStatus.BAD_REQUEST.toString()>; //retorna um erro 400
-        }
+    public List<ShoppingCart> getByUserId(Long id) {
+       return shoppingCartRepository.findAllByUserID(id);
     }
 
-    public ShoppingCart post(ShoppingCart pedido) {
+    public String post(Product pedido, Long id) {
         try {
-            return this.shoppingCartRepository.save(pedido);
+                ShoppingCart carrinho = new ShoppingCart();
+
+                carrinho.setNomeProduto(pedido.getName());
+                carrinho.setQuantidade(pedido.getQuantity());
+                carrinho.setValorPorProduto(pedido.getPrice());
+                carrinho.setValorTotal(pedido.getPrice().multiply(BigDecimal.valueOf(pedido.getQuantity())));
+                carrinho.setDataPedido(new Date());
+                carrinho.setUser(customerRepository.getById(id));
+                shoppingCartRepository.save(carrinho);
+
+            return "";
         } catch (RuntimeException e) {
             throw new RuntimeException("Não foi possível adicionar Cliente");
         }

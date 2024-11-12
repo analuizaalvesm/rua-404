@@ -17,10 +17,22 @@ const ProductPage: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [productList, setProductList] = useState<Product[]>([]);
 
   const productId = state?.productId;
-  const products = state?.products;
-  const randomProducts = products.sort(() => Math.random() - Math.random());
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/products")
+      .then((response) => {
+        setProductList(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
+  const randomProducts = productList.sort(() => Math.random() - Math.random());
 
   useEffect(() => {
     if (!productId) {
@@ -45,21 +57,6 @@ const ProductPage: React.FC = () => {
 
     fetchProduct();
   }, [productId]);
-
-  const arrayOfImages = (product: { url: string }) => [
-    product.url,
-    product.url,
-    product.url,
-    product.url,
-  ];
-
-  // será utilizado quando o back-end retornar mais imagens de um produto
-  const changeImage = (url: string) => {
-    const mainImage = document.getElementById("mainImage") as HTMLImageElement;
-    if (mainImage) {
-      mainImage.src = url;
-    }
-  };
 
   if (loading) {
     return (
@@ -234,7 +231,7 @@ const ProductPage: React.FC = () => {
                 className="bg-white border border-gray-300 rounded-none shadow-md p-4 w-full sm:w-72 m-1 cursor-pointer hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between min-h-[300px]" // Ajuste a altura mínima conforme necessário
                 onClick={() =>
                   navigate(`/product/${relatedProduct.id}`, {
-                    state: { productId: relatedProduct.id, products },
+                    state: { productId: relatedProduct.id, productList },
                   })
                 }
               >
@@ -249,7 +246,7 @@ const ProductPage: React.FC = () => {
                 <p className="text-gray-600 mb-1 text-center">{`R$ ${relatedProduct.price
                   .toFixed(2)
                   .replace(".", ",")}`}</p>
-                <button className="bg-black text-white w-full py-2 mt-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                <button className="bg-black text-white w-full py-2 mt-2 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                   Ver Produto
                 </button>
               </div>

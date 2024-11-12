@@ -9,11 +9,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "product")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
-    
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
@@ -32,7 +36,7 @@ public class Product {
 
     @Column
     private BigDecimal price;
-    
+
     @Column
     private int quantity;
 
@@ -42,6 +46,7 @@ public class Product {
     @Column
     private String url;
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -113,6 +118,4 @@ public class Product {
     public void setUrl(String url) {
         this.url = url;
     }
-
-
 }
