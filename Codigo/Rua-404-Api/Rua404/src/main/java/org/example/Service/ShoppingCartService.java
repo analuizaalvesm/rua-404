@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.example.Model.Product;
 import org.example.Model.ShoppingCart;
+import org.example.Model.ShoppingUpdate;
 import org.example.Repositories.CustomerRepository;
 import org.example.Repositories.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class ShoppingCartService {
                 carrinho.setValorPorProduto(pedido.getPrice());
                 carrinho.setValorTotal(pedido.getPrice().multiply(BigDecimal.valueOf(pedido.getQuantity())));
                 carrinho.setDataPedido(new Date());
+                carrinho.setUrl(pedido.getUrl());
                 carrinho.setUser(customerRepository.getById(id));
                 shoppingCartRepository.save(carrinho);
 
@@ -58,12 +60,14 @@ public class ShoppingCartService {
         }
     }
 
-    public ShoppingCart put(ShoppingCart pedido) {
-        try {
-            return shoppingCartRepository.save(pedido);
-        } catch (Exception e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Failed to update ShoppingCart", e);
-        }
+    public ShoppingCart put(ShoppingUpdate pedido, Long id) {
+        return shoppingCartRepository.findById(id).map(
+                shoppingCart -> {
+                    shoppingCart.setNomeProduto(pedido.getNomeProduto());
+                    shoppingCart.setQuantidade(pedido.getQuantidade());
+                    shoppingCart.setStatus(pedido.getStatus());
+                    return shoppingCartRepository.save(shoppingCart);
+                }).orElseThrow(() -> new RuntimeException("error doidao"));
     }
 
 }

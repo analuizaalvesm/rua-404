@@ -30,6 +30,17 @@ public class ShoppingCart {
     @Column
     private String status;
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @Column
+    private String url;
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "customer_id")
     private Customer user;
