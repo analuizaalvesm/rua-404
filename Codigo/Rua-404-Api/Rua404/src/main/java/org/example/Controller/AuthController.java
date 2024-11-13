@@ -5,6 +5,7 @@ import org.example.DTOS.registerDTO;
 import org.example.Enum.UserRole;
 import org.example.Model.Customer;
 import org.example.Repositories.CustomerRepository;
+import org.example.Security.JwtUtil;
 import org.example.Service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -57,21 +58,27 @@ public class AuthController {
  */
 @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid loginDTO data){
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        Customer a=this.customerRepository.findByEmail(data.login());
+        Customer a=this.customerRepository.findByEmail(data.email());
+        if(a.getRole()==(UserRole.ADMIN)){
+        String token = JwtUtil.generateAdmToken(this.customerRepository.findByEmailAsync(data.email()).getEmail());
+         return ResponseEntity.ok(token);
+        }
 
-        return ResponseEntity.ok(a.getAuthorities());
+        String token = JwtUtil.generateToken(this.customerRepository.findByEmailAsync(data.email()).getEmail());
+
+        return ResponseEntity.ok(token);
     }
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid registerDTO data){
-        if(this.customerRepository.findByEmail(data.login())!=null){
+        if(this.customerRepository.findByEmail(data.email())!=null){
             return ResponseEntity.badRequest().build();
         }
         String encryptPassword=new BCryptPasswordEncoder().encode(data.password());
-        Customer newUser= new Customer(data.firstName(),data.secondName(),data.login(),encryptPassword);
+        Customer newUser= new Customer(data.firstName(),data.secondName(),data.email(),encryptPassword);
         newUser.setRole(UserRole.USER);
 
         customerRepository.save(newUser);

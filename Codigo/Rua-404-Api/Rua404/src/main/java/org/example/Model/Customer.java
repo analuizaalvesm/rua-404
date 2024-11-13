@@ -203,6 +203,9 @@ public class Customer implements UserDetails {
     public String getUsername() {
         return this.email;
     }
+    public UserRole getRole(){
+        return this.role;
+    }
 
     
 
