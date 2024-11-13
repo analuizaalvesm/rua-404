@@ -1,5 +1,6 @@
 package org.example.Controller;
 
+import org.example.DTOS.ResponseDTO;
 import org.example.DTOS.loginDTO;
 import org.example.DTOS.registerDTO;
 import org.example.Enum.UserRole;
@@ -64,7 +65,9 @@ public class AuthController {
         Customer a=this.customerRepository.findByEmail(data.email());
         if(a.getRole()==(UserRole.ADMIN)){
         String token = JwtUtil.generateAdmToken(this.customerRepository.findByEmailAsync(data.email()).getEmail());
-         return ResponseEntity.ok(token);
+
+        ResponseDTO response=new ResponseDTO(token, a.getRole());
+         return ResponseEntity.ok(response);
         }
 
         String token = JwtUtil.generateToken(this.customerRepository.findByEmailAsync(data.email()).getEmail());
@@ -79,7 +82,7 @@ public class AuthController {
         }
         String encryptPassword=new BCryptPasswordEncoder().encode(data.password());
         Customer newUser= new Customer(data.firstName(),data.secondName(),data.email(),encryptPassword);
-        newUser.setRole(UserRole.USER);
+        newUser.setRole(UserRole.ADMIN);
 
         customerRepository.save(newUser);
         return ResponseEntity.ok(newUser);

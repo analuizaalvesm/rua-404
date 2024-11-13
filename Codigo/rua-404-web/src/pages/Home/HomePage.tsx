@@ -86,10 +86,11 @@ const Home = () => {
                 ARTE DE RUA
               </p>
               <p className="text-gray-600 text-center text-lg text-white leading-relaxed mt-8 px-32">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
+                Onde a tecnologia encontra a arte nas ruas, transformando o
+                urbano em um playground digital. Somos um coletivo que mistura
+                intervenções urbanas e arte multimídia para criar experiências
+                imersivas e únicas. Conecte-se com o futuro da arte, onde cada
+                projeto é uma nova interação entre o digital e o real.
               </p>
               <div className="flex justify-center">
                 <button
@@ -167,7 +168,6 @@ const Home = () => {
             {events.map((event) => (
               <div className="relative bg-gray-100 w-full max-w-screen overflow-hidden shadow-lg min-h-[400px]">
                 <img
-                  // src="https://scontent.fplu41-1.fna.fbcdn.net/v/t1.6435-9/64508182_2312031355509716_759115429250596864_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=0327a3&_nc_ohc=LL_oltatlosQ7kNvgFdOodQ&_nc_zt=23&_nc_ht=scontent.fplu41-1.fna&_nc_gid=AqbE-9K_HsrivdYc4aMvOHW&oh=00_AYASzAYQoTquQu_gmJW-ZbzysgZHnMUlTV352PQ_BrjeLw&oe=674E1867"
                   src={event.url}
                   alt="Event Background"
                   className="absolute inset-0 w-full h-full object-cover opacity-90 brightness-[0.4]"
