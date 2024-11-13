@@ -9,11 +9,12 @@ import { FiShoppingCart } from "react-icons/fi";
 
 interface CartItem {
   id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  image: string;
-  darkImage: string;
+  nomeProduto: string;
+  valorTotal: number;
+  valorPorProduto: number;
+  quantidade: number;
+  status: string;
+  url: string;
 }
 
 interface CartDropdownProps {
@@ -28,7 +29,7 @@ const CartDropdown = ({ cartItems, cartCount }: CartDropdownProps) => {
 
   const getFinalPrice = () => {
     return cartItems
-      .reduce((acc, item) => acc + item.price * item.quantity, 0)
+      .reduce((acc, item) => acc + item.valorPorProduto * item.quantidade, 0)
       .toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL",
@@ -62,22 +63,22 @@ const CartDropdown = ({ cartItems, cartCount }: CartDropdownProps) => {
                   className={`flex items-center p-2.5 cursor-pointer hover:bg-[#fafafa] ${
                     index !== cartItems.length - 1 && "border-b border-gray-200"
                   }`}
-                  onClick={() => navigate(`/product/${item.id}`)}
+                  onClick={() => navigate(`/shopping-cart`)}
                 >
                   <img
-                    src={item.image}
-                    alt={item.name}
+                    src={item.url || "https://via.placeholder.com/150"}
+                    alt={item.nomeProduto}
                     className="w-20 h-20 rounded-sm"
                   />
                   <div className="pl-3">
                     <p className="text-xs font-regular text-gray-400">
-                      {item.quantity} unidade(s)
+                      {item.quantidade} unidade(s)
                     </p>
                     <p className="font-semibold text-sm line-clamp-2">
-                      {item.name}
+                      {item.nomeProduto}
                     </p>
                     <p className="text-sm font-regular text-gray-500">
-                      {item.price.toLocaleString("pt-BR", {
+                      {item.valorPorProduto.toLocaleString("pt-BR", {
                         style: "currency",
                         currency: "BRL",
                       })}

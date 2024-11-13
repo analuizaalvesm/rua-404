@@ -116,7 +116,10 @@ const Home = () => {
         <h2 className="text-5xl font-orbitron-bold mb-8">RUA STORE</h2>
         <div className="grid grid-cols-4 gap-6">
           {products.map((product) => (
-            <div className="bg-white border border-gray-200 w-full max-w-sm">
+            <div
+              key={product.id}
+              className="bg-white border border-gray-200 w-full max-w-sm"
+            >
               <div className="relative bg-gray-200 aspect-[6/3] border border-black">
                 <img
                   src={product.url}
@@ -166,7 +169,10 @@ const Home = () => {
           </h2>
           <div className="grid grid-cols-4 gap-6">
             {events.map((event) => (
-              <div className="relative bg-gray-100 w-full max-w-screen overflow-hidden shadow-lg min-h-[400px]">
+              <div
+                key={event.id}
+                className="relative bg-gray-100 w-full max-w-screen overflow-hidden shadow-lg min-h-[400px]"
+              >
                 <img
                   src={event.url}
                   alt="Event Background"
