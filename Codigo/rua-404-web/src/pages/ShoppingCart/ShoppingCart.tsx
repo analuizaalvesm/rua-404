@@ -11,7 +11,7 @@ const ShoppingCart = () => {
 
   const calculateSummary = () => {
     const subtotal = cartItems.reduce(
-      (sum, item) => sum + item.price * item.quantity,
+      (sum, item) => sum + item.valorPorProduto * item.quantidade,
       0
     );
     const savings = 0;

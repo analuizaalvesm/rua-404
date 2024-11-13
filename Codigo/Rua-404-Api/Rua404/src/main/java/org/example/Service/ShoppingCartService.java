@@ -7,7 +7,6 @@ import java.util.Optional;
 
 import org.example.Model.Product;
 import org.example.Model.ShoppingCart;
-import org.example.Model.ShoppingUpdate;
 import org.example.Repositories.CustomerRepository;
 import org.example.Repositories.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,21 +28,21 @@ public class ShoppingCartService {
     }
 
     public List<ShoppingCart> getByUserId(Long id) {
-       return shoppingCartRepository.findAllByUserID(id);
+        return shoppingCartRepository.findAllByUserID(id);
     }
 
     public String post(Product pedido, Long id) {
         try {
-                ShoppingCart carrinho = new ShoppingCart();
+            ShoppingCart carrinho = new ShoppingCart();
 
-                carrinho.setNomeProduto(pedido.getName());
-                carrinho.setQuantidade(pedido.getQuantity());
-                carrinho.setValorPorProduto(pedido.getPrice());
-                carrinho.setValorTotal(pedido.getPrice().multiply(BigDecimal.valueOf(pedido.getQuantity())));
-                carrinho.setDataPedido(new Date());
-                carrinho.setUrl(pedido.getUrl());
-                carrinho.setUser(customerRepository.getById(id));
-                shoppingCartRepository.save(carrinho);
+            carrinho.setNomeProduto(pedido.getName());
+            carrinho.setQuantidade(pedido.getQuantity());
+            carrinho.setValorPorProduto(pedido.getPrice());
+            carrinho.setValorTotal(pedido.getPrice().multiply(BigDecimal.valueOf(pedido.getQuantity())));
+            carrinho.setDataPedido(new Date());
+            carrinho.setUrl(pedido.getUrl());
+            carrinho.setUser(customerRepository.getById(id));
+            shoppingCartRepository.save(carrinho);
 
             return "";
         } catch (RuntimeException e) {
@@ -60,10 +59,9 @@ public class ShoppingCartService {
         }
     }
 
-    public ShoppingCart put(ShoppingUpdate pedido, Long id) {
+    public ShoppingCart put(ShoppingCart pedido, Long id) {
         return shoppingCartRepository.findById(id).map(
                 shoppingCart -> {
-                    shoppingCart.setNomeProduto(pedido.getNomeProduto());
                     shoppingCart.setQuantidade(pedido.getQuantidade());
                     shoppingCart.setStatus(pedido.getStatus());
                     return shoppingCartRepository.save(shoppingCart);
