@@ -53,7 +53,7 @@ const Checkout = (): JSX.Element => {
         </h2>
 
         <div className="mt-4 sm:mt-6 md:gap-6 lg:flex lg:items-start xl:gap-6">
-          <div className="w-full lg:max-w-2xl xl:max-w-3xl">
+          <div className="w-full lg:max-w-2xl xl:max-w-2xl">
             <div className="border border-gray-200 bg-[#fdfdfd] rounded-sm p-4">
               <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
                 Itens do Carrinho ({cartItems.length} itens)
@@ -61,7 +61,6 @@ const Checkout = (): JSX.Element => {
               {cartItems.map((item, index) => (
                 <div
                   key={item.id}
-                  // className="flex items-center border-b border-gray-200 py-4"
                   className={`flex items-center pt-4 ${
                     index === cartItems.length - 1
                       ? ""
