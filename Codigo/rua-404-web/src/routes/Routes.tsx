@@ -63,6 +63,11 @@ const routeConfig: RouteConfig[] = [
         isPrivate: true,
       },
       {
+        path: "checkout",
+        element: <Route.CheckoutPage />,
+        isPrivate: true,
+      },
+      {
         path: "profile",
         element: <Route.ProfilePage />,
         isPrivate: true,

@@ -4,8 +4,10 @@ import CartTable from "./Components/CartTable";
 import { useCart } from "@/context/useCart";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ShoppingCart = () => {
+  const navigate = useNavigate();
   const { cartItems, updateQuantity, removeItem } = useCart();
   const [products, setProducts] = useState([]);
 
@@ -67,7 +69,11 @@ const ShoppingCart = () => {
             <OrderSummary
               summary={summary}
               applyVoucher={() => console.log("apply voucher")}
-              proceedToCheckout={() => console.log("proceed")}
+              proceedToCheckout={() =>
+                navigate("/checkout", {
+                  state: { cartItems, summary },
+                })
+              }
             />
           </div>
         </div>
