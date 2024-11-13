@@ -6,6 +6,7 @@ import {
   AdminDashboard,
   AdminRoutes,
   AdminStock,
+  AdminUsers
 } from "@/pages/Admin/Dashboard/AdminRoutes";
 import AdminLogin from "@/pages/Admin/Login/AdminLogin";
 
@@ -87,6 +88,10 @@ const routeConfig: RouteConfig[] = [
       {
         path: "stock",
         element: <AdminStock />,
+      },
+      {
+        path: "users",
+        element: <AdminUsers />,
       },
       {
         path: "",
