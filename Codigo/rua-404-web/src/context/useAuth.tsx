@@ -18,6 +18,7 @@ type UserContextType = {
   logout: () => void;
   isAuthenticated: () => boolean;
   userId: number | null;
+  setUser: (user: UserProfile) => void;
 };
 
 type Props = { children: React.ReactNode };
@@ -129,6 +130,7 @@ export const UserProvider = ({ children }: Props) => {
       value={{
         login,
         user,
+        setUser,
         register,
         token,
         logout,
