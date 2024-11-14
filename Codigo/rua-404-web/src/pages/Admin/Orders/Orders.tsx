@@ -1,118 +1,11 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { FiHeart, FiShoppingCart } from "react-icons/fi";
-import { useLocation, useNavigate, NavLink } from "react-router-dom";
-import { useAuth } from "@/context/useAuth";
-import { User } from "@/models/User";
-import { getUserProfile } from "@/services/ProfileService";
-import { useCart } from "@/context/useCart";
+import { NavLink, useLocation } from "react-router-dom";
 
-interface Order {
-    id: number;
-    listProducts: Product[];
-    date: string;
-    staffId: number;
-    inventoryId: number;
-    lastUpdated: any;
-}
+const Orders = () => {
+  const location = useLocation();
+  const { pathname } = location;
 
-const Orders: React.FC = () => {
-    const { user } = useAuth();
-    const { state } = useLocation();
-    const navigate = useNavigate();
-    const { pathname } = location;
-  
-    const [order, setOrder] = useState<Order | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
-    const [orderList, setOrderList] = useState<Order[]>([]);
-    const [userData, setUserData] = useState<User | null>(null);
-
-    const orderId = state?.orderId;
-
-//     useEffect(() => {
-//         const fetchUserProfile = async () => {
-//             try {
-//                 const userData = await getUserProfile(user?.email || "");
-//                 if (userData) {
-//                     setUserData(userData);
-//                 }
-
-//             } catch (error) {
-//             console.error("Error fetching user profile:", error);
-//             }
-//         };
-
-//         if (user) {
-//             fetchUserProfile();
-//         }
-//     }, [user]);
-
-//     useEffect(() => {
-//         axios
-//             .get("http://localhost:8080/orders")
-//             .then((response) => {
-//                 setOrderList(response.data);
-//             })
-//             .catch((error) => {
-//                 console.error(error);
-//             });
-//     }, []);
-
-//   const randomOrders = orderList.sort(() => Math.random() - Math.random());
-
-//     useEffect(() => {
-//         if (!orderId) {
-//             setLoading(false);
-//             return;
-//         }
-
-//         const fetchOrder = async () => {
-//             try {
-//                 setLoading(true);
-//                 const response = await axios.get<Order>(
-//                 `http://localhost:8080/orders/${orderId}`
-//             );
-
-//             setOrder(response.data);
-
-//             } catch (err) {
-//                 console.error(err);
-//                 setError("Failed to fetch order data.");
-//             } finally {
-//                 setLoading(false);
-//             }
-//         };
-//         fetchOrder();
-
-//     }, [orderId]);
-
-//     if (loading) {
-//         return (
-//             <div className="flex justify-center items-center h-screen">
-//             <p className="text-xl">Loading...</p>
-//             </div>
-//         );
-//     }
-
-//     if (error) {
-//         return (
-//             <div className="flex justify-center items-center h-screen">
-//             <p className="text-xl text-red-500">{error}</p>
-//             </div>
-//         );
-//     }
-    
-//     if (!order) {
-//         return (
-//             <div className="flex justify-center items-center h-screen">
-//             <p className="text-xl">Pedidos não encontrados.</p>
-//             </div>
-//         );
-//     }
-    
-      return (
-        <div>
+    return (
+      <div>
             <div className="max-w-xl">
                 <div className="flex sm:flex-col lg:flex-row sm:items-center justify-between">
                     <ul className="flex max-sm:flex-col sm:items-center gap-x-10 gap-y-3">
@@ -125,18 +18,10 @@ const Orders: React.FC = () => {
                             </label>
                         </li>
                         <li>
-                            <label
-                                htmlFor="comprar-novamente"
-                                className="text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline"
-                            >
-                                Compre novamente
-                            </label>
-                        </li>
-                        <li>
                           <NavLink
-                            to="/profile/orders/not-sent"
+                            to="/admin/orders/not-sent"
                             className={`text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline ${
-                              pathname.includes("/profile/orders/not-sent")
+                              pathname.includes("/admin/orders/not-sent")
                             }`}
                           >
                             Ainda não enviado
@@ -164,16 +49,6 @@ const Orders: React.FC = () => {
                                 Data: 18 de março 2024
                             </p>
                         </div>
-                        <div className="flex items-center gap-3 max-md:mt-5">
-                            <button
-                                className="rounded-full px-7 py-3 bg-white text-gray-900 border border-gray-300 font-semibold text-sm shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:bg-gray-50 hover:border-gray-400">
-                                Detalhes
-                            </button>
-                            <button
-                                className="rounded-full px-7 py-3 bg-black shadow-sm shadow-transparent text-white font-semibold text-sm transition-all duration-500 hover:shadow-gray hover:bg-gray">
-                                Comprar novamente
-                            </button>
-                        </div>
                     </div>
 
                     <svg className="my-9 w-full" xmlns="http://www.w3.org/2000/svg" width="1216" height="2" viewBox="0 0 1216 2" fill="none">
@@ -191,7 +66,11 @@ const Orders: React.FC = () => {
                                     Adesivo XPTO
                                 </h6>
                                 <p className="font-normal text-lg leading-8 text-gray-500 mb-8 whitespace-nowrap">
-                                    By: RUA 404
+                                  <p>Dados destinatário</p>
+                                  <p>Nome: João da Silva</p>
+                                  <p>Endereço: Rua sete, 10 - Centro, Belo Horizonte/MG </p>
+                                  <p>CEP: 30.100-50</p>
+                                  <p>Telefone: (31) 99999-9999</p>
                                 </p>
                                 <div className="flex items-center max-sm:flex-col gap-x-10 gap-y-3">
                                     <span className="font-normal text-lg leading-8 text-gray-500 whitespace-nowrap">
@@ -214,7 +93,7 @@ const Orders: React.FC = () => {
                             </div>
                             <div className="flex flex-col justify-center items-start max-sm:items-center">
                                 <p className="font-normal text-lg text-gray-500 leading-8 mb-2 text-left whitespace-nowrap">
-                                    Previsão de entrega
+                                    Enviar até
                                 </p>
                                 <p className="font-semibold text-lg leading-8 text-black text-left whitespace-nowrap">
                                     23 de março de 2024
@@ -249,16 +128,6 @@ const Orders: React.FC = () => {
                                 Data: 9 de abril 2024
                             </p>
                         </div>
-                        <div className="flex items-center gap-3 max-md:mt-5">
-                            <button
-                                className="rounded-full px-7 py-3 bg-white text-gray-900 border border-gray-300 font-semibold text-sm shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:bg-gray-50 hover:border-gray-400">
-                                Detalhes
-                            </button>
-                            <button
-                                className="rounded-full px-7 py-3 bg-black shadow-sm shadow-transparent text-white font-semibold text-sm transition-all duration-500 hover:shadow-gray hover:bg-gray">
-                                Comprar novamente
-                            </button>
-                        </div>
                     </div>
 
                     <svg className="my-9 w-full" xmlns="http://www.w3.org/2000/svg" width="1216" height="2" viewBox="0 0 1216 2"
@@ -277,7 +146,11 @@ const Orders: React.FC = () => {
                                     Adesivo XYZ
                                 </h6>
                                 <p className="font-normal text-lg leading-8 text-gray-500 mb-8 whitespace-nowrap">
-                                    By: RUA 404
+                                  <p>Dados destinatário</p>
+                                  <p>Nome: João da Silva</p>
+                                  <p>Endereço: Rua sete, 10 - Centro, Belo Horizonte/MG </p>
+                                  <p>CEP: 30.100-50</p>
+                                  <p>Telefone: (31) 99999-9999</p>
                                 </p>
                                 <div className="flex items-center max-sm:flex-col gap-x-10 gap-y-3">
                                     <span className="font-normal text-lg leading-8 text-gray-500 whitespace-nowrap">
@@ -300,7 +173,7 @@ const Orders: React.FC = () => {
                             </div>
                             <div className="flex flex-col justify-center items-start max-sm:items-center">
                                 <p className="font-normal text-lg text-gray-500 leading-8 mb-2 text-left whitespace-nowrap">
-                                    Previsão de entrega
+                                    Enviar até
                                 </p>
                                 <p className="font-semibold text-lg leading-8 text-black text-left whitespace-nowrap">
                                     -
@@ -330,6 +203,6 @@ const Orders: React.FC = () => {
             </div>
         </div>
     );
-};
-
-export default Orders;
+  };
+  
+  export default Orders;

@@ -6,6 +6,7 @@ import Loader from "@/components/admin/components/Loader";
 import Stock from "../Stock/Stock";
 import Users from "../Users/Users";
 import Dashboard from "./Dashboard";
+import Orders from "../Orders/Orders";
 
 const AdminRoutes = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -53,6 +54,17 @@ const AdminStock = () => {
 };
 
 export { AdminStock };
+
+const AdminOrders = () => {
+  return (
+    <>
+      <PageTitle title="RuaAdmin - Pedidos" />
+      <Orders />
+    </>
+  );
+};
+
+export { AdminOrders };
 
 const AdminUsers = () => {
   return (

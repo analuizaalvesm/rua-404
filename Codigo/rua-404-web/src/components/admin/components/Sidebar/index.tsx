@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FiFile, FiLayers } from "react-icons/fi";
 import { BsGrid } from "react-icons/bs";
-import { Users } from "lucide-react";
+import { ShoppingBag, Users } from "lucide-react";
+import { BiColor } from "react-icons/bi";
+import { TbShoppingBagEdit } from "react-icons/tb";
+import { FiSettings } from "react-icons/fi";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -106,7 +109,51 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   to="/admin/users"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${pathname.includes("/admin/users") &&
                     "bg-graydark dark:bg-meta-4"
-                    }`}
+                  }`}
+                >
+                  <FiFile size={20} />
+                  Relatórios
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/admin/orders"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/orders") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <ShoppingBag size={20} />
+                  Pedidos
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/admin/settings"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/settings") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <FiSettings size={20} />
+                  Configurações
+                </NavLink>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 className="mb-4 ml-4 text-sm font-semibold text-gray-500">
+              OUTROS
+            </h3>
+
+            <ul className="mb-6 flex flex-col gap-1.5 text-gray-300">
+              <li>
+                <NavLink
+                  to="/chart"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/users") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
                 >
                   <Users size={20} />
                   Usuários
