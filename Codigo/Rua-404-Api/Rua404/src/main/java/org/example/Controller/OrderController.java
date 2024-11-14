@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.example.Model.Order;
+import org.example.Model.Pedido;
 import org.example.Service.OrderService;
 
 import java.util.List;
@@ -13,38 +14,26 @@ import java.util.Optional;
 @RequestMapping("/orders")
 public class OrderController {
 
+    
     @Autowired
     private OrderService orderService;
 
     @GetMapping
-    public List<Order> getAllOrders() {
-        return orderService.findAll();
+    public List<Order> getAllPedidos() {
+        return orderService.getAllPedidos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-        Optional<Order> order = orderService.findById(id);
-        return order.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    public ResponseEntity<Order> getPedidoById(@PathVariable Long id) {
+        return orderService.getPedidoById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public Order createOrder(@RequestBody Order order) {
-        return orderService.save(order);
+    @PostMapping("/{usuarioId}")
+    public Order createPedido(@PathVariable Long usuarioId, @RequestBody Order pedido) {
+        return orderService.savePedido(pedido, usuarioId);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long id, @RequestBody Order order) {
-        try {
-            return ResponseEntity.ok(orderService.update(id, order));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long id) {
-        orderService.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
 }
 
