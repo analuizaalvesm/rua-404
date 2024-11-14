@@ -6,8 +6,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long>{
     @Query("SELECT u FROM Customer u WHERE u.email = :email")
     Customer findByEmailAsync(@Param("email")String email);
+
+    Customer findByEmail(String email);
 }

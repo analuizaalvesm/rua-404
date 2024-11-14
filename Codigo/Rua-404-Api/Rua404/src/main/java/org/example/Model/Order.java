@@ -1,37 +1,44 @@
 package org.example.Model;
 
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "Pedidos")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private Date date;
+    private LocalDate data;
 
-    @Column(name = "staff_id", nullable = false)
-    private Long staffId;
+    @ManyToMany
+    @JoinTable(
+        name = "pedido_produto",
+        joinColumns = @JoinColumn(name = "pedido_id"),
+        inverseJoinColumns = @JoinColumn(name = "produto_id")
+    )
+    private List<Product> produtos = new ArrayList<>();
 
-    @Column(name = "customer_id", nullable = false)
-    private Long customerId;
+    private BigDecimal valorTotal;
 
-    @Column(name = "inventory_id", nullable = false)
-    private Long inventoryId;
+    private String status;
 
-    @Column(name = "last_updated", nullable = false)
-    private LocalDateTime lastUpdated;
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false) // Cria uma chave estrangeira para usuário
+    private Customer usuario;
 
-    @PrePersist
-    @PreUpdate
-    public void onUpdate() {
-        this.lastUpdated = LocalDateTime.now();
-    }
+    //RELACIONAMENTO PARA PEDIDO-PAGAMENTO
+    // @OneToOne
+    // @JoinColumn(name = "pagamento_id")
+    // private Pagamento pagamento;
 
     public Long getId() {
         return id;
@@ -41,44 +48,54 @@ public class Order {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
+    public LocalDate getData() {
+        return data;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 
-    public Long getStaffId() {
-        return staffId;
+    public List<Product> getProdutos() {
+        return produtos;
     }
 
-    public void setStaffId(Long staffId) {
-        this.staffId = staffId;
+    public void setProdutos(List<Product> produtos) {
+        this.produtos = produtos;
     }
 
-    public Long getCustomerId() {
-        return customerId;
+    public BigDecimal getValorTotal() {
+        return valorTotal;
     }
 
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
     }
 
-    public Long getInventoryId() {
-        return inventoryId;
+    public String getStatus() {
+        return status;
     }
 
-    public void setInventoryId(Long inventoryId) {
-        this.inventoryId = inventoryId;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public LocalDateTime getLastUpdated() {
-        return lastUpdated;
+    public Customer getUsuario() {
+        return usuario;
     }
 
-    public void setLastUpdated(LocalDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
+    public void setUsuario(Customer usuario) {
+        this.usuario = usuario;
     }
+
+    //GET E SET PARA PAGAMENTO
+    // public Pagamento getPagamento() {
+    //     return pagamento;
+    // }
+
+    // public void setPagamento(Pagamento pagamento) {
+    //     this.pagamento = pagamento;
+    // }
+    
 }
 

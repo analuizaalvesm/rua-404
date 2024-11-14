@@ -33,3 +33,13 @@ export const deleteUserProfile = async (customerId: number) => {
     return false;
   }
 };
+
+export const getAllUsersProfile = async () => {
+  try {
+    const response = await axios.get(`http://localhost:8080/customer`);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+    return false;
+  }
+};
