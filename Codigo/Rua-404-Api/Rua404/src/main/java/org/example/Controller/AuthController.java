@@ -82,7 +82,7 @@ public class AuthController {
         }
         String encryptPassword=new BCryptPasswordEncoder().encode(data.password());
         Customer newUser= new Customer(data.firstName(),data.secondName(),data.email(),encryptPassword);
-        newUser.setRole(UserRole.USER);
+        newUser.setRole(UserRole.ADMIN);
 
         customerRepository.save(newUser);
         return ResponseEntity.ok(newUser);
