@@ -3,6 +3,7 @@ import Navbar from "./components/custom/NavBar/NavBar";
 import { UserProvider } from "./context/useAuth";
 import { Outlet } from "react-router-dom";
 import { CartProvider } from "./context/useCart";
+import { AdminProvider } from "./context/useAdminAuth";
 
 export function App() {
   return (

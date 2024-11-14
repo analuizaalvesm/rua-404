@@ -1,7 +1,8 @@
 import React, { useState, createContext, useEffect, useContext } from "react";
 import { UserProfile } from "../models/User";
 import { useNavigate } from "react-router-dom";
-import { loginApi, registerApi } from "../services/AuthService";
+import { loginApi, registerApi } from "@/services/AuthService";
+import { getUserProfile } from "@/services/ProfileService";
 import axios from "axios";
 
 type UserContextType = {
@@ -16,6 +17,8 @@ type UserContextType = {
   login: (email: string, password: string) => void;
   logout: () => void;
   isAuthenticated: () => boolean;
+  userId: number | null;
+  setUser: (user: UserProfile) => void;
 };
 
 type Props = { children: React.ReactNode };
@@ -32,6 +35,7 @@ export const UserProvider = ({ children }: Props) => {
       ? JSON.parse(localStorage.getItem("user")!)
       : null
   );
+  const [userId, setUserId] = useState<number | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   useEffect(() => {
@@ -46,10 +50,10 @@ export const UserProvider = ({ children }: Props) => {
   }, []);
 
   const register = async (
-    email: string,
-    password: string,
     firstName: string,
-    lastName: string
+    lastName: string,
+    email: string,
+    password: string
   ) => {
     await registerApi(firstName, lastName, email, password)
       .then((response) => {
@@ -93,6 +97,22 @@ export const UserProvider = ({ children }: Props) => {
       .catch((e) => window.alert("ERRO LOGIN"));
   };
 
+  const getUserInfo = async () => {
+    await getUserProfile(user?.email!)
+      .then((response) => {
+        if (response) {
+          setUserId(response.customer_id);
+        }
+      })
+      .catch((e) => window.alert("ERRO GET USER INFO"));
+  };
+
+  useEffect(() => {
+    if (user) {
+      getUserInfo();
+    }
+  }, [user]);
+
   const isAuthenticated = () => {
     return !!user;
   };
@@ -107,7 +127,16 @@ export const UserProvider = ({ children }: Props) => {
 
   return (
     <UserContext.Provider
-      value={{ login, user, register, token, logout, isAuthenticated }}
+      value={{
+        login,
+        user,
+        setUser,
+        register,
+        token,
+        logout,
+        isAuthenticated,
+        userId,
+      }}
     >
       {isLoggedIn ? children : null}
     </UserContext.Provider>

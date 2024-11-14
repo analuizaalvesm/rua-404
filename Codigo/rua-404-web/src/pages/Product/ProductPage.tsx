@@ -2,24 +2,54 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { FiHeart, FiShoppingCart } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "@/context/useAuth";
+import { User } from "@/models/User";
+import { getUserProfile } from "@/services/ProfileService";
+import { useCart } from "@/context/useCart";
 
 interface Product {
   id: number;
   name: string;
+  size: string;
+  collab: string;
+  quantity: number;
   price: number;
   productType: string;
+  lastUpdated: any;
   url: string;
 }
 
 const ProductPage: React.FC = () => {
+  const { user } = useAuth();
+  const { addProductToCart, cartItems } = useCart();
   const { state } = useLocation();
   const navigate = useNavigate();
+
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [productList, setProductList] = useState<Product[]>([]);
+  const [userData, setUserData] = useState<User | null>(null);
+  const [quantity, setQuantity] = useState<number>(1);
+  const [addingToCart, setAddingToCart] = useState<boolean>(false);
 
   const productId = state?.productId;
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const userData = await getUserProfile(user?.email || "");
+        if (userData) {
+          setUserData(userData);
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+    if (user) {
+      fetchUserProfile();
+    }
+  }, [user]);
 
   useEffect(() => {
     axios
@@ -58,18 +88,16 @@ const ProductPage: React.FC = () => {
     fetchProduct();
   }, [productId]);
 
-  const arrayOfImages = (product: { url: string }) => [
-    product.url,
-    product.url,
-    product.url,
-    product.url,
-  ];
+  const handleAddToCart = async () => {
+    if (!product) return;
 
-  // será utilizado quando o back-end retornar mais imagens de um produto
-  const changeImage = (url: string) => {
-    const mainImage = document.getElementById("mainImage") as HTMLImageElement;
-    if (mainImage) {
-      mainImage.src = url;
+    setAddingToCart(true);
+    try {
+      await addProductToCart(product, quantity);
+    } catch (error) {
+      console.error("Failed to add product to cart:", error);
+    } finally {
+      setAddingToCart(false);
     }
   };
 
@@ -116,23 +144,11 @@ const ProductPage: React.FC = () => {
                   }}
                   style={{ width: "500px" }}
                 />
-
-                {/* <div className="flex gap-4 py-4 justify-center overflow-x-auto">
-                  {arrayOfImages(product).map((url, index) => (
-                    <img
-                      key={index}
-                      src={url}
-                      alt={`Thumbnail ${index + 1}`}
-                      className="w-20 h-20 object-cover rounded-md cursor-pointer opacity-60 hover:opacity-100 transition duration-300"
-                      onClick={() => changeImage(url)}
-                    />
-                  ))}
-                </div> */}
               </div>
             </div>
 
             <div className="w-full md:w-1/2 px-4">
-              <h2 className="text-3xl font-orbitron-regular mb-2">
+              <h2 className="text-3xl font-orbitron-semibold mb-2">
                 {product.name}
               </h2>
               <div className="flex items-center mb-4">
@@ -180,15 +196,20 @@ const ProductPage: React.FC = () => {
                   id="quantity"
                   name="quantity"
                   min="1"
-                  defaultValue="1"
+                  value={quantity}
+                  onChange={(e) => setQuantity(Number(e.target.value))} // Update quantity state
                   className="w-12 text-center rounded-none border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 />
               </div>
 
               <div className="flex space-x-2 mb-6">
-                <button className="bg-black flex gap-3 items-center text-white px-12 py-2 rounded-none hover:bg-gray-600 focus:outline-none focus:ring-0 focus:border-0">
+                <button
+                  className="bg-black flex gap-3 items-center text-white px-12 py-2 rounded-none hover:bg-gray-600 focus:outline-none focus:ring-0 focus:border-0"
+                  onClick={handleAddToCart}
+                  disabled={addingToCart}
+                >
                   <FiShoppingCart size={20} />
-                  Adicionar ao carrinho
+                  {addingToCart ? "Adicionando..." : "Adicionar ao carrinho"}
                 </button>
                 <button className="bg-transparent flex items-center text-gray-800 px-2.5 rounded-full hover:bg-gray-300 focus:outline-none focus:ring-0 focus:border-0">
                   <FiHeart size={20} />
@@ -212,58 +233,75 @@ const ProductPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Produtos Relacionados */}
       <section className="bg-gray-100 py-10 mx-4">
         <div className="container mx-auto px-4">
           <div className="flex flex-row justify-between items-center mb-3">
             <h2 className="text-2xl font-bold text-center md:mb-0">
               Produtos Relacionados
             </h2>
-            <div
-              className="flex items-center cursor-pointer"
-              onClick={() => navigate("/store")}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="w-8 h-8 text-gray-600"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </div>
           </div>
-          <div className="flex flex-wrap justify-center md:justify-around">
-            {randomProducts.slice(0, 5).map((relatedProduct: any) => (
+          <div className="mt-6 grid grid-cols-5 gap-4 sm:mt-8">
+            {randomProducts.slice(0, 5).map((relatedProduct: any, index) => (
               <div
-                key={relatedProduct.id}
-                className="bg-white border border-gray-300 rounded-none shadow-md p-4 w-full sm:w-72 m-1 cursor-pointer hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between min-h-[300px]" // Ajuste a altura mínima conforme necessário
-                onClick={() =>
-                  navigate(`/product/${relatedProduct.id}`, {
-                    state: { productId: relatedProduct.id, productList },
-                  })
-                }
+                key={product.id}
+                className="space-y-3 overflow-hidden rounded-sm border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800"
               >
-                <img
-                  src={relatedProduct.url}
-                  alt={relatedProduct.name}
-                  className="h-32 w-full object-cover rounded-none mb-2"
-                />
-                <h3 className="text-lg font-semibold mb-2 text-center">
-                  {relatedProduct.name}
-                </h3>
-                <p className="text-gray-600 mb-1 text-center">{`R$ ${relatedProduct.price
-                  .toFixed(2)
-                  .replace(".", ",")}`}</p>
-                <button className="bg-black text-white w-full py-2 mt-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-                  Ver Produto
-                </button>
+                <a className="overflow-hidden rounded">
+                  <img
+                    className="mx-auto h-44 w-full object-cover rounded-sm"
+                    src={relatedProduct.url}
+                    alt={`${relatedProduct.name} image`}
+                  />
+                </a>
+                <div>
+                  <a
+                    href={relatedProduct.href}
+                    className="text-lg font-orbitron-semibold pr-8 leading-tight text-gray-900 hover:underline dark:text-white"
+                  >
+                    {relatedProduct.name}
+                  </a>
+                  <p className="mt-2 text-base font-normal text-gray-500 dark:text-gray-400">
+                    {relatedProduct.description}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-lg font-bold text-gray-900 dark:text-white">
+                    <span className="">
+                      {product.price.toLocaleString("pt-BR", {
+                        style: "currency",
+                        currency: "BRL",
+                      })}
+                    </span>
+                  </p>
+                </div>
+                <div className="mt-6 flex items-center gap-2.5">
+                  <button
+                    data-tooltip-target={`favourites-tooltip-${index + 1}`}
+                    type="button"
+                    className="inline-flex items-center justify-center gap-2 rounded-sm border border-gray-200 bg-white p-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+                  >
+                    <FiHeart className="h-5 w-5" />
+                  </button>
+                  <div
+                    id={`favourites-tooltip-${index + 1}`}
+                    role="tooltip"
+                    className="tooltip invisible absolute z-10 inline-block rounded-sm bg-gray-900 px-3 py-2 text-sm font-medium text-white opacity-0 shadow-sm transition-opacity duration-300 dark:bg-gray-700"
+                  >
+                    Adicionar aos favoritos
+                    <div className="tooltip-arrow" data-popper-arrow></div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      navigate(`/product/${relatedProduct.id}`, {
+                        state: { productId: relatedProduct.id },
+                      })
+                    }
+                    className="inline-flex w-full items-center justify-center rounded-sm bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  >
+                    Adicionar ao carrinho
+                  </button>
+                </div>
               </div>
             ))}
           </div>

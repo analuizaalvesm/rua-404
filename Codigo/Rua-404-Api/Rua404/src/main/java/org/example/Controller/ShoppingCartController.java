@@ -29,19 +29,19 @@ public class ShoppingCartController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addAtCart(@RequestBody Product product, @RequestParam Long id){
+    public ResponseEntity<String> addAtCart(@RequestBody Product product, @RequestParam Long id) {
         try {
-             this.shoppingCartService.post(product, id);
-           return  ResponseEntity.ok().body("Produto adicionado ao carrinho");
+            this.shoppingCartService.post(product, id);
+            return ResponseEntity.ok().body("Produto adicionado ao carrinho");
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping
-    public ResponseEntity<ShoppingCart> editCart(ShoppingCart carrinho){
+    public ResponseEntity<ShoppingCart> editCart(ShoppingCart carrinho, Long idCarrinho) {
         try {
-            ShoppingCart cart = shoppingCartService.put(carrinho);
+            ShoppingCart cart = shoppingCartService.put(carrinho, idCarrinho);
             return ResponseEntity.ok(cart);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -49,7 +49,7 @@ public class ShoppingCartController {
     }
 
     @DeleteMapping
-    public ResponseEntity<String> deleteCart(Long id){
+    public ResponseEntity<String> deleteCart(Long id) {
         try {
             shoppingCartService.delete(id);
             return ResponseEntity.ok(HttpStatus.OK.toString());

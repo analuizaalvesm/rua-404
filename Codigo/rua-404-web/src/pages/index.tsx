@@ -1,0 +1,16 @@
+export { default as HomePage } from "./Home/HomePage";
+export { default as StorePage } from "./Store/StorePage";
+export { default as LoginPage } from "./Login/LoginPage";
+export { default as ProfilePage } from "./Profile/ProfilePage";
+export { default as RegisterPage } from "./Register/RegisterPage";
+export { default as GetCodePage } from "./GetCode/GetCodePage";
+export { default as ValidadeCodePage } from "./ValidadeCode/ValidateCodePage";
+export { default as ChangePasswordPage } from "./ChangePassword/ChangePasswordPage";
+export { default as ProductPage } from "./Product/ProductPage";
+export { default as ShoppingCart } from "./ShoppingCart/ShoppingCart";
+export { default as CheckoutPage } from "./ShoppingCart/Checkout/Checkout";
+export { default as Address } from "./Profile/Address/Address";
+export { default as Profile } from "./Profile/EditProfile/ProfileSection";
+export { default as Orders } from "./Profile/Orders/Orders";
+export { default as Security } from "./Profile/Security/Security";
+export { default as NotFoundPage } from "./NotFound/NotFoundPage";

@@ -10,11 +10,12 @@ import {
 type CartItemProps = {
   item: {
     id: number;
-    name: string;
-    price: number;
-    quantity: number;
-    image: string;
-    darkImage: string;
+    nomeProduto: string;
+    valorTotal: number;
+    valorPorProduto: number;
+    quantidade: number;
+    status: string;
+    url: string;
   };
   updateQuantity: (id: number, quantity: number) => void;
   removeItem: (id: number) => void;
@@ -26,15 +27,15 @@ const CartItemRow = ({ item, updateQuantity, removeItem }: CartItemProps) => (
       <a href="#" className="flex items-center gap-4">
         <img
           className="h-24 w-24 rounded-sm object-cover"
-          src={item.image}
-          alt={item.name}
+          src={item.url || "https://via.placeholder.com/150"}
+          alt={item.nomeProduto}
         />
         <div className="w-[20vh] min-w-0 flex-1 space-y-2 md:order-2 md:max-w-md">
           <a
             href="#"
             className="text-lg font-medium text-gray-900 leading-snug hover:underline"
           >
-            {item.name}
+            {item.nomeProduto}
           </a>
           <div className="flex items-center gap-4">
             <button
@@ -60,8 +61,8 @@ const CartItemRow = ({ item, updateQuantity, removeItem }: CartItemProps) => (
       <div className="flex items-center justify-center">
         <button
           type="button"
-          disabled={item.quantity === 1}
-          onClick={() => updateQuantity(item.id, item.quantity - 1)}
+          disabled={item.quantidade === 1}
+          onClick={() => updateQuantity(item.id, item.quantidade - 1)}
           className={`inline-flex h-6 w-6 p-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none`}
         >
           -
@@ -69,13 +70,13 @@ const CartItemRow = ({ item, updateQuantity, removeItem }: CartItemProps) => (
         <input
           type="text"
           className=" w-12 border-0 bg-transparent text-center text-sm font-medium text-gray-900"
-          value={item.quantity}
+          value={item.quantidade}
           readOnly
         />
         <button
           type="button"
-          disabled={item.quantity === 10}
-          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+          disabled={item.quantidade === 10}
+          onClick={() => updateQuantity(item.id, item.quantidade + 1)}
           className={`inline-flex h-6 w-6 p-0 items-center justify-center rounded-md border border-gray-300 bg-gray-100 hover:bg-gray-200 focus:outline-none`}
         >
           +
@@ -85,7 +86,7 @@ const CartItemRow = ({ item, updateQuantity, removeItem }: CartItemProps) => (
 
     <TableCell className="text-right">
       <p className="text-base font-bold text-gray-900">
-        {(item.price * item.quantity).toLocaleString("pt-BR", {
+        {(item.valorPorProduto * item.quantidade).toLocaleString("pt-BR", {
           style: "currency",
           currency: "BRL",
         })}
@@ -116,16 +117,28 @@ const CartTable = ({ items, updateQuantity, removeItem }: CartTableProps) => (
           </TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
-        {items.map((item) => (
-          <CartItemRow
-            key={item.id}
-            item={item}
-            updateQuantity={updateQuantity}
-            removeItem={removeItem}
-          />
-        ))}
-      </TableBody>
+      {items.length !== 0 ? (
+        <TableBody>
+          {items.map((item) => (
+            <CartItemRow
+              key={item.id}
+              item={item}
+              updateQuantity={updateQuantity}
+              removeItem={removeItem}
+            />
+          ))}
+        </TableBody>
+      ) : (
+        <TableBody>
+          <TableRow>
+            <TableCell colSpan={3} className="text-center">
+              <p className="text-lg font-medium text-gray-900">
+                Seu carrinho está vazio.
+              </p>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      )}
     </Table>
   </div>
 );
