@@ -1,8 +1,8 @@
 package org.example.Service;
 
 import java.util.List;
-import java.util.Optional;
 
+import org.example.DTOS.updateDTO;
 import org.example.Model.Customer;
 import org.example.Repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,8 @@ public class CustomerService {
     public List<Customer> getAllCustomers(){
         return this.customerRepository.findAll();
     }
-    public Optional<Customer> getCustomerById(long id){
-        return this.customerRepository.findById(id);
+    public Customer getCustomerById(long id){
+        return this.customerRepository.getByID(id);
     }
     public Customer createCustomer(Customer newCustomer) {
         if (emailExists(newCustomer.getEmail())) {
@@ -35,20 +35,15 @@ public class CustomerService {
         Customer customer = customerRepository.findByEmailAsync(email);
         return customer != null;
     }    
-    public Customer updateCustomer(Customer CustomerObj,long id){
-        return customerRepository.findById(id)
-        .map(customer->{
-            customer.setFirst_name(CustomerObj.getFirst_name());
-            customer.setLast_name(CustomerObj.getLast_name());
-            customer.setCpf(CustomerObj.getCpf());
-            customer.setTelefone(CustomerObj.getTelefone());
-            customer.setDataNascimento(CustomerObj.getDataNascimento());
-            customer.setActive(CustomerObj.getActive());
-            customer.setAddress(CustomerObj.getAddress());
-            customer.setEmail(CustomerObj.getEmail());
-            customer.setPassword(CustomerObj.getPassword());
-            return customerRepository.save(customer);
-        }).orElseThrow(()-> new RuntimeException("Cliente não encontrado"));
+    public Customer updateCustomer(updateDTO updateUser,long id){
+        Customer obj= this.customerRepository.getByID(id);
+        obj.setFirst_name(updateUser.first_name());
+        obj.setLast_name(updateUser.last_name());
+        obj.setEmail(updateUser.email());
+        obj.setDataNascimento(updateUser.dataNascimento());
+        obj.setCpf(updateUser.cpf());
+        obj.setTelefone(updateUser.telefone());
+        return this.customerRepository.save(obj);
     }
 
     public void deleteCustomer(Long id){

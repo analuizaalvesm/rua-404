@@ -3,7 +3,6 @@ package org.example.Service;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.example.Model.Product;
 import org.example.Model.ShoppingCart;
@@ -12,7 +11,6 @@ import org.example.Repositories.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 public class ShoppingCartService {
@@ -41,7 +39,7 @@ public class ShoppingCartService {
             carrinho.setValorTotal(pedido.getPrice().multiply(BigDecimal.valueOf(pedido.getQuantity())));
             carrinho.setDataPedido(new Date());
             carrinho.setUrl(pedido.getUrl());
-            carrinho.setUser(customerRepository.getById(id));
+            carrinho.setUser(customerRepository.getByID(id));
             shoppingCartRepository.save(carrinho);
 
             return "";

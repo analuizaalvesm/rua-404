@@ -1,5 +1,5 @@
 package org.example.DTOS;
 
-public record registerDTO(String firstName, String secondName, String email, String password) {
+public record registerDTO(String first_name, String last_name, String email, String password) {
 
 }

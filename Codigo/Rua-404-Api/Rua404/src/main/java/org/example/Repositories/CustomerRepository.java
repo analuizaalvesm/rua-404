@@ -13,4 +13,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>{
     Customer findByEmailAsync(@Param("email")String email);
 
     Customer findByEmail(String email);
+
+    @Query("SELECT i FROM Customer i WHERE i.customer_id = :id ")
+    public Customer getByID(@Param("id") long id);
 }

@@ -1,8 +1,8 @@
 package org.example.Controller;
 
 import java.util.List;
-import java.util.Optional;
 
+import org.example.DTOS.updateDTO;
 import org.example.Model.Customer;
 import org.example.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +33,10 @@ public class CustomerController {
 
     
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> findById(@PathVariable Long id){
-    Optional<Customer> Customer= this.customerService.getCustomerById(id);
-    if(Customer.isPresent()){
-        return ResponseEntity.ok(Customer.get());
+    public ResponseEntity<?> findById(@PathVariable Long id){
+    Customer Customer= this.customerService.getCustomerById(id);
+    if(Customer!=null){
+        return ResponseEntity.ok(Customer);
     }else{
         return ResponseEntity.notFound().build();
     }
@@ -52,9 +52,9 @@ public class CustomerController {
        }
     }   
     @PutMapping("/{id}")
-    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customerUpdated,@PathVariable long id){
+    public ResponseEntity<Customer> updateCustomer(@RequestBody updateDTO user,@PathVariable long id){
         try {
-            Customer customer= this.customerService.updateCustomer(customerUpdated,id);
+            Customer customer= this.customerService.updateCustomer(user,id);
             return ResponseEntity.ok(customer);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
