@@ -4,7 +4,7 @@ import { useAuth } from "@/context/useAuth";
 import { User } from "@/models/User";
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, token, setUser } = useAuth();
   const [userData, setUserData] = useState<User | null>(null);
   const [editableUser, setEditableUser] = useState<User | null>(null);
   const [profilePictureUrl, setProfilePictureUrl] = useState<string | null>(
@@ -62,9 +62,20 @@ const Profile = () => {
       JSON.stringify(user) !== JSON.stringify(editableUser)
     ) {
       try {
-        await updateUserProfile(editableUser);
-        alert("As informações foram atualizadas com sucesso!");
-        setUserData({ ...editableUser });
+        const updatedUser = await updateUserProfile(editableUser);
+        if (updatedUser) {
+          setUserData({ ...editableUser });
+          const userObj = {
+            email: editableUser.email,
+            firstName: editableUser.first_name,
+            lastName: editableUser.last_name,
+          };
+
+          setUser(userObj);
+          localStorage.setItem("user", JSON.stringify(userObj));
+
+          alert("As informações foram atualizadas com sucesso!");
+        }
       } catch (error) {
         alert("Ocorreu um erro ao tentar salvar as alterações.");
       }
@@ -72,7 +83,6 @@ const Profile = () => {
       alert("Nenhuma alteração foi detectada.");
     }
   };
-
   const resetEditableUser = () => {
     if (userData) {
       setEditableUser({ ...userData });

@@ -3,19 +3,31 @@ package org.example.Controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.example.Model.Product;
 import org.example.Service.ProductService;
+import org.example.Service.StockManagementService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/products")
 public class ProductController {
 
     @Autowired
-    ProductService productService;
+    private ProductService productService;
+
+    @Autowired
+    private StockManagementService sotckService;
 
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts(){
@@ -54,5 +66,22 @@ public class ProductController {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }
+    @PostMapping("/{id}/stock-entry") public ResponseEntity<?> stockEntry(@PathVariable Long id, @RequestParam int quantity) { 
+        try { 
+            Product updatedProduct =this.sotckService.processStockEntry(id, quantity); return ResponseEntity.ok(updatedProduct.getQuantity()); 
+        } catch (Exception e) {
+             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage()); 
+            }
+        }
+        @PostMapping("/{id}/stock-exit")
+        public ResponseEntity<?> stockExit(@PathVariable Long id, @RequestParam int quantity) {
+             try {
+                Product updatedProduct = this.sotckService.processStockExit(id, quantity); 
+                return ResponseEntity.ok(updatedProduct.getQuantity()); 
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+             }
+            }
+        }
     
-}
+
