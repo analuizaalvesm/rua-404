@@ -63,7 +63,7 @@ public class AuthController {
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         Customer a=this.customerRepository.findByEmail(data.email());
-        if(a.getRole()==(UserRole.ADMIN)){
+        if(a.getRole()==(UserRole.USER)){
         String token = JwtUtil.generateAdmToken(this.customerRepository.findByEmailAsync(data.email()).getEmail());
 
         ResponseDTO response=new ResponseDTO(token, a.getRole());
