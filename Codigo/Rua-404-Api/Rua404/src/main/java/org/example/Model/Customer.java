@@ -1,6 +1,13 @@
 package org.example.Model;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+
+import org.example.Enum.UserRole;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,12 +17,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.JoinColumn;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class Customer implements UserDetails {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -31,11 +41,21 @@ public class Customer {
     @Column(name="last_name")
     private String last_name;
 
+    @Column(name="cpf")
+    private String cpf;
+
+    @Column(name="telefone")
+    private String telefone;
+
+    @Column(name="data_nascimento")
+    private String dataNascimento;
+
     @Column(name="email")
     private String email;
 
-    @Column(name="address")
-    private String address;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address", referencedColumnName = "endereco_id")
+    private Endereco address;
 
     @Column(name="active")
     private boolean active;
@@ -68,8 +88,19 @@ public class Customer {
     @Getter
     @Column(name = "login_token", unique = true, nullable = true)
     private String loginToken;
+
+    
+    public UserRole role;
     
 
+    public Customer(){}
+
+    public Customer(String firstName, String secondName, String login, String password){
+        this.first_name=firstName;
+        this.last_name=secondName;
+        this.email=login;
+        this.password=password;
+    }
 
     public Long getCustomer_id() {
         return this.customer_id;
@@ -103,6 +134,30 @@ public class Customer {
         this.last_name = last_name;
     }
 
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(String dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
     public String getEmail() {
         return this.email;
     }
@@ -111,11 +166,14 @@ public class Customer {
         this.email = email;
     }
 
-    public String getAddress() {
-        return this.address;
+    public Endereco getAddress() {
+        return address;
+    }
+    public void setRole(UserRole role){
+        this.role=role;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Endereco address) {
         this.address = address;
     }
 
@@ -147,6 +205,7 @@ public class Customer {
         this.last_update = last_update;
     }
 
+    @Override
     public String getPassword() {
         return this.password;
     }
@@ -169,6 +228,20 @@ public class Customer {
 
     public void setSendCode(Date data) {
         this.dataSendCode = data;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+    public UserRole getRole(){
+        return this.role;
     }
 
     

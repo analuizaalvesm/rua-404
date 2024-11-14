@@ -1,9 +1,9 @@
 package org.example.Security;
 
+import java.util.Date;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-
-import java.util.Date;
 
 public class JwtUtil {
 
@@ -16,5 +16,12 @@ public class JwtUtil {
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 horas
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
                 .compact();
+    }
+    public static String generateAdmToken(String email){
+        return Jwts.builder() .setSubject(email)
+        .claim("role", "ADMIN") 
+        .setIssuedAt(new Date(System.currentTimeMillis())) 
+        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) 
+        .signWith(SignatureAlgorithm.HS256, SECRET_KEY) .compact();
     }
 }

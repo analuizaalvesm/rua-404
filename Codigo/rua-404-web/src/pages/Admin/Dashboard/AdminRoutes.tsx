@@ -4,6 +4,7 @@ import { Outlet, useLocation } from "react-router-dom";
 import DefaultLayout from "./DefaultLayout";
 import Loader from "@/components/admin/components/Loader";
 import Stock from "../Stock/Stock";
+import Users from "../Users/Users";
 import Dashboard from "./Dashboard";
 import Orders from "../Orders/Orders";
 
@@ -64,3 +65,14 @@ const AdminOrders = () => {
 };
 
 export { AdminOrders };
+
+const AdminUsers = () => {
+  return (
+    <>
+      <PageTitle title="RuaAdmin - Usuários" />
+      <Users />
+    </>
+  );
+};
+
+export { AdminUsers };
