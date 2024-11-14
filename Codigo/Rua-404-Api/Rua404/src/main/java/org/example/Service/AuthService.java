@@ -7,11 +7,14 @@ import org.example.Repositories.UserRepository;
 import org.example.Security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-public class AuthService {
+public class AuthService implements UserDetailsService {
 
     @Autowired
     private CustomerRepository customerRepository;
@@ -92,5 +95,10 @@ public class AuthService {
             }
         }
         throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Código inválido");
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return this.customerRepository.findByEmail(username);
     }
 }

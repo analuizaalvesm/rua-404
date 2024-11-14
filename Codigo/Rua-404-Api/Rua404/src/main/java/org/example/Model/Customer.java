@@ -1,6 +1,13 @@
 package org.example.Model;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+
+import org.example.Enum.UserRole;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -18,7 +25,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class Customer implements UserDetails {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -81,8 +88,19 @@ public class Customer {
     @Getter
     @Column(name = "login_token", unique = true, nullable = true)
     private String loginToken;
+
+    
+    public UserRole role;
     
 
+    public Customer(){}
+
+    public Customer(String firstName, String secondName, String login, String password){
+        this.first_name=firstName;
+        this.last_name=secondName;
+        this.email=login;
+        this.password=password;
+    }
 
     public Long getCustomer_id() {
         return this.customer_id;
@@ -151,6 +169,9 @@ public class Customer {
     public Endereco getAddress() {
         return address;
     }
+    public void setRole(UserRole role){
+        this.role=role;
+    }
 
     public void setAddress(Endereco address) {
         this.address = address;
@@ -184,6 +205,7 @@ public class Customer {
         this.last_update = last_update;
     }
 
+    @Override
     public String getPassword() {
         return this.password;
     }
@@ -206,6 +228,20 @@ public class Customer {
 
     public void setSendCode(Date data) {
         this.dataSendCode = data;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+    public UserRole getRole(){
+        return this.role;
     }
 
     
