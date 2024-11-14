@@ -5,6 +5,7 @@ import DefaultLayout from "./DefaultLayout";
 import Loader from "@/components/admin/components/Loader";
 import Stock from "../Stock/Stock";
 import Dashboard from "./Dashboard";
+import Orders from "../Orders/Orders";
 
 const AdminRoutes = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -52,3 +53,14 @@ const AdminStock = () => {
 };
 
 export { AdminStock };
+
+const AdminOrders = () => {
+  return (
+    <>
+      <PageTitle title="RuaAdmin - Pedidos" />
+      <Orders />
+    </>
+  );
+};
+
+export { AdminOrders };

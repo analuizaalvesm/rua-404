@@ -4,6 +4,7 @@ import { FiFile, FiLayers, FiSettings } from "react-icons/fi";
 import { BsGrid } from "react-icons/bs";
 import { ShoppingBag, Users } from "lucide-react";
 import { BiColor } from "react-icons/bi";
+import { TbShoppingBagEdit } from "react-icons/tb";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -101,7 +102,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     "bg-gray-800 dark:bg-meta-4"
                   }`}
                 >
-                  <ShoppingBag size={20} />
+                  <TbShoppingBagEdit size={20} />
                   Estoque
                 </NavLink>
               </li>
@@ -119,14 +120,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               <li>
                 <NavLink
-                  to="/admin/cms"
+                  to="/admin/orders"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
-                    pathname.includes("/admin/cms") &&
+                    pathname.includes("/admin/orders") &&
                     "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                  <BiColor size={20} />
-                  CMS
+                  <ShoppingBag size={20} />
+                  Pedidos
                 </NavLink>
               </li>
               <li>
