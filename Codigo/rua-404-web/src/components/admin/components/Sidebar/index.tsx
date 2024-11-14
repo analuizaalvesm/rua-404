@@ -5,7 +5,7 @@ import { BsGrid } from "react-icons/bs";
 import { ShoppingBag, Users } from "lucide-react";
 import { BiColor } from "react-icons/bi";
 import { TbShoppingBagEdit } from "react-icons/tb";
-import { Users } from "lucide-react";
+import { FiSettings } from "react-icons/fi";
 
 interface SidebarProps {
   sidebarOpen: boolean;

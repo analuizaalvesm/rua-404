@@ -103,6 +103,7 @@ const routeConfig: RouteConfig[] = [
         path: "orders/not-sent",
         element: <AdminOrders />,
       },
+      {
         path: "users",
         element: <AdminUsers />,
       },
