@@ -1,5 +1,9 @@
 package org.example.Controller;
 
+import jakarta.validation.Valid;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import org.example.DTOS.ResponseDTO;
 import org.example.DTOS.loginDTO;
 import org.example.DTOS.registerDTO;
@@ -21,8 +25,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
@@ -47,16 +49,6 @@ public class AuthController {
         }
         
     }
-   /*  @PostMapping("/register")
-    public String register(@RequestBody Customer customer) {
-        return authService.registerUser(customer);
-    }
-
-    @PostMapping("/login")
-    public String login(@RequestBody Customer customer) {
-        return authService.login(customer);
-    }
- */
 @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid loginDTO data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
@@ -83,6 +75,11 @@ public class AuthController {
         String encryptPassword=new BCryptPasswordEncoder().encode(data.password());
         Customer newUser= new Customer(data.first_name(),data.last_name(),data.email(),encryptPassword);
         newUser.setRole(UserRole.USER);
+        
+        LocalDate hoje = LocalDate.now();
+        Date date=Date.from(hoje.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        newUser.setCreate_data(date);
 
         customerRepository.save(newUser);
         return ResponseEntity.ok(newUser);

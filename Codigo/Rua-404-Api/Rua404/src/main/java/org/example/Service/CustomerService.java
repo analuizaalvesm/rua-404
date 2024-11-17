@@ -1,7 +1,9 @@
 package org.example.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
-
 import org.example.DTOS.updateDTO;
 import org.example.Model.Customer;
 import org.example.Repositories.CustomerRepository;
@@ -36,6 +38,9 @@ public class CustomerService {
         return customer != null;
     }    
     public Customer updateCustomer(updateDTO updateUser,long id){
+        LocalDate hoje = LocalDate.now();
+        Date date=Date.from(hoje.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
         Customer obj= this.customerRepository.getByID(id);
         obj.setFirst_name(updateUser.first_name());
         obj.setLast_name(updateUser.last_name());
@@ -43,6 +48,7 @@ public class CustomerService {
         obj.setDataNascimento(updateUser.dataNascimento());
         obj.setCpf(updateUser.cpf());
         obj.setTelefone(updateUser.telefone());
+        obj.setLast_update(date);
         return this.customerRepository.save(obj);
     }
 
