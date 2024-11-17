@@ -36,6 +36,7 @@ public class ReportController {
             break;
         case "pedidos":
             reportContent=relatoriosService.generateOrdersReport();
+            break;
         default:
             return ResponseEntity.badRequest().build();
     }

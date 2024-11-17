@@ -59,24 +59,27 @@ public class RelatoriosService{
     return pdfDocument;
 }
 
-    public String generateOrdersReport(){
-        List<Order> listaDePedidos=this.orderRepository.findAll();
-        
-       StringBuilder relatorio = new StringBuilder();
-        for (Order order : listaDePedidos) {
-             StringJoiner produtos = new StringJoiner(", "); 
-             for (Product produto : order.getProdutos()) { 
-                produtos.add(produto.getName()); 
-            } String linha =
-             "Pedido: " + order.getId() + 
-             " Produtos: " + produtos.toString() + 
-             " Data: " + order.getData() + 
-             " Cliente: " + order.getUsuario().getEmail() + 
-             " Total: " + order.getValorTotal()+
-             " Status: "+order.getStatus(); 
-             relatorio.append(linha).append("\n"); }
-             return relatorio.toString();
+public String generateOrdersReport() {
+    List<Order> listaDePedidos = this.orderRepository.findAll();
+
+    StringBuilder relatorio = new StringBuilder();
+    for (Order order : listaDePedidos) {
+
+        StringJoiner produtos = new StringJoiner(", ");
+        for (Product produto : order.getProdutos()) {
+            produtos.add(produto.getName());
+        }
+        String linha = "Pedido: " + order.getId() +
+                       " Produtos: " + produtos.toString() +
+                       " Data: " + order.getData() +
+                       " Cliente: " + order.getUsuario().getEmail() +
+                       " Total: " + order.getValorTotal() +
+                       " Status: " + order.getStatus();
+        relatorio.append(linha).append("\n");
     }
+    return relatorio.toString();
+}
+
 
     public String generateUsersReport(){
       List<Customer> listaDeClientes=this.customerRepository.findAll();
