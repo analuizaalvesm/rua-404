@@ -1,7 +1,28 @@
 package org.example.Repositories;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import org.example.Model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
+
+    @Query("SELECT SUM(o.valorTotal) FROM Order o WHERE o.data >= :startDate")
+    public BigDecimal findValorTotalByPeriod(@Param("startDate")LocalDate startDate);
+
+    /*@Query("SELECT SUM(o.valorTotal) FROM Order o WHERE o.data >= CURRENT_DATE - 7")
+    public BigDecimal findValorTotalByWeek();
+
+    @Query("SELECT SUM(o.valorTotal) FROM Order o WHERE o.data >= CURRENT_DATE - 30")
+    public BigDecimal findValorTotalByMonth();*/
+
+    @Query("SELECT COUNT(o) FROM Order o WHERE o.status = 'fechado'")
+    public Long findTotalPedidosFechados();
+
+    @Query("SELECT SUM(o.valorTotal) FROM Order o WHERE o.status = 'fechado'")
+    public BigDecimal totalValorVendas();
 }
