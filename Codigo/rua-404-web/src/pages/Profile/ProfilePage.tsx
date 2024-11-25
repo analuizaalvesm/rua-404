@@ -64,8 +64,11 @@ const JobProfile = () => {
                             : "text-gray-500 hover:bg-[#F5F5F5] hover:text-gray-800"
                         }`}
                       >
-                        {item.icon}
-                        {item.name}
+                        <span className="md:hidden">{item.icon}</span>
+                        <span className="hidden md:inline-flex items-center gap-2">
+                          {item.icon}
+                          {item.name}
+                        </span>
                       </button>
                     </div>
                   </li>
@@ -74,8 +77,11 @@ const JobProfile = () => {
                   onClick={logout}
                   className="w-full mb-8 text-left bg-[#fafafa] text-[15px]/[15px] font-regular flex flex-row items-center py-3 px-4 gap-3 text-red-400 hover:bg-[#F5F5F5] hover:text-red-500"
                 >
-                  <FiLogOut size={18} />
-                  Sair
+                  <span className="md:hidden"><FiLogOut size={18} /></span>
+                  <span className="hidden md:inline-flex items-center gap-2">
+                    <FiLogOut size={18} />
+                    Sair
+                  </span>
                 </button>
               </ul>
             </nav>

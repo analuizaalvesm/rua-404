@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getUserProfile, updateUserProfile } from "@/services/ProfileService";
 import { useAuth } from "@/context/useAuth";
 import { User } from "@/models/User";
+import { BsCpuFill } from "react-icons/bs";
 
 const Profile = () => {
   const { user, token, setUser } = useAuth();
@@ -69,6 +70,9 @@ const Profile = () => {
             email: editableUser.email,
             firstName: editableUser.first_name,
             lastName: editableUser.last_name,
+            dataNascimento: editableUser.dataNascimento,
+            cpf: editableUser.cpf,
+            telefone: editableUser.telefone
           };
 
           setUser(userObj);
@@ -83,6 +87,7 @@ const Profile = () => {
       alert("Nenhuma alteração foi detectada.");
     }
   };
+
   const resetEditableUser = () => {
     if (userData) {
       setEditableUser({ ...userData });
@@ -181,7 +186,7 @@ const Profile = () => {
         </div>
         <div className="w-3/6 pr-1">
           <label
-            htmlFor="data"
+            htmlFor="dataNascimento"
             className="block text-sm font-medium text-gray-700"
           >
             Data de nascimento
@@ -189,6 +194,9 @@ const Profile = () => {
           <input
             type="date"
             id="data"
+            name="dataNascimento"
+            value={editableUser?.dataNascimento || ""}
+            onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
           />
         </div>
@@ -202,20 +210,24 @@ const Profile = () => {
           <input
             type="text"
             name="cpf"
+            value={editableUser?.cpf || ""}
+            onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             placeholder="123.456.789-00"
           />
         </div>
         <div className="w-3/6 pr-1">
           <label
-            htmlFor="celular"
+            htmlFor="telefone"
             className="block text-sm font-medium text-gray-700"
           >
             Celular
           </label>
           <input
             type="text"
-            name="celular"
+            name="telefone"
+            value={editableUser?.telefone || ""}
+            onChange={handleInputChange}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-sm shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
             placeholder="(11) 99999-9999"
           />

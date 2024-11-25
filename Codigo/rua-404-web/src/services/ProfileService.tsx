@@ -1,9 +1,11 @@
 import axios from "axios";
 import { handleError } from "../utils/handlers/ErrorHandler";
 import { User } from "../models/User";
+import { Address } from "../models/Address";
 
 const api = "http://localhost:8080/auth/";
 const customerApi = "http://localhost:8080/customer/";
+const addressApi = "http://localhost:8080/endereco";
 
 export const getUserProfile = async (email: String) => {
   console.log("email", email);
@@ -43,3 +45,21 @@ export const getAllUsersProfile = async () => {
     return false;
   }
 };
+
+export const getAddress = async (customerId: number) => {
+  try {
+    const response = await axios.get(`${addressApi}?ClienteId=${customerId}`);
+    return response;
+  } catch (error) {
+    handleError(error);
+  }
+}
+
+export const updateAddress = async (customerId: number, address: Address) => {
+  try {
+    const response = await axios.put(`${addressApi}?idCliente=${customerId}`, address);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+}
