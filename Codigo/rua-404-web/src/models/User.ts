@@ -3,6 +3,9 @@ export type User = {
   store_id?: number;
   first_name: string;
   last_name: string;
+  cpf: string;
+  telefone: string;
+  dataNascimento: string;
   email: string;
   address: string;
   active: boolean;
@@ -20,7 +23,6 @@ export type User = {
   id?: number;
   profilePicture?: any;
 };
-
 
 export type UserProfile = {
   email: string;
