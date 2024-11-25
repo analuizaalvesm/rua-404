@@ -29,7 +29,7 @@ public class EnderecoController {
         if(obj!=null){
             obj.setAddress(endereco);
         }else{
-            return ResponseEntity.badRequest().body("Cliente não encontrado");
+            return ResponseEntity.ok().body("Cliente não encontrado");
         }
         Endereco savedEndereco = enderecoService.saveEndereco(endereco);
         if (savedEndereco != null) {
@@ -40,12 +40,25 @@ public class EnderecoController {
     }
 
     @GetMapping
-    public ResponseEntity<Endereco> getEnderecoById(@RequestParam Long ClienteId) {
-        Long id=this.customerRepository.findById(ClienteId).get().getAddress().getIdEndereco();
-        Optional<Endereco> endereco = enderecoService.getEnderecoById(id);
-        return endereco.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+public ResponseEntity<Endereco> getEnderecoById(@RequestParam Long ClienteId) {
+    Optional<Customer> clienteOpt = this.customerRepository.findById(ClienteId);
+    if (!clienteOpt.isPresent()) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    Customer cliente = clienteOpt.get();
+    Endereco address = cliente.getAddress();
+    if (address == null) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    Long id = address.getIdEndereco();
+    if (id == null) {
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    Optional<Endereco> endereco = enderecoService.getEnderecoById(id);
+    return endereco.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+            .orElseGet(() -> new ResponseEntity<>(HttpStatus.NO_CONTENT));
+}
+
 
     @PutMapping
     public ResponseEntity<Endereco> updateEndereco(@RequestParam Long idCliente, @RequestBody Endereco enderecoDetails) {
