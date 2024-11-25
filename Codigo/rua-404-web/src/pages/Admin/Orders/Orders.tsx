@@ -11,7 +11,7 @@ const Orders: React.FC = () => {
     const { state } = useLocation();
     const navigate = useNavigate();
     const { pathname } = location;
-  
+
     const [order, setOrder] = useState<Order | null>(null);
     const [orders, setOrderList] = useState<Order[]>([]);
     const [userData, setUserData] = useState<User | null>(null);
@@ -64,11 +64,11 @@ const Orders: React.FC = () => {
         date.setDate(date.getDate() + days);
         return date;
     };
-    
+
     const OrderCard = ({ order }: { order: Order }) => {
         const [buttonText, setButtonText] = useState<string>("Confirmar pagamento");
         const [statusText, setStatusText] = useState<string>("Pendente pagamento");
-        
+
         const handleCancelButtonClick = () => {
         }
 
@@ -89,7 +89,7 @@ const Orders: React.FC = () => {
             setStatusText("Pronto");
         }
 
-        const confirmSend = () => { 
+        const confirmSend = () => {
             setStatusText("Enviado");
         }
 
@@ -202,15 +202,15 @@ const Orders: React.FC = () => {
         value: string | number,
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
         type = "text"
-      ) => (
+    ) => (
         <div className="flex flex-col">
-          <label className="mb-1 font-semibold">{label}</label>
-          <input
-            type={type}
-            value={value}
-            onChange={onChange}
-            className="border rounded p-2"
-          />
+            <label className="mb-1 font-semibold">{label}</label>
+            <input
+                type={type}
+                value={value}
+                onChange={onChange}
+                className="border rounded p-2"
+            />
         </div>
     );
 
@@ -220,11 +220,11 @@ const Orders: React.FC = () => {
                 <div className="mx-auto max-w-screen-2xl px-16">
                     <div className="flex items-center mb-4 space-x-4">
                         <input
-                        type="text"
-                        placeholder="Pesquisar pedidos..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="border rounded p-2 flex-1"
+                            type="text"
+                            placeholder="Pesquisar pedidos..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className="border rounded p-2 flex-1"
                         />
                     </div>
 
@@ -241,12 +241,11 @@ const Orders: React.FC = () => {
                                 </li>
                                 <li>
                                     <NavLink
-                                    to="/admin/orders/not-sent"
-                                    className={`text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline ${
-                                        pathname.includes("/admin/orders/not-sent")
-                                    }`}
+                                        to="/admin/orders/not-sent"
+                                        className={`text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline ${pathname.includes("/admin/orders/not-sent")
+                                            }`}
                                     >
-                                    Ainda não enviado
+                                        Ainda não enviado
                                     </NavLink>
                                 </li>
                                 <li>
@@ -268,16 +267,16 @@ const Orders: React.FC = () => {
                                     <OrderCard key={order.id} order={order} />
                                 ))
                             ) : (
-                            <p className="col-span-full text-center">
-                                Nenhum produto encontrado.
-                            </p>
-                        )}
+                                <p className="col-span-full text-center">
+                                    Nenhum produto encontrado.
+                                </p>
+                            )}
                         </div>
                     </main>
                 </div>
             </section>
         </div>
     );
-  };
-  
-  export default Orders;
+};
+
+export default Orders;
