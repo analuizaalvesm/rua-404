@@ -13,8 +13,6 @@ const Orders: React.FC = () => {
     const { pathname } = location;
   
     const [order, setOrder] = useState<Order | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
     const [orders, setOrderList] = useState<Order[]>([]);
     const [userData, setUserData] = useState<User | null>(null);
     const [searchTerm, setSearchTerm] = useState<string>("");
@@ -137,19 +135,18 @@ const Orders: React.FC = () => {
                         </div>
                         <div
                             className="col-span-4 sm:col-span-3 max-sm:mt-4 sm:pl-8 flex flex-col justify-center max-sm:items-center">
-                            <h6 className="text-xl font-semibold mb-1 leading-9 text-black mb-3 whitespace-nowrap">
+                            <h6 className="text-xl mb-1 leading-9 text-black mb-3 whitespace-nowrap">
                                 {
                                     order.produtos.map((product) => (
                                         <div className="flex items-center max-sm:flex-col gap-x-10 gap-y-3">
-                                            <p>{product.name}</p>
+                                            <p className="font-semibold">{product.name}</p>
                                             <span className="font-normal text-lg leading-8 text-gray-500 whitespace-nowrap">
-                                                Tamanho: {product.size}
+                                                Tam.: {product.size}
                                             </span>
                                             <span className="font-normal text-lg leading-8 text-gray-500 whitespace-nowrap">
-                                                Quant: {product.quantity}
+                                                Quant.: {product.quantity}
                                             </span>
                                         </div>
-                                        
                                     ))
                                 }
                             </h6>
@@ -221,64 +218,64 @@ const Orders: React.FC = () => {
         <div>
             <section className="bg-gray-50 dark:bg-gray-900 pb-10">
                 <div className="mx-auto max-w-screen-2xl px-16">
-                <div className="flex items-center mb-4 space-x-4">
-                    <input
-                    type="text"
-                    placeholder="Pesquisar pedidos..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="border rounded p-2 flex-1"
-                    />
-                </div>
-
-                <main className="w-full">
-                    <div className="flex flex-col gap-6">
-                        {filteredOrders.length > 0 ? (
-                            filteredOrders.map((order) => (
-                                <OrderCard key={order.id} order={order} />
-                            ))
-                        ) : (
-                        <p className="col-span-full text-center">
-                            Nenhum produto encontrado.
-                        </p>
-                    )}
+                    <div className="flex items-center mb-4 space-x-4">
+                        <input
+                        type="text"
+                        placeholder="Pesquisar pedidos..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="border rounded p-2 flex-1"
+                        />
                     </div>
-                </main>
+
+                    <div className="max-w-xl">
+                        <div className="flex sm:flex-col lg:flex-row sm:items-center justify-between">
+                            <ul className="flex max-sm:flex-col sm:items-center gap-x-10 gap-y-3">
+                                <li className="cursor-pointer">
+                                    <label
+                                        htmlFor="pedidos"
+                                        className="text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline underline"
+                                    >
+                                        Pedidos
+                                    </label>
+                                </li>
+                                <li>
+                                    <NavLink
+                                    to="/admin/orders/not-sent"
+                                    className={`text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline ${
+                                        pathname.includes("/admin/orders/not-sent")
+                                    }`}
+                                    >
+                                    Ainda não enviado
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <label
+                                        htmlFor="cancelados"
+                                        className="text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline"
+                                    >
+                                        Pedidos cancelados
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <main className="w-full">
+                        <div className="flex flex-col gap-6">
+                            {filteredOrders.length > 0 ? (
+                                filteredOrders.map((order) => (
+                                    <OrderCard key={order.id} order={order} />
+                                ))
+                            ) : (
+                            <p className="col-span-full text-center">
+                                Nenhum produto encontrado.
+                            </p>
+                        )}
+                        </div>
+                    </main>
                 </div>
             </section>
-
-            {/* <div className="max-w-xl">
-                <div className="flex sm:flex-col lg:flex-row sm:items-center justify-between">
-                    <ul className="flex max-sm:flex-col sm:items-center gap-x-10 gap-y-3">
-                        <li className="cursor-pointer">
-                            <label
-                                htmlFor="pedidos"
-                                className="text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline underline"
-                            >
-                                Pedidos
-                            </label>
-                        </li>
-                        <li>
-                            <NavLink
-                            to="/admin/orders/not-sent"
-                            className={`text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline ${
-                                pathname.includes("/admin/orders/not-sent")
-                            }`}
-                            >
-                            Ainda não enviado
-                            </NavLink>
-                        </li>
-                        <li>
-                            <label
-                                htmlFor="cancelados"
-                                className="text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline"
-                            >
-                                Pedidos cancelados
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-            </div> */}
         </div>
     );
   };
