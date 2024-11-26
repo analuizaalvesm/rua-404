@@ -60,4 +60,15 @@ public class ShoppingCartController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("fecharCarrinho")
+    public ResponseEntity<String> fecharCart(@RequestParam Long id) {
+        try {
+           ShoppingCart pedidonovo =  shoppingCartService.getById(id);
+            shoppingCartService.fecharCarrinho(pedidonovo);
+            return ResponseEntity.ok().body("Carrinho fechado com sucesso");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

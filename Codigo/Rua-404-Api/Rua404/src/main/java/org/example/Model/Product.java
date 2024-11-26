@@ -46,6 +46,10 @@ public class Product {
     @Column
     private String url;
 
+    public Product(String name){
+        this.name = name;
+    }
+
     // Getters and Setters
     public Long getId() {
         return id;
