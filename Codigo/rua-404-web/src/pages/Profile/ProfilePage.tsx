@@ -39,8 +39,8 @@ const JobProfile = () => {
   return (
     <div className="max-w-full bg-[#fafafa]">
       <div className="mx-auto max-w-screen-xl">
-        <div className="pt-12 pb-4">
-          <h2 className="text-2xl font-medium">Minha conta</h2>
+        <div className="pt-12 pb-4 p-4 md:pr-0">
+          <h2 className="text-2xl font-medium font-orbitron-semibold">Minha conta</h2>
           <p className="text-[#6A6A6A]">
             Gerencie as configurações da sua conta e defina as suas
             preferências.
@@ -86,7 +86,7 @@ const JobProfile = () => {
               </ul>
             </nav>
           </aside>
-          <main className="w-10/12 pl-6 pt-6">
+          <main className="w-10/12 p-6">
             <Outlet />
           </main>
         </div>
