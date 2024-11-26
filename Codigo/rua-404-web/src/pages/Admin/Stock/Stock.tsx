@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { Product } from "../../../models/Product";
-import { getProductsApi, deleteProductApi, createProductApi } from "../../../services/ProductService";
+import {
+  getProductsApi,
+  deleteProductApi,
+  createProductApi,
+} from "../../../services/ProductService";
 
 const Stock = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -9,14 +13,14 @@ const Stock = () => {
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [productToDelete, setProductToDelete] = useState<number | null>(null);
   const [newProduct, setNewProduct] = useState<Omit<Product, "id">>({
-    name: '',
-    productType: '',
-    size: '',
-    collab: '',
+    name: "",
+    productType: "",
+    size: "",
+    collab: "",
     price: 0,
     quantity: 0,
     lastUpdated: new Date().toISOString(),
-    url: ''
+    url: "",
   });
   const [editProduct, setEditProduct] = useState<Product | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -44,14 +48,14 @@ const Stock = () => {
     fetchProducts();
     setShowAddModal(false);
     setNewProduct({
-      name: '',
-      productType: '',
-      size: '',
-      collab: '',
+      name: "",
+      productType: "",
+      size: "",
+      collab: "",
       price: 0,
       quantity: 0,
       lastUpdated: new Date().toISOString(),
-      url: ''
+      url: "",
     });
   };
 
@@ -119,8 +123,8 @@ const Stock = () => {
 
   return (
     <div className="max-w-full">
-      <section className="bg-gray-50 dark:bg-gray-900 pb-10">
-        <div className="mx-auto max-w-screen-2xl px-16">
+      <section className="dark:bg-gray-900 pb-10">
+        <div className="mx-auto max-w-screen-2xl">
           <div className="flex items-center mb-4 space-x-4">
             <input
               type="text"
@@ -181,16 +185,59 @@ const Stock = () => {
           <div className="bg-white p-6 rounded shadow-lg w-80">
             <h2 className="text-lg font-bold mb-4">Adicionar Novo Produto</h2>
             <form className="flex flex-col space-y-4">
-              {renderInputField("Nome", newProduct.name, (e) => setNewProduct({ ...newProduct, name: e.target.value }))}
-              {renderInputField("Tipo de Produto", newProduct.productType, (e) => setNewProduct({ ...newProduct, productType: e.target.value }))}
-              {renderInputField("Tamanho", newProduct.size, (e) => setNewProduct({ ...newProduct, size: e.target.value }))}
-              {renderInputField("Colaboração", newProduct.collab, (e) => setNewProduct({ ...newProduct, collab: e.target.value }))}
-              {renderInputField("Preço", newProduct.price, (e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) }), "number")}
-              {renderInputField("Quantidade", newProduct.quantity, (e) => setNewProduct({ ...newProduct, quantity: parseInt(e.target.value, 10) }), "number")}
-              {renderInputField("URL da Imagem", newProduct.url, (e) => setNewProduct({ ...newProduct, url: e.target.value }))}
+              {renderInputField("Nome", newProduct.name, (e) =>
+                setNewProduct({ ...newProduct, name: e.target.value })
+              )}
+              {renderInputField(
+                "Tipo de Produto",
+                newProduct.productType,
+                (e) =>
+                  setNewProduct({ ...newProduct, productType: e.target.value })
+              )}
+              {renderInputField("Tamanho", newProduct.size, (e) =>
+                setNewProduct({ ...newProduct, size: e.target.value })
+              )}
+              {renderInputField("Colaboração", newProduct.collab, (e) =>
+                setNewProduct({ ...newProduct, collab: e.target.value })
+              )}
+              {renderInputField(
+                "Preço",
+                newProduct.price,
+                (e) =>
+                  setNewProduct({
+                    ...newProduct,
+                    price: parseFloat(e.target.value),
+                  }),
+                "number"
+              )}
+              {renderInputField(
+                "Quantidade",
+                newProduct.quantity,
+                (e) =>
+                  setNewProduct({
+                    ...newProduct,
+                    quantity: parseInt(e.target.value, 10),
+                  }),
+                "number"
+              )}
+              {renderInputField("URL da Imagem", newProduct.url, (e) =>
+                setNewProduct({ ...newProduct, url: e.target.value })
+              )}
               <div className="flex justify-end mt-4">
-                <button onClick={() => setShowAddModal(false)} type="button" className="px-4 py-2 mr-2 bg-gray-300 rounded">Cancelar</button>
-                <button onClick={handleAddProduct} type="button" className="px-4 py-2 bg-green-500 text-white rounded">Adicionar</button>
+                <button
+                  onClick={() => setShowAddModal(false)}
+                  type="button"
+                  className="px-4 py-2 mr-2 bg-gray-300 rounded"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={handleAddProduct}
+                  type="button"
+                  className="px-4 py-2 bg-green-500 text-white rounded"
+                >
+                  Adicionar
+                </button>
               </div>
             </form>
           </div>
@@ -202,16 +249,62 @@ const Stock = () => {
           <div className="bg-white p-6 rounded shadow-lg w-80">
             <h2 className="text-lg font-bold mb-4">Editar Produto</h2>
             <form className="flex flex-col space-y-4">
-              {renderInputField("Nome", editProduct.name, (e) => setEditProduct({ ...editProduct, name: e.target.value }))}
-              {renderInputField("Tipo de Produto", editProduct.productType, (e) => setEditProduct({ ...editProduct, productType: e.target.value }))}
-              {renderInputField("Tamanho", editProduct.size, (e) => setEditProduct({ ...editProduct, size: e.target.value }))}
-              {renderInputField("Colaboração", editProduct.collab, (e) => setEditProduct({ ...editProduct, collab: e.target.value }))}
-              {renderInputField("Preço", editProduct.price, (e) => setEditProduct({ ...editProduct, price: parseFloat(e.target.value) }), "number")}
-              {renderInputField("Quantidade", editProduct.quantity, (e) => setEditProduct({ ...editProduct, quantity: parseInt(e.target.value, 10) }), "number")}
-              {renderInputField("URL da Imagem", editProduct.url, (e) => setEditProduct({ ...editProduct, url: e.target.value }))}
+              {renderInputField("Nome", editProduct.name, (e) =>
+                setEditProduct({ ...editProduct, name: e.target.value })
+              )}
+              {renderInputField(
+                "Tipo de Produto",
+                editProduct.productType,
+                (e) =>
+                  setEditProduct({
+                    ...editProduct,
+                    productType: e.target.value,
+                  })
+              )}
+              {renderInputField("Tamanho", editProduct.size, (e) =>
+                setEditProduct({ ...editProduct, size: e.target.value })
+              )}
+              {renderInputField("Colaboração", editProduct.collab, (e) =>
+                setEditProduct({ ...editProduct, collab: e.target.value })
+              )}
+              {renderInputField(
+                "Preço",
+                editProduct.price,
+                (e) =>
+                  setEditProduct({
+                    ...editProduct,
+                    price: parseFloat(e.target.value),
+                  }),
+                "number"
+              )}
+              {renderInputField(
+                "Quantidade",
+                editProduct.quantity,
+                (e) =>
+                  setEditProduct({
+                    ...editProduct,
+                    quantity: parseInt(e.target.value, 10),
+                  }),
+                "number"
+              )}
+              {renderInputField("URL da Imagem", editProduct.url, (e) =>
+                setEditProduct({ ...editProduct, url: e.target.value })
+              )}
               <div className="flex justify-end mt-4">
-                <button onClick={() => setShowEditModal(false)} type="button" className="px-4 py-2 mr-2 bg-gray-300 rounded">Cancelar</button>
-                <button onClick={handleSaveEditProduct} type="button" className="px-4 py-2 bg-blue-500 text-white rounded">Salvar</button>
+                <button
+                  onClick={() => setShowEditModal(false)}
+                  type="button"
+                  className="px-4 py-2 mr-2 bg-gray-300 rounded"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={handleSaveEditProduct}
+                  type="button"
+                  className="px-4 py-2 bg-blue-500 text-white rounded"
+                >
+                  Salvar
+                </button>
               </div>
             </form>
           </div>
