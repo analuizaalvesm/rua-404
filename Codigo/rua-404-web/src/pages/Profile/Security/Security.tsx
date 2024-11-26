@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/context/useAuth';
-import { getUserProfile } from '@/services/ProfileService';
+import { getUserProfile, deleteUser } from '@/services/ProfileService';
 import { User } from '@/models/User';
 
 const Security: React.FC = () => {
+    const { logout } = useAuth();
     const { user } = useAuth();
     const [userData, setUserData] = useState<User | null>(null);
 
@@ -24,18 +25,31 @@ const Security: React.FC = () => {
         }
     }, [user]);
 
+    const handleDeleteUser = async () => {
+        if (userData) {
+            const success = await deleteUser(userData.customer_id);
+            console.log("success", success);
+            if (success) {
+                logout();
+                alert("Usuário deletado com sucesso.");
+            } else {
+                alert("Erro ao deletar usuário.");
+            }
+        }
+    }
+
     return (
         <div className="max-w-full">
-            <h1 className="text-2xl font-semibold mb-1">Segurança</h1>
+            <h2 className="text-xl font-medium font-orbitron-regular mb-1">Segurança</h2>
 
-            <svg className="my-9 w-full" xmlns="http://www.w3.org/2000/svg" width="1216" height="2" viewBox="0 0 1216 2" fill="none">
+            <svg className="my-6 w-full" width="1216" height="2" viewBox="0 0 1216 2" fill="none">
                 <path d="M0 1H1216" stroke="#D1D5DB"></path>
             </svg>
 
             <section>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="col-span-1">
-                        <h2 className="mb-1 text-lg font-semibold leading-tight tracking-tight text-gray-900 dark:text-white">
+                        <h2 className="mb-1 text-lg font-medium leading-tight tracking-tight text-gray-900 dark:text-white">
                             Alterar senha
                         </h2>
                         <p className="text-gray-500 text-sm">
@@ -68,8 +82,9 @@ const Security: React.FC = () => {
                                     <input id="newsletter" aria-describedby="newsletter" type="checkbox" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required />
                                 </div>
                                 <div className="ml-3 text-sm">
-                                    <label htmlFor="newsletter" className="font-light text-gray-500 dark:text-gray-300">Eu aceito os 
-                                        <a className="font-medium text-primary-600 hover:underline dark:text-primary-500" href="#">
+                                    <label htmlFor="newsletter" className="font-light text-gray-500 dark:text-gray-300">
+                                        Eu aceito os 
+                                        <a className="font-medium text-primary-600 hover:underline dark:text-primary-500 ml-1" href="#">
                                             Termos e Condições
                                         </a>
                                     </label>
@@ -106,7 +121,7 @@ const Security: React.FC = () => {
                     <div className="col-span-2">
                         <button
                             type="submit"
-                            onClick={() => console.log("Deletar conta")}
+                            onClick={handleDeleteUser}
                             className="bg-red-600 text-white text-sm px-6 py-2.5 rounded-sm hover:bg-red-800"
                         >
                             Sim, deletar minha conta.
@@ -114,6 +129,11 @@ const Security: React.FC = () => {
                     </div>
                 </div>
             </section>
+
+            <svg className="mt-9 w-full" width="1216" height="0" viewBox="0 0 1216 2"
+                fill="none">
+                <path d="M0 1H1216" stroke="#D1D5DB" />
+            </svg>
         </div>
     );
 };

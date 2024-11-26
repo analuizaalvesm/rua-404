@@ -115,7 +115,7 @@ const Orders: React.FC = () => {
         }
 
         return (
-            <div className="mt-7 border border-gray-300 pt-9">
+            <div className="!bg-[#F5F5F5] border border-gray-300 pt-9">
                 <div className="flex max-md:flex-col items-center justify-between px-3 md:px-11">
                     <div className="data">
                         <p className="font-medium text-lg leading-4 text-black whitespace-nowrap">
@@ -210,7 +210,7 @@ const Orders: React.FC = () => {
     return (
         <div>
             <div className="mb-6">
-                <h1 className="text-2xl font-semibold mb-1">Pedidos</h1>
+                <h2 className="text-xl font-medium font-orbitron-regular mb-1">Pedidos</h2>
             </div>
             <main className="w-full">
                 <div className="flex flex-col gap-6">

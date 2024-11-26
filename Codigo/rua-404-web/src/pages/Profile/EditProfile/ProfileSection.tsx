@@ -97,7 +97,7 @@ const Profile = () => {
   return (
     <div className="max-w-xl">
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold mb-1">Meu perfil</h1>
+        <h2 className="text-xl font-medium font-orbitron-regular mb-1">Meu perfil</h2>
         <p className="text-sm text-gray-500 font-regular">
           Aqui estão as informações básicas da sua conta. Atualize seus dados
           quando quiser.{" "}
@@ -249,6 +249,11 @@ const Profile = () => {
           </button>
         </div>
       </form>
+
+      <svg className="mt-9 w-full" width="1216" height="0" viewBox="0 0 1216 2"
+          fill="none">
+          <path d="M0 1H1216" stroke="#D1D5DB" />
+      </svg>
     </div>
   );
 };

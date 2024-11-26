@@ -46,6 +46,25 @@ export const getAllUsersProfile = async () => {
   }
 };
 
+export const deleteUser = async (customerId: number) => {
+  try {
+    await axios.delete(`${customerApi}${customerId}`);
+    return true;
+  } catch (error) {
+    handleError(error);
+    return false;
+  }
+}
+
+export const createAddress = async (customerId: number, address: Address) => {
+  try {
+    const response = await axios.post(`${addressApi}?idCliente=${customerId}`, address);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+}
+
 export const getAddress = async (customerId: number) => {
   try {
     const response = await axios.get(`${addressApi}?ClienteId=${customerId}`);
