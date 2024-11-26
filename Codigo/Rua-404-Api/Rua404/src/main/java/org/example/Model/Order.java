@@ -1,6 +1,7 @@
 package org.example.Model;
 
 import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate data;
+    private Date data;
 
     @ManyToMany
     @JoinTable(
@@ -40,6 +41,25 @@ public class Order {
     // @JoinColumn(name = "pagamento_id")
     // private Pagamento pagamento;
 
+    public Order(Long id, Date data, List<Product> produtos, BigDecimal valorTotal, Customer usuario, String status) {
+        this.id = id;
+        this.data = data;
+        this.produtos = produtos;
+        this.valorTotal = valorTotal;
+        this.usuario = usuario;
+        this.status = status;
+    }
+
+    public  Order(ShoppingCart carrinho, String Status, Product produto) {
+        this.data = new Date();
+        this.produtos.add(produto);
+        this.valorTotal = carrinho.getValorTotal();
+        this.usuario = carrinho.getUser();
+        this.status = Status;
+    }
+public Order(){
+
+}
     public Long getId() {
         return id;
     }
@@ -48,11 +68,11 @@ public class Order {
         this.id = id;
     }
 
-    public LocalDate getData() {
+    public Date getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(Date data) {
         this.data = data;
     }
 

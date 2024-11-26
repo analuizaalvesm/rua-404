@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.example.Model.Order;
+import org.example.Model.Pedido;
 import org.example.Model.Product;
 import org.example.Model.ShoppingCart;
 import org.example.Repositories.CustomerRepository;
@@ -21,12 +23,23 @@ public class ShoppingCartService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private ProductService productService;
+
     public List<ShoppingCart> get() {
         return shoppingCartRepository.findAll();
     }
 
     public List<ShoppingCart> getByUserId(Long id) {
         return shoppingCartRepository.findAllByUserID(id);
+    }
+
+    public ShoppingCart getById(Long id) {
+        return shoppingCartRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Carrinho não encontrado com id: " + id));
     }
 
     public String post(Product pedido, Long id) {
@@ -64,6 +77,21 @@ public class ShoppingCartService {
                     shoppingCart.setStatus(pedido.getStatus());
                     return shoppingCartRepository.save(shoppingCart);
                 }).orElseThrow(() -> new RuntimeException("error doidao"));
+    }
+
+    public void fecharCarrinho(ShoppingCart carrinho){
+        Product produto = new Product(
+                carrinho.getNomeProduto()
+        );
+
+        Order pedidoNovo = new Order(carrinho, "Aguardando Pagamento", produto);
+        orderService.savePedido(pedidoNovo, carrinho.getUser().getCustomer_id());
+        this.delete(carrinho.getId());
+
+
+        productService.updateQuantity(carrinho.getId(), carrinho.getQuantidade());
+
+
     }
 
 }

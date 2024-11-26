@@ -27,10 +27,12 @@ const AddressPage = () => {
                 const userData = await getUserProfile(user?.email || "");
                 if (userData) {
                     setUserData(userData);
-                    const addressData = await getAddress(userData.customer_id);
+                    const response = await getAddress(userData.customer_id);
+                    console.log("response", response);
+                    const addressData = response?.data;
                     console.log("addressData", addressData);
 
-                    if (addressData) {
+                    if (response?.status == 200 && addressData) {
                         setAddressData(addressData);
                         setEditableAddress({ ...addressData });
                         setAddress({
@@ -40,7 +42,17 @@ const AddressPage = () => {
                             complemento: addressData.complemento,
                             bairro: addressData.bairro,
                             cidade: addressData.cidade,
-                            estado: addressData.estado,
+                            estado: addressData.estado
+                        });
+                    } else {
+                        setAddress({
+                            cep: "",
+                            rua: "",
+                            numero: "",
+                            complemento: "",
+                            bairro: "",
+                            cidade: "",
+                            estado: ""
                         });
                     }
                 }
@@ -147,7 +159,7 @@ const AddressPage = () => {
             <div className="mb-6">
                 <h1 className="text-2xl font-semibold mb-1">Endereço</h1>
                 <p className="text-sm text-gray-500 font-regular">
-                    Os endereço cadastrado será utilizado para entrega dos pedidos.
+                    O endereço cadastrado será utilizado para entrega dos seus pedidos.
                 </p>
             </div>
             <form className="space-y-5">

@@ -58,5 +58,18 @@ public class ProductService {
             throw new RuntimeException("Não foi possivel excluir o Produto");
         }
     }
+
+    public boolean updateQuantity(Long id, int quantity){
+        Product product = productRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Produto não encontrado com id: " + id));
+
+        if(product.getQuantity() < quantity){
+            return false;
+        }
+
+        product.setQuantity(product.getQuantity() - quantity);
+        productRepository.save(product);
+        return true;
+    }
     
 }

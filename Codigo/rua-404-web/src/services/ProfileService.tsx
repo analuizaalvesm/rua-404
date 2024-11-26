@@ -49,7 +49,7 @@ export const getAllUsersProfile = async () => {
 export const getAddress = async (customerId: number) => {
   try {
     const response = await axios.get(`${addressApi}?ClienteId=${customerId}`);
-    return response.data;
+    return response;
   } catch (error) {
     handleError(error);
   }

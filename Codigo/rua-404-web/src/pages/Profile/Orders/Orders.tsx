@@ -5,6 +5,7 @@ import { useAuth } from "@/context/useAuth";
 import { User } from "@/models/User";
 import { getUserProfile } from "@/services/ProfileService";
 import { Order } from "@/models/Order";
+import { FaArrowLeft } from "react-icons/fa6";
 
 const Orders: React.FC = () => {
     const { user } = useAuth();
@@ -58,6 +59,12 @@ const Orders: React.FC = () => {
         });
     };
 
+    const addDays = (data: string, days: number) => {
+        const date = new Date(data);
+        date.setDate(date.getDate() + days);
+        return date;
+    };
+
     useEffect(() => {
         if (!orderId) {
             setLoading(false);
@@ -99,14 +106,6 @@ const Orders: React.FC = () => {
             </div>
         );
     }
-
-    // if (!order) {
-    //     return (
-    //         <div className="flex justify-center items-center h-screen">
-    //         <p className="text-xl">Pedidos não encontrados.</p>
-    //         </div>
-    //     );
-    // }
 
     const OrderCard = ({ order }: { order: Order }) => {
         const [statusText, setStatusText] = useState<string>("Aguardando confirmação");
@@ -184,7 +183,7 @@ const Orders: React.FC = () => {
                                 Previsão de entrega
                             </p>
                             <p className="font-semibold text-base leading-8 text-black text-left whitespace-nowrap">
-                                23 de março de 2024
+                                {formatData(addDays(order.data, 15).toISOString())}
                             </p>
                         </div>
                     </div>
@@ -210,44 +209,8 @@ const Orders: React.FC = () => {
 
     return (
         <div>
-            <div className="max-w-xl">
-                <div className="flex sm:flex-col lg:flex-row sm:items-center justify-between">
-                    <ul className="flex max-sm:flex-col sm:items-center gap-x-10 gap-y-3">
-                        <li className="cursor-pointer">
-                            <label
-                                htmlFor="pedidos"
-                                className="text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline underline"
-                            >
-                                Pedidos
-                            </label>
-                        </li>
-                        <li>
-                            <label
-                                htmlFor="comprar-novamente"
-                                className="text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline"
-                            >
-                                Compre novamente
-                            </label>
-                        </li>
-                        <li>
-                            <NavLink
-                                to="/profile/orders/not-sent"
-                                className={`text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline ${pathname.includes("/profile/orders/not-sent")
-                                    }`}
-                            >
-                                Ainda não enviado
-                            </NavLink>
-                        </li>
-                        <li>
-                            <label
-                                htmlFor="cancelados"
-                                className="text-sm font-medium text-gray-700 leading-8 transition-all duration-500 hover:text-black hover:underline"
-                            >
-                                Pedidos cancelados
-                            </label>
-                        </li>
-                    </ul>
-                </div>
+            <div className="mb-6">
+                <h1 className="text-2xl font-semibold mb-1">Pedidos</h1>
             </div>
             <main className="w-full">
                 <div className="flex flex-col gap-6">
@@ -256,14 +219,34 @@ const Orders: React.FC = () => {
                             <OrderCard key={order.id} order={order} />
                         ))
                     ) : (
-                        <p className="col-span-full text-center">
-                            Nenhum produto encontrado.
-                        </p>
+                        <section className="flex items-center h-[50vh] dark:bg-gray-50 dark:text-gray-800">
+                            <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
+                                <div className="max-w-xl text-center">
+                                    <p className="text-2xl font-orbitron-semibold md:text-4xl">
+                                        PEDID0S N0T F0UND
+                                    </p>
+                                    <div className="mt-4 mb-8 dark:text-gray-600">
+                                        <p>Parece que você ainda não fez pedidos.</p>
+                                        <p>Não se preocupe, temos o que você procura.</p>
+                                    </div>
+                                    <button
+                                        rel="noopener noreferrer"
+                                        onClick={() => navigate("/store")}
+                                        className="px-4 py-2 font-medium rounded text-white"
+                                    >
+                                        <div className="flex flex-row items-center gap-2">
+                                        <FaArrowLeft color="#fff" size={14} />
+                                            Loja
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
                     )}
                 </div>
             </main>
 
-            <svg className="mt-9 w-full" xmlns="http://www.w3.org/2000/svg" width="1216" height="2" viewBox="0 0 1216 2"
+            <svg className="mt-9 w-full" width="1216" height="0" viewBox="0 0 1216 2"
                 fill="none">
                 <path d="M0 1H1216" stroke="#D1D5DB" />
             </svg>
