@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUserProfile, updateAddress, getAddress } from "@/services/ProfileService";
+import { getUserProfile, createAddress, getAddress, updateAddress } from "@/services/ProfileService";
 import { useAuth } from "@/context/useAuth";
 import { User } from "@/models/User";
 import { CircularProgress } from "@mui/material";
@@ -10,7 +10,6 @@ const AddressPage = () => {
     const [userData, setUserData] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [addressData, setAddressData] = useState<Address | null>(null);
-    const [editableAddress, setEditableAddress] = useState<Address | null>(null);
     const [address, setAddress] = useState<Address>({
         cep: "",
         rua: "",
@@ -34,16 +33,7 @@ const AddressPage = () => {
 
                     if (response?.status == 200 && addressData) {
                         setAddressData(addressData);
-                        setEditableAddress({ ...addressData });
-                        setAddress({
-                            cep: addressData.cep,
-                            rua: addressData.rua,
-                            numero: addressData.numero,
-                            complemento: addressData.complemento,
-                            bairro: addressData.bairro,
-                            cidade: addressData.cidade,
-                            estado: addressData.estado
-                        });
+                        setAddress({ ...addressData });
                     } else {
                         setAddress({
                             cep: "",
@@ -72,7 +62,7 @@ const AddressPage = () => {
 
     const resetEditableAddress = () => {
         if (addressData) {
-            setEditableAddress({ ...addressData });
+            setAddress({ ...addressData });
         }
     };
 
@@ -80,38 +70,49 @@ const AddressPage = () => {
         e: React.MouseEvent<HTMLButtonElement, MouseEvent>
     ) => {
         e.preventDefault();
-        if (
-            userData &&
-            addressData &&
-            JSON.stringify(address) !== JSON.stringify(addressData)
-        ) {
-            try {
-                const updatedAddress = await updateAddress(userData.customer_id, address);
-                console.log("updatedAddress:", updatedAddress);
-                if (updatedAddress) {
-                    setAddressData({ ...updatedAddress });
-                    const addressObj = {
-                        idEndereco: updatedAddress.idEndereco,
-                        cep: updatedAddress.cep,
-                        rua: updatedAddress.rua,
-                        numero: updatedAddress.numero,
-                        complemento: updatedAddress.complemento,
-                        bairro: updatedAddress.bairro,
-                        cidade: updatedAddress.cidade,
-                        estado: updatedAddress.estado,
-                        pais: updatedAddress.pais
-                    };
-
-                    setAddress(addressObj);
-
-                    alert("As informações foram atualizadas com sucesso!");
+        if (userData) {
+            if (addressData === null) {
+                const newAddress = await createAddress(userData.customer_id, address);
+                if (newAddress) {
+                    saveNewAddress(newAddress);
                 }
-            } catch (error) {
-                alert("Ocorreu um erro ao tentar salvar as alterações.");
+            } else if (JSON.stringify(address) !== JSON.stringify(addressData)) {
+                try {
+                    console.log("address:", address);
+                    const updatedAddress = await updateAddress(userData.customer_id, address);
+                    console.log("updatedAddress:", updatedAddress);
+                    if (updatedAddress) {
+                        saveNewAddress(updatedAddress);
+                    }
+                } catch (error) {
+                    alert("Ocorreu um erro ao tentar salvar as alterações.");
+                }
+            } else {
+                alert("Nenhuma alteração foi detectada.");
+                console.log("address", address);
+                console.log("addressData", addressData);
             }
+
         } else {
-            alert("Nenhuma alteração foi detectada.");
+            alert("Ocorreu um erro ao tentar salvar as alterações.");
         }
+    };
+
+    const saveNewAddress = async (updatedAddress: Address) => {
+        setAddressData({ ...updatedAddress });
+        const addressObj = {
+            cep: updatedAddress.cep,
+            rua: updatedAddress.rua,
+            numero: updatedAddress.numero,
+            complemento: updatedAddress.complemento,
+            bairro: updatedAddress.bairro,
+            cidade: updatedAddress.cidade,
+            estado: updatedAddress.estado
+        };
+
+        setAddress(addressObj);
+
+        alert("As informações foram atualizadas com sucesso!");
     };
 
     const handleCepChange = async (e: any) => {
@@ -157,7 +158,7 @@ const AddressPage = () => {
     return (
         <div className="max-w-xl">
             <div className="mb-6">
-                <h1 className="text-2xl font-semibold mb-1">Endereço</h1>
+                <h2 className="text-xl font-medium font-orbitron-regular mb-1">Endereço</h2>
                 <p className="text-sm text-gray-500 font-regular">
                     O endereço cadastrado será utilizado para entrega dos seus pedidos.
                 </p>
