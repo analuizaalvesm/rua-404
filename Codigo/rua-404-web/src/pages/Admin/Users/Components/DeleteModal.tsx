@@ -17,9 +17,9 @@ type DeleteModalProps = {
 const DeleteModal = ({ isOpen, onClose, onDelete }: DeleteModalProps) => (
   <Dialog open={isOpen} onOpenChange={onClose}>
     <DialogContent>
-      <DialogHeader>
+      <DialogHeader className="gap-2">
         <DialogTitle>Confirmar Exclusão</DialogTitle>
-        <DialogDescription>
+        <DialogDescription className="font-regular w-[70%]">
           Tem certeza que deseja excluir este usuário? Esta ação não pode ser
           desfeita.
         </DialogDescription>
