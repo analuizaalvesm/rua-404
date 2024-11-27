@@ -3,7 +3,6 @@ package org.example.Service;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-
 import org.example.Model.Order;
 import org.example.Model.Pedido;
 import org.example.Model.Product;
@@ -13,6 +12,7 @@ import org.example.Repositories.ShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.example.Enum.OrderStatus;
 
 @Service
 public class ShoppingCartService {
@@ -84,7 +84,7 @@ public class ShoppingCartService {
                 carrinho.getNomeProduto()
         );
 
-        Order pedidoNovo = new Order(carrinho, "Aguardando Pagamento", produto);
+        Order pedidoNovo = new Order(carrinho, OrderStatus.PENDENTE, produto);
         orderService.savePedido(pedidoNovo, carrinho.getUser().getCustomer_id());
         this.delete(carrinho.getId());
 

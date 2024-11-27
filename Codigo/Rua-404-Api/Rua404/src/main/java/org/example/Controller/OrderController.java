@@ -3,12 +3,10 @@ package org.example.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.example.Enum.OrderStatus;
 import org.example.DTOS.OrderDTO;
-
 import org.example.Model.Order;
 import org.example.Service.OrderService;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +42,18 @@ public class OrderController {
     @PostMapping("/{usuarioId}")
     public Order createPedido(@PathVariable Long usuarioId, @RequestBody Order pedido) {
         return orderService.savePedido(pedido, usuarioId);
+    }
+
+    @PutMapping("/{orderId}/status")
+    public ResponseEntity<String> updateOrderStatus(@PathVariable Long orderId, @RequestParam OrderStatus status) {
+        try {
+            orderService.updateOrderStatus(orderId, status);
+            return ResponseEntity.ok("Order status updated successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("An error occurred while updating order status");
+        }
     }
 
 }
