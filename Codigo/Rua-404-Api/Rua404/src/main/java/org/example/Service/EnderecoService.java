@@ -1,17 +1,21 @@
 package org.example.Service;
 
+import java.util.Optional;
+import org.example.Model.Customer;
+import org.example.Model.Endereco;
+import org.example.Repositories.CustomerRepository;
+import org.example.Repositories.EnderecoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.example.Model.Endereco;
-import org.example.Repositories.EnderecoRepository;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EnderecoService {
 
-    private final EnderecoRepository enderecoRepository;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     @Autowired
     public EnderecoService(EnderecoRepository enderecoRepository) {
@@ -56,5 +60,12 @@ public class EnderecoService {
             return null;
         }
     }
+    public boolean deleteEndereco(Long idCliente){
+        Customer c =this.customerRepository.findById(idCliente).get();
+            this.enderecoRepository.delete(c.getAddress());
+            return true;
+        
+    }
+
 
 }
