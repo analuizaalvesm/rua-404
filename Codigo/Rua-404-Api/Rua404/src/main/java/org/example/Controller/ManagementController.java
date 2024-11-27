@@ -1,5 +1,6 @@
 package org.example.Controller;
 
+import org.example.DTOS.ChangePassowrdRequestDTO;
 import org.example.Model.Customer;
 import org.example.Service.ManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,12 @@ public class ManagementController {
     }
 
     @PostMapping("/change-password")
-    public String recoverPassword(@RequestBody Customer user) {
-        return managementService.changePassword(user);
+    public String recoverPassword(@RequestBody ChangePassowrdRequestDTO user) {
+        return managementService.changePassword(user.id(), user.senhaAtual(), user.novaSenha());
     }
 
     @PostMapping("/update-password")
     public String updatePassword(@RequestBody Customer user) {
         return managementService.updatePassword(user);
     }
-
 }
