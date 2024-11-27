@@ -46,16 +46,6 @@ const Stock = () => {
   const [showAddModal, setShowAddModal] = useState<boolean>(false);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [productToDelete, setProductToDelete] = useState<number | null>(null);
-  const [newProduct, setNewProduct] = useState<Omit<Product, "id">>({
-    name: "",
-    productType: "",
-    size: "",
-    collab: "",
-    price: 0,
-    quantity: 0,
-    lastUpdated: new Date().toISOString(),
-    url: "",
-  });
   const [editProduct, setEditProduct] = useState<Product | null>(null);
 
   const fetchProducts = async () => {
@@ -94,22 +84,15 @@ const Stock = () => {
     }
   };
 
-  const handleAddProduct = async () => {
-    await createProductApi(newProduct);
-    fetchProducts();
-    setShowAddModal(false);
-    setNewProduct({
-      name: "",
-      productType: "",
-      size: "",
-      collab: "",
-      price: 0,
-      quantity: 0,
-      lastUpdated: new Date().toISOString(),
-      url: "",
-    });
+  const handleAddProduct = async (formData: any) => {
+    try {
+      await createProductApi(formData);
+      await fetchProducts();
+      setShowAddModal(false);
+    } catch (error) {
+      console.error("Failed to add product:", error);
+    }
   };
-
   const handleEditProduct = (product: Product) => {
     setEditProduct(product);
     setShowEditModal(true);
@@ -413,7 +396,9 @@ const Stock = () => {
         <ProductModal
           isOpen={showAddModal}
           onClose={() => setShowAddModal(false)}
-          onSubmit={handleAddProduct}
+          onSubmit={(formData) => {
+            handleAddProduct(formData);
+          }}
           mode="add"
         />
       )}

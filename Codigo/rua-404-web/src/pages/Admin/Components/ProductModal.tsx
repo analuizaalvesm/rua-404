@@ -65,8 +65,8 @@ const ProductModal = ({
     }
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Check if this contains the updated data
     onSubmit(formData);
   };
 
