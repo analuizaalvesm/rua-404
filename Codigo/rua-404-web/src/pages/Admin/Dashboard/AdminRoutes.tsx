@@ -6,7 +6,7 @@ import Loader from "@/components/admin/components/Loader";
 import Stock from "../Stock/Stock";
 import Users from "../Users/Users";
 import Dashboard from "./Dashboard";
-import Orders from "../Orders/Orders";
+import Orders from "../Orders/OrdersPage";
 
 const AdminRoutes = () => {
   const [loading, setLoading] = useState<boolean>(true);
