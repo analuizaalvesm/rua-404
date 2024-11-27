@@ -2,11 +2,12 @@ package org.example.Service;
 
 import java.util.Date;
 import java.util.Random;
-
 import org.example.Model.Customer;
+import org.example.Repositories.CustomerRepository;
 import org.example.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -18,6 +19,9 @@ public class ManagementService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
 // comentando por motivos de testes
 //    @Autowired
@@ -46,7 +50,6 @@ public class ManagementService {
         Customer userBd = userRepository.findByEmailAndCode(user.getEmail(), user.getRecuperationCode());
         if (userBd != null) {
             Date diferent = new Date(new Date().getTime() - userBd.getDataSendCode().getTime());
-
             if (diferent.getTime() / 1000 < 900) {
                 userBd.setPassword(user.getPassword());
                 userBd.setCode(null);
@@ -77,15 +80,16 @@ public class ManagementService {
         }
     }
 
-    public String updatePassword(Customer user) {
-        Customer userBd = userRepository.findByEmailAsync(user.getEmail());
-        if (userBd != null) {
-            userBd.setPassword(user.getPassword()); 
-            userRepository.saveAndFlush(userBd);
-            return "Senha alterada com sucesso!";
-        } else {
-            return "Erro ao alterar senha!";
-        }
+    public String updatePassword(Long id, String senhaAtual,String novaSenha) { 
+        Customer user = this.customerRepository.findById(id).orElse(null);
+        if (user == null) { return "Usuário não encontrado!"; 
+    } BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
+    if (passwordEncoder.matches(senhaAtual, user.getPassword())) {
+         String novaSenhaEncrypted = passwordEncoder.encode(novaSenha);
+          user.setPassword(novaSenhaEncrypted); this.customerRepository.save(user);
+           return "Senha alterada com sucesso!"; } 
+           else { return "Erro ao alterar senha! Senha atual incorreta.";
+         }
     }
 
     private String getCode(Long id) {

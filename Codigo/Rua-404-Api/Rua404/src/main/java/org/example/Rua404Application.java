@@ -10,7 +10,7 @@ public class Rua404Application {
     public static void main(String[] args) {
         SpringApplication.run(Rua404Application.class, args);
     }
-
+    
     @Bean    
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
