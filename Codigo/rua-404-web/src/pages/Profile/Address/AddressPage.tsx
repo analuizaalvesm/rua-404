@@ -6,7 +6,7 @@ import { CircularProgress } from "@mui/material";
 import { Address } from "@/models/Address";
 
 const AddressPage = () => {
-    const { user, setUser } = useAuth();
+    const { user } = useAuth();
     const [userData, setUserData] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const [addressData, setAddressData] = useState<Address | null>(null);
