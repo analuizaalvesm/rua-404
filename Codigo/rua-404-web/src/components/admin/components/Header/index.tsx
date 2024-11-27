@@ -61,7 +61,18 @@ const Header = (props: {
 
         <div className="hidden sm:block">
           <form action="https://formbold.com/s/unique_form_id" method="POST">
-            <div className="flex flex-row items-center"></div>
+            <div className="flex flex-row items-center">
+              <div className="flex flex-row items-center">
+                <button className="bg-transparent p-0">
+                  <FiSearch size={20} color={"#000"} />
+                </button>
+                <input
+                  type="text"
+                  placeholder="Pesquisar"
+                  className="w-full bg-transparent pl-6 pr-4 text-black focus:outline-none dark:text-white xl:w-125"
+                />
+              </div>
+            </div>
           </form>
         </div>
 

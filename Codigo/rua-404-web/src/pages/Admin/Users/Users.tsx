@@ -21,9 +21,9 @@ import { Card, CardTitle } from "@/components/ui/Card/card";
 import { Trash2 } from "lucide-react";
 import { BiShoppingBag } from "react-icons/bi";
 import { FiChevronDown, FiSearch } from "react-icons/fi";
-import DeleteModal from "./Components/DeleteModal";
-import DetailsModal from "./Components/DetailsModal";
-import PaginationControl from "./Components/PaginationControl";
+import DeleteModal from "../Components/DeleteModal";
+import DetailsModal from "../Components/DetailsModal";
+import PaginationControl from "../Components/PaginationControl";
 import { User, Order } from "./userTypes";
 
 const ITEMS_PER_PAGE = 10;
@@ -37,7 +37,7 @@ const Users = () => {
   const [userToDelete, setUserToDelete] = useState<number | null>(null);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [sortCriteria, setSortCriteria] = useState<string>("Mais antigo");
 
   useEffect(() => {
@@ -154,7 +154,6 @@ const Users = () => {
           <h1 className="text-2xl font-bold mb-4">Gerenciar Usuários</h1>
           <div className="mb-4 flex gap-4 justify-between w-full">
             <div className="flex flex-col w-1/3">
-              <span className="text-sm text-gray-500 mb-1.5">Pesquisar</span>
               <div className="flex gap-2 items-center">
                 <div className="relative w-full">
                   <input
@@ -162,13 +161,13 @@ const Users = () => {
                     placeholder="Pesquisar por nome ou email"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="text-sm w-full p-2.5 pl-10 border border-gray-200 rounded-md shadow-sm"
+                    className="text-sm w-full p-2 pl-10 border border-gray-200 rounded-md shadow-sm"
                   />
                   <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
                 </div>
                 <button
                   onClick={handleSearch}
-                  className="bg-primary text-white font-regular text-sm rounded-md px-3 py-2.5"
+                  className="bg-primary text-white font-regular text-sm rounded-md px-3 py-2 border border-black"
                 >
                   Pesquisar
                 </button>
@@ -177,7 +176,6 @@ const Users = () => {
 
             <div className="flex items-center gap-4">
               <div>
-                <span className="text-sm text-gray-500">Ordenar por</span>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
@@ -211,7 +209,6 @@ const Users = () => {
               </div>
 
               <div>
-                <span className="text-sm text-gray-500">Status</span>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
@@ -261,22 +258,22 @@ const Users = () => {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableCell className="font-semibold pl-4 bg-[#F5F5F5] rounded-tl-md">
+                        <TableCell className="font-semibold text-gray-600 pl-4 bg-gray-50 rounded-tl-md">
                           ID
                         </TableCell>
-                        <TableCell className="font-semibold bg-[#F5F5F5]">
+                        <TableCell className="font-semibold text-gray-600 bg-gray-50">
                           Nome
                         </TableCell>
-                        <TableCell className="font-semibold bg-[#F5F5F5]">
+                        <TableCell className="font-semibold text-gray-600 bg-gray-50">
                           Email
                         </TableCell>
-                        <TableCell className="font-semibold bg-[#F5F5F5]">
+                        <TableCell className="font-semibold text-gray-600 bg-gray-50">
                           Data de Criação
                         </TableCell>
-                        <TableCell className="font-semibold bg-[#F5F5F5]">
+                        <TableCell className="font-semibold text-gray-600 bg-gray-50">
                           Status
                         </TableCell>
-                        <TableCell className="font-semibold pr-4 bg-[#F5F5F5] text-right rounded-tr-md">
+                        <TableCell className="font-semibold text-gray-600 pr-4 bg-gray-50 text-right rounded-tr-md">
                           Ações
                         </TableCell>
                       </TableRow>
@@ -345,6 +342,7 @@ const Users = () => {
                   setCurrentPage={setCurrentPage}
                   currentPage={currentPage}
                   totalPages={totalPages}
+                  type="usuários"
                 />
               </>
             ) : (
@@ -360,6 +358,7 @@ const Users = () => {
         isOpen={showDeleteModal}
         onClose={() => setShowDeleteModal(false)}
         onDelete={handleDeleteUser}
+        type="usuário"
       />
 
       <DetailsModal

@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/Button/button";
 import { BiShoppingBag } from "react-icons/bi";
 import { Trash2 } from "lucide-react";
-import { User } from "../userTypes";
+import { User } from "../Users/userTypes";
 
 type UserTableProps = {
   users: User[];

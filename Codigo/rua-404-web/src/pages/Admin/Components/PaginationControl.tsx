@@ -7,6 +7,7 @@ type PaginationProps = {
   setCurrentPage: (page: number) => void;
   currentPage: number;
   totalPages: number;
+  type: string;
 };
 
 const PaginationControl = ({
@@ -16,11 +17,12 @@ const PaginationControl = ({
   setCurrentPage,
   currentPage,
   totalPages,
+  type,
 }: PaginationProps) => (
   <div className="flex items-center justify-between mt-4">
     <div className="text-sm text-gray-600">
       Mostrando {startIndex + 1}-{Math.min(endIndex, filteredUsers.length)} de{" "}
-      {filteredUsers.length} usuários
+      {filteredUsers.length} {type}
     </div>
     <div className="flex gap-2">
       <Button

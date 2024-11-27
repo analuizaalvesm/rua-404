@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/Card/card";
 import { FiCalendar, FiShoppingBag } from "react-icons/fi";
-import { Order, User } from "../userTypes";
+import { User } from "../Users/userTypes";
 
 type DetailsModalProps = {
   isOpen: boolean;
@@ -17,45 +17,6 @@ type DetailsModalProps = {
 };
 
 const DetailsModal = ({ isOpen, user, onClose }: DetailsModalProps) => (
-  //   <Dialog open={isOpen} onOpenChange={onClose}>
-  //     <DialogContent>
-  //       <DialogHeader>
-  //         <DialogTitle>Pedidos do usuário</DialogTitle>
-  //       </DialogHeader>
-  //       {user?.orders && user.orders.length > 0 ? (
-  //         <div className="space-y-4">
-  //           {user.orders.map((order: Order) => (
-  //             <Card key={order.id}>
-  //               <div className="flex justify-between items-center bg-gray-100 p-3">
-  //                 <span>Pedido #{order.id}</span>
-  //                 <span>{order.status}</span>
-  //               </div>
-  //               <div className="text-sm flex items-center px-3">
-  //                 <FiCalendar /> Data: {order.date}
-  //               </div>
-  //               <div className="text-sm flex items-center px-3">
-  //                 <FiShoppingBag /> Itens: {order.items}
-  //               </div>
-  //               <div className="font-bold text-gray-900 pt-2 px-3 pb-3">
-  //                 Total:{" "}
-  //                 {order.total.toLocaleString("pt-BR", {
-  //                   style: "currency",
-  //                   currency: "BRL",
-  //                 })}
-  //               </div>
-  //             </Card>
-  //           ))}
-  //         </div>
-  //       ) : (
-  //         <p>Este usuário não possui pedidos.</p>
-  //       )}
-  //       <DialogFooter>
-  //         <Button variant="secondary" onClick={onClose}>
-  //           Fechar
-  //         </Button>
-  //       </DialogFooter>
-  //     </DialogContent>
-  //   </Dialog>
   <Dialog open={isOpen} onOpenChange={onClose}>
     <DialogContent className="sm:max-w-[600px]">
       <DialogHeader>
