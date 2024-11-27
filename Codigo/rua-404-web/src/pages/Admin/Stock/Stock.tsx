@@ -98,11 +98,16 @@ const Stock = () => {
     setShowEditModal(true);
   };
 
-  const handleSaveEditProduct = async () => {
-    if (editProduct) {
-      await createProductApi(editProduct);
-      setShowEditModal(false);
-      setEditProduct(null);
+  const handleSaveEditProduct = async (formData: any) => {
+    try {
+      if (editProduct) {
+        await createProductApi(formData);
+        await fetchProducts();
+        setShowEditModal(false);
+        setEditProduct(null);
+      }
+    } catch (error) {
+      console.log("Failed to update the product:", error);
     }
   };
 
@@ -407,7 +412,7 @@ const Stock = () => {
         <ProductModal
           isOpen={showEditModal}
           onClose={() => setShowEditModal(false)}
-          onSubmit={handleSaveEditProduct}
+          onSubmit={(formData) => handleSaveEditProduct(formData)}
           initialData={editProduct}
           mode="edit"
         />

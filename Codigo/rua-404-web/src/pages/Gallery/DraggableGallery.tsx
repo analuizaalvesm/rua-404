@@ -19,10 +19,14 @@ const DraggableGallery = () => {
               />
             ) : (
               <video
+                loop
                 controls
-                src={item.src}
+                autoPlay
+                muted
                 className="w-full h-full object-cover"
-              ></video>
+              >
+                <source src={item.src} type="video/mp4" />
+              </video>
             )}
           </div>
         ))}
