@@ -14,3 +14,4 @@ export { default as Profile } from "./Profile/EditProfile/ProfileSection";
 export { default as Orders } from "./Profile/Orders/Orders";
 export { default as Security } from "./Profile/Security/Security";
 export { default as NotFoundPage } from "./NotFound/NotFoundPage";
+export { default as Gallery } from "./Gallery/DraggableGallery";

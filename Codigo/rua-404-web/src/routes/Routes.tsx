@@ -7,7 +7,7 @@ import {
   AdminRoutes,
   AdminStock,
   AdminOrders,
-  AdminUsers
+  AdminUsers,
 } from "@/pages/Admin/Dashboard/AdminRoutes";
 import AdminLogin from "@/pages/Admin/Login/AdminLogin";
 
@@ -28,6 +28,7 @@ const publicRoutes: RouteConfig[] = [
   { path: "login", element: <Route.LoginPage /> },
   { path: "register", element: <Route.RegisterPage /> },
   { path: "store", element: <Route.StorePage /> },
+  { path: "gallery", element: <Route.Gallery /> },
   { path: "get-code", element: <Route.GetCodePage /> },
   { path: "validate-code", element: <Route.ValidadeCodePage /> },
   { path: "change-password", element: <Route.ChangePasswordPage /> },

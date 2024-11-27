@@ -237,3 +237,12 @@ button:focus-visible {
     @apply bg-background text-foreground;
   }
 }
+
+.fadesin {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+.fadesin.appear {
+  opacity: 1;
+}
