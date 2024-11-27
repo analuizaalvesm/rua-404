@@ -33,7 +33,7 @@ public class ManagementController {
 
     @PostMapping("/update-password")
     public String updatePasswordChangePassowrd(@RequestBody ChangePassowrdRequestDTO user) {
-        return managementService.updatePassword(user.id(),user.senhaAtual(),user.novaSenha())
+        return managementService.updatePassword(user.id(),user.senhaAtual(),user.novaSenha());
     }
 
 }

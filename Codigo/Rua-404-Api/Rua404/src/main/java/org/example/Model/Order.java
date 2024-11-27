@@ -2,13 +2,13 @@ package org.example.Model;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.example.Enum.OrderStatus;
 
 @Entity
 @Table(name = "Pedidos")
@@ -30,7 +30,9 @@ public class Order {
 
     private BigDecimal valorTotal;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false) // Cria uma chave estrangeira para usuário
@@ -41,7 +43,7 @@ public class Order {
     // @JoinColumn(name = "pagamento_id")
     // private Pagamento pagamento;
 
-    public Order(Long id, Date data, List<Product> produtos, BigDecimal valorTotal, Customer usuario, String status) {
+    public Order(Long id, Date data, List<Product> produtos, BigDecimal valorTotal, Customer usuario, OrderStatus status) {
         this.id = id;
         this.data = data;
         this.produtos = produtos;
@@ -50,7 +52,7 @@ public class Order {
         this.status = status;
     }
 
-    public  Order(ShoppingCart carrinho, String Status, Product produto) {
+    public  Order(ShoppingCart carrinho, OrderStatus Status, Product produto) {
         this.data = new Date();
         this.produtos.add(produto);
         this.valorTotal = carrinho.getValorTotal();
@@ -92,11 +94,11 @@ public Order(){
         this.valorTotal = valorTotal;
     }
 
-    public String getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 

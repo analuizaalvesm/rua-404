@@ -2,6 +2,9 @@ package org.example.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.example.Enum.OrderStatus;
+import org.example.DTOS.OrderDTO;
+import org.example.DTOS.ProductDTO;
 import org.example.Model.Customer;
 import org.example.Model.Order;
 import org.example.Model.Pedido;
@@ -9,7 +12,6 @@ import org.example.Model.Product;
 import org.example.Repositories.CustomerRepository;
 import org.example.Repositories.ProductRepository;
 import org.example.Repositories.OrderRepository;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +32,21 @@ public class OrderService {
 
     public List<Order> getAllPedidos() {
         return orderRepository.findAll();
+    }
+
+    public List<OrderDTO> getOrdersByCustomerId(Long usuarioId) {
+        List<Order> orders = orderRepository.findOrdersByCustomerId(usuarioId);
+        return orders.stream()
+                .map(order -> new OrderDTO(
+                        order.getId(),
+                        order.getData(),
+                        order.getValorTotal(),
+                        order.getStatus().name(),
+                        order.getProdutos().stream()
+                                .map(product -> new ProductDTO(product.getId(), product.getName()))
+                                .collect(Collectors.toList())
+                ))
+                .collect(Collectors.toList());
     }
 
     public Optional<Order> getPedidoById(Long id) {
@@ -59,6 +76,18 @@ public class OrderService {
         pedido.setValorTotal(total);
     
         return orderRepository.save(pedido);  
+    }
+
+    public void updateOrderStatus(Long orderId, OrderStatus newStatus) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found with ID: " + orderId));
+
+        if (order.getStatus() == OrderStatus.CANCELADO) {
+            throw new IllegalArgumentException("Cannot update status of a canceled order");
+        }
+
+        order.setStatus(newStatus);
+        orderRepository.save(order);
     }
 }
 
