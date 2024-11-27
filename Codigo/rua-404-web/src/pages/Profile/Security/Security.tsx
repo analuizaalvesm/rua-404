@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useAuth } from '@/context/useAuth';
 import { getUserProfile, deleteUser } from '@/services/ProfileService';
-import { User } from '@/models/User';
+import { useNavigate } from 'react-router-dom';
+
+interface LoginForm {
+    oldPassword: string;
+    newPassword: string;
+    confirmPassword: string;
+}
 
 const Security: React.FC = () => {
     const { logout } = useAuth();
     const { user } = useAuth();
-    const [userData, setUserData] = useState<User | null>(null);
+    const [userData, setUserData] = useState<any>(null);
+    const [form, setForm] = useState<LoginForm>({ oldPassword: '', newPassword: '', confirmPassword: '' });
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -25,6 +34,55 @@ const Security: React.FC = () => {
         }
     }, [user]);
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setForm({ ...form, [name]: value });
+        console.log("form", form);
+    };
+
+    const handleUpdatePassword = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (form.newPassword !== form.confirmPassword) {
+            window.alert("As senhas não coincidem. Por favor, tente novamente.");
+            return;
+        }
+
+        if (form.newPassword.length < 8) {
+            window.alert("A nova senha deve ter no mínimo 8 caracteres.");
+            return;
+        }
+        
+        try {
+            const response = await axios.post(
+                `http://localhost:8080/api/management/update-password`,
+                {
+                    id: userData?.customer_id,
+                    senhaAtual: form.oldPassword,
+                    novaSenha: form.newPassword,
+                },
+            );
+            console.log("Resposta recebida:", response);
+
+            if (response.status === 200) {
+                window.alert("Senha atualizada com sucesso.");
+                logout();
+                navigate("/login");
+            } else {
+                window.alert("Erro ao alterar senha! Tente novamente.");
+
+                if (response.status === 204) {
+                    console.error("Erro ao alterar senha! Senha atual incorreta.", response);
+                } else {
+                    console.error("Erro genérico.", response);
+                }
+            }
+
+        } catch (err) {
+            console.error("Erro capturado no catch:", err);
+            window.alert("Erro na validação do código, tente novamente.");
+        }
+    };
+
     const handleDeleteUser = async () => {
         if (userData) {
             const success = await deleteUser(userData.customer_id);
@@ -36,7 +94,7 @@ const Security: React.FC = () => {
                 alert("Erro ao deletar usuário.");
             }
         }
-    }
+    };
 
     return (
         <div className="max-w-full">
@@ -58,24 +116,51 @@ const Security: React.FC = () => {
                     </div>
 
                     <div className="col-span-2">
-                        <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" action="#">
+                        <form className="mt-4 space-y-4 lg:mt-5 md:space-y-5" onSubmit={handleUpdatePassword}>
                             <div>
                                 <label htmlFor="current-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Senha atual
                                 </label>
-                                <input type="password" name="current-password" id="current-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                <input 
+                                    type="password" 
+                                    name="current-password" 
+                                    id="current-password" 
+                                    placeholder="••••••••" 
+                                    defaultValue={form.oldPassword}
+                                    onChange={handleInputChange}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                                    required 
+                                />
                             </div>
                             <div>
                                 <label htmlFor="new-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Nova Senha
                                 </label>
-                                <input type="password" name="new-password" id="new-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                <input 
+                                    type="password" 
+                                    name="new-password" 
+                                    id="new-password" 
+                                    placeholder="••••••••" 
+                                    defaultValue={form.newPassword}
+                                    onChange={handleInputChange}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                                    required 
+                                />
                             </div>
                             <div>
                                 <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                     Confirmar nova senha
                                 </label>
-                                <input type="password" name="confirm-password" id="confirm-password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                                <input 
+                                    type="password" 
+                                    name="confirm-password" 
+                                    id="confirm-password" 
+                                    placeholder="••••••••" 
+                                    defaultValue={form.confirmPassword}
+                                    onChange={handleInputChange}
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                                    required 
+                                />
                             </div>
                             <div className="flex items-start">
                                 <div className="flex items-center h-5">
@@ -92,7 +177,6 @@ const Security: React.FC = () => {
                             </div>
                             <button
                                 type="submit"
-                                onClick={() => console.log("Alterar senha")}
                                 className="bg-black text-white text-sm px-6 py-2.5 rounded-sm hover:bg-gray-800"
                             >
                                 Salvar
