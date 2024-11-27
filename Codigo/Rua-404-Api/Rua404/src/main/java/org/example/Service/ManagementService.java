@@ -80,15 +80,19 @@ public class ManagementService {
         }
     }
 
-    public String updatePassword(Long id, String senhaAtual,String novaSenha) { 
+    public boolean updatePassword(Long id, String senhaAtual,String novaSenha) { 
         Customer user = this.customerRepository.findById(id).orElse(null);
-        if (user == null) { return "Usuário não encontrado!"; 
-    } BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
+        if (user == null) {
+     return false; 
+    } 
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
     if (passwordEncoder.matches(senhaAtual, user.getPassword())) {
          String novaSenhaEncrypted = passwordEncoder.encode(novaSenha);
           user.setPassword(novaSenhaEncrypted); this.customerRepository.save(user);
-           return "Senha alterada com sucesso!"; } 
-           else { return "Erro ao alterar senha! Senha atual incorreta.";
+           return true; } 
+           else 
+           { 
+            return false;
          }
     }
 

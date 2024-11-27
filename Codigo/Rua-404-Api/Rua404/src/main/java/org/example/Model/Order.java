@@ -35,7 +35,7 @@ public class Order {
 
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false) // Cria uma chave estrangeira para usuário
+    @JoinColumn(name = "usuario_id", nullable = true) 
     private Customer usuario;
 
     //RELACIONAMENTO PARA PEDIDO-PAGAMENTO

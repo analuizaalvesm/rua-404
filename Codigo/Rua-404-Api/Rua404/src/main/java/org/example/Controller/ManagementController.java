@@ -4,6 +4,9 @@ import org.example.DTOS.ChangePassowrdRequestDTO;
 import org.example.Model.Customer;
 import org.example.Service.ManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +35,10 @@ public class ManagementController {
     }
 
     @PostMapping("/update-password")
-    public String updatePasswordChangePassowrd(@RequestBody ChangePassowrdRequestDTO user) {
-        return managementService.updatePassword(user.id(),user.senhaAtual(),user.novaSenha());
+    public ResponseEntity<?> updatePasswordChangePassowrd(@RequestBody ChangePassowrdRequestDTO user) {
+         if(this.managementService.updatePassword(user.id(), user.senhaAtual(), user.novaSenha())==true){
+            return ResponseEntity.ok().build();
+         }return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
