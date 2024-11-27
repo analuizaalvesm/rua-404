@@ -27,12 +27,13 @@ public class ManagementController {
     }
 
     @PostMapping("/change-password")
-    public String recoverPassword(@RequestBody ChangePassowrdRequestDTO user) {
-        return managementService.changePassword(user.id(), user.senhaAtual(), user.novaSenha());
+    public String recoverPassword(@RequestBody Customer user) {
+        return managementService.changePassword(user);
     }
 
     @PostMapping("/update-password")
-    public String updatePassword(@RequestBody Customer user) {
-        return managementService.updatePassword(user);
+    public String updatePasswordChangePassowrd(@RequestBody ChangePassowrdRequestDTO user) {
+        return managementService.updatePassword(user.id(),user.senhaAtual(),user.novaSenha())
     }
+
 }

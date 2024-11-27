@@ -46,16 +46,23 @@ public class ManagementService {
         }
     }
 
-    public String changePassword(Long id, String senhaAtual,String novaSenha) {
-        Customer user = this.customerRepository.findById(id).orElse(null);
-        if (user == null) { return "Usuário não encontrado!"; 
-    } BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
-    if (passwordEncoder.matches(senhaAtual, user.getPassword())) {
-         String novaSenhaEncrypted = passwordEncoder.encode(novaSenha);
-          user.setPassword(novaSenhaEncrypted); this.customerRepository.save(user);
-           return "Senha alterada com sucesso!"; } 
-           else { return "Erro ao alterar senha! Senha atual incorreta.";
-         }
+    public String changePassword(Customer user) {
+        Customer userBd = userRepository.findByEmailAndCode(user.getEmail(), user.getRecuperationCode());
+        if (userBd != null) {
+            Date diferent = new Date(new Date().getTime() - userBd.getDataSendCode().getTime());
+            if (diferent.getTime() / 1000 < 900) {
+                userBd.setPassword(user.getPassword());
+                userBd.setCode(null);
+                userBd.setSendCode(null);
+                userBd.setCodeExpiration(null);
+                userRepository.saveAndFlush(userBd);
+                return HttpStatus.OK.toString();
+            } else {
+               return HttpStatus.UNAUTHORIZED.toString();
+            }
+        } else {
+            return HttpStatus.BAD_REQUEST.toString();
+        }
     }
 
     public String validateCode(Customer user) {
@@ -73,15 +80,16 @@ public class ManagementService {
         }
     }
 
-    public String updatePassword(Customer user) { 
-        Customer userBd = userRepository.findByEmailAsync(user.getEmail());
-        if (userBd != null) {
-            userBd.setPassword(user.getPassword()); 
-            userRepository.saveAndFlush(userBd);
-            return "Senha alterada com sucesso!";
-        } else {
-            return "Erro ao alterar senha!";
-        }
+    public String updatePassword(Long id, String senhaAtual,String novaSenha) { 
+        Customer user = this.customerRepository.findById(id).orElse(null);
+        if (user == null) { return "Usuário não encontrado!"; 
+    } BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
+    if (passwordEncoder.matches(senhaAtual, user.getPassword())) {
+         String novaSenhaEncrypted = passwordEncoder.encode(novaSenha);
+          user.setPassword(novaSenhaEncrypted); this.customerRepository.save(user);
+           return "Senha alterada com sucesso!"; } 
+           else { return "Erro ao alterar senha! Senha atual incorreta.";
+         }
     }
 
     private String getCode(Long id) {
