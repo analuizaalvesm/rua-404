@@ -12,7 +12,7 @@ export type Products = {
 
 export interface Product {
   id: number;
-  name: string;
+  nome: string;
   productType: string;
   size: string;
   collab: string;

@@ -5,16 +5,16 @@ import { getUserProfile, deleteUser } from '@/services/ProfileService';
 import { useNavigate } from 'react-router-dom';
 
 interface LoginForm {
-    oldPassword: string;
+    currentPassword: string;
     newPassword: string;
     confirmPassword: string;
 }
 
-const Security: React.FC = () => {
+const SecurityPage: React.FC = () => {
     const { logout } = useAuth();
     const { user } = useAuth();
     const [userData, setUserData] = useState<any>(null);
-    const [form, setForm] = useState<LoginForm>({ oldPassword: '', newPassword: '', confirmPassword: '' });
+    const [form, setForm] = useState<LoginForm>({ currentPassword: '', newPassword: '', confirmPassword: '' });
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -57,7 +57,7 @@ const Security: React.FC = () => {
                 `http://localhost:8080/api/management/update-password`,
                 {
                     id: userData?.customer_id,
-                    senhaAtual: form.oldPassword,
+                    senhaAtual: form.currentPassword,
                     novaSenha: form.newPassword,
                 },
             );
@@ -123,10 +123,10 @@ const Security: React.FC = () => {
                                 </label>
                                 <input 
                                     type="password" 
-                                    name="current-password" 
-                                    id="current-password" 
+                                    name="currentPassword" 
+                                    id="currentPassword" 
                                     placeholder="••••••••" 
-                                    defaultValue={form.oldPassword}
+                                    defaultValue={form.currentPassword}
                                     onChange={handleInputChange}
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                                     required 
@@ -138,8 +138,8 @@ const Security: React.FC = () => {
                                 </label>
                                 <input 
                                     type="password" 
-                                    name="new-password" 
-                                    id="new-password" 
+                                    name="newPassword" 
+                                    id="newPassword" 
                                     placeholder="••••••••" 
                                     defaultValue={form.newPassword}
                                     onChange={handleInputChange}
@@ -153,8 +153,8 @@ const Security: React.FC = () => {
                                 </label>
                                 <input 
                                     type="password" 
-                                    name="confirm-password" 
-                                    id="confirm-password" 
+                                    name="confirmPassword" 
+                                    id="confirmPassword" 
                                     placeholder="••••••••" 
                                     defaultValue={form.confirmPassword}
                                     onChange={handleInputChange}
@@ -222,4 +222,4 @@ const Security: React.FC = () => {
     );
 };
 
-export default Security;
+export default SecurityPage;

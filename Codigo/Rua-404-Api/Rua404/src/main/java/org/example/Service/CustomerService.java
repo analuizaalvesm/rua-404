@@ -6,15 +6,23 @@ import java.util.Date;
 import java.util.List;
 import org.example.DTOS.updateDTO;
 import org.example.Model.Customer;
+import org.example.Model.Endereco;
+import org.example.Model.Order;
 import org.example.Repositories.CustomerRepository;
+import org.example.Repositories.EnderecoRepository;
+import org.example.Repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CustomerService {
+    @Autowired
+    private OrderRepository orderRepository;
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired EnderecoRepository enderecoRepository;
 
     public List<Customer> getAllCustomers(){
         return this.customerRepository.findAll();
@@ -53,10 +61,21 @@ public class CustomerService {
     }
 
     public void deleteCustomer(Long id){
-        try {
-            this.customerRepository.deleteById(id);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Não foi possivel delete Cliente");
+            Customer obj=this.customerRepository.findById(id).get();
+            if(obj!=null){
+            List<Order> listaDePedidos=this.orderRepository.findOrdersByCustomerId(id);
+
+            for (Order pedidos : listaDePedidos) {
+                pedidos.setUsuario(null);
+                this.orderRepository.save(pedidos);
+            }
+            Endereco a=obj.getAddress();
+            enderecoRepository.delete(a);
+        
+            obj.setAddress(null);
+            customerRepository.save(obj);
+
+            this.customerRepository.delete(obj);
         }
-    }
+}
 }
