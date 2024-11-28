@@ -35,9 +35,11 @@ import Video9 from "@/assets/gallery/videos/media9.mp4";
 import Video10 from "@/assets/gallery/videos/media10.mp4";
 import Video11 from "@/assets/gallery/videos/media11.mp4";
 import Video12 from "@/assets/gallery/videos/media12.mp4";
+import Video13 from "@/assets/gallery/videos/media13.mp4";
 
 export const mediaItems = [
   { type: "image", src: Image1 },
+  { type: "video", src: Video13 },
   { type: "video", src: Video1 },
   { type: "image", src: Image2 },
   { type: "video", src: Video2 },
@@ -56,9 +58,9 @@ export const mediaItems = [
   { type: "video", src: Video6 },
   { type: "image", src: Image12 },
   { type: "image", src: Image13 },
-  { type: "video", src: Video7 },
   { type: "image", src: Image14 },
   { type: "image", src: Image15 },
+  { type: "video", src: Video7 },
   { type: "video", src: Video8 },
   { type: "image", src: Image16 },
   { type: "image", src: Image17 },
@@ -74,3 +76,7 @@ export const mediaItems = [
   { type: "video", src: Video12 },
   { type: "image", src: Image24 },
 ];
+
+export const shuffledMediaItems = [...mediaItems].sort(
+  () => Math.random() - 0.5
+);
