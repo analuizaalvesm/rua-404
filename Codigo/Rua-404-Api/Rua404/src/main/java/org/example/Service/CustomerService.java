@@ -69,8 +69,6 @@ public class CustomerService {
                 pedidos.setUsuario(null);
                 this.orderRepository.save(pedidos);
             }
-            Endereco a=obj.getAddress();
-            enderecoRepository.delete(a);
         
             obj.setAddress(null);
             customerRepository.save(obj);
