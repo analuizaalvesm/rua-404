@@ -145,7 +145,13 @@ const Navbar = () => {
 
             <div className="absolute left-1/2 transform -translate-x-1/2">
               <img
-                src={isHovering ? logo : !isHomeRoute ? logo : logoWhite}
+                src={
+                  isHovering
+                    ? logo
+                    : !(isHomeRoute || isGalleryRoute)
+                    ? logo
+                    : logoWhite
+                }
                 alt="RUA 404"
                 className="w-56"
               />
