@@ -1,7 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { QrCodePix } from "qrcode-pix";
-import CheckoutAddressForm from "./CheckoutAddressForm";
 
 interface CartItem {
   id: number;
@@ -90,7 +89,6 @@ const Checkout = (): JSX.Element => {
                 </div>
               ))}
             </div>
-            <CheckoutAddressForm />
           </div>
 
           <div className="w-full mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
