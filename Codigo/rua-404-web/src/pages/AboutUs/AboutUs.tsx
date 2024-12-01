@@ -62,6 +62,12 @@ const AboutUs = () => {
       name: "Prints Artísticos",
       description: "Arte em papel de alta qualidade, capturando momentos e intervenções urbanas.",
       quantity: "+20 edições limitadas"
+    },
+    {
+      id: 3,
+      name: "Pins & Buttons",
+      description: "Acessórios exclusivos para quem quer levar a arte urbana para onde for.",
+      quantity: "+5 modelos exclusivos"
     }
   ];
 
@@ -85,7 +91,6 @@ const AboutUs = () => {
             </div>
           </div>
         </div>
-
       </div>
     );
   };
@@ -230,7 +235,7 @@ const AboutUs = () => {
           <h2 className="text-5xl font-orbitron-bold mb-8 text-right text-white">
             NOSSOS PRODUTOS
           </h2>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-3 gap-6">
             {productHighlights.map((product) => (
               <div
                 key={product.id}

@@ -102,9 +102,6 @@ const Orders: React.FC = () => {
                         <section className="flex items-center h-[50vh] dark:bg-gray-50 dark:text-gray-800">
                             <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
                                 <div className="max-w-xl text-center">
-                                    <p className="text-2xl font-orbitron-semibold md:text-4xl">
-                                        PEDID0S N0T F0UND
-                                    </p>
                                     <div className="mt-4 mb-8 dark:text-gray-600">
                                         <p>Parece que você ainda não fez pedidos.</p>
                                         <p>Não se preocupe, temos o que você procura.</p>
