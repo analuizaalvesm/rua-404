@@ -21,14 +21,14 @@ const Navbar = () => {
   const currentRoute = window.location.pathname;
 
   const location = useLocation();
-  const isHomeRoute = location.pathname === "/";
-  const isGalleryRoute = location.pathname === "/gallery";
+
+  const allowedRoutes = ["/", "/gallery", "/about-us"];
 
   return (
     <>
       <div
         className={`${
-          isHomeRoute || isGalleryRoute
+          allowedRoutes.includes(currentRoute)
             ? "bg-black hover:bg-white text-white hover:text-black"
             : "bg-white text-black"
         } tracking-wider transition-colors duration-300 group`}
@@ -148,7 +148,7 @@ const Navbar = () => {
                 src={
                   isHovering
                     ? logo
-                    : !(isHomeRoute || isGalleryRoute)
+                    : !allowedRoutes.includes(currentRoute)
                     ? logo
                     : logoWhite
                 }
@@ -161,7 +161,7 @@ const Navbar = () => {
               <div className="hidden lg:flex items-center text-black">
                 <div
                   className={`flex items-center space-x-4 ${
-                    isHomeRoute || isGalleryRoute
+                    allowedRoutes.includes(currentRoute)
                       ? "text-white group-hover:text-black"
                       : "text-black"
                   }`}
@@ -181,7 +181,7 @@ const Navbar = () => {
                 <Link
                   to="/login"
                   className={`text-white border-2 border-black font-medium text-sm py-2 px-2 focus:outline-none ${
-                    isHomeRoute || isGalleryRoute
+                    allowedRoutes.includes(currentRoute)
                       ? "group-hover:bg-white group-hover:text-black group-hover:border-2 group-hover:border-black transition-colors duration-300"
                       : "bg-white border-black !text-black"
                   }`}
@@ -191,7 +191,7 @@ const Navbar = () => {
                 <Link
                   to="/register"
                   className={`text-white font-semibold text-sm border-2 border-white py-2 px-2 ${
-                    isHomeRoute || isGalleryRoute
+                    allowedRoutes.includes(currentRoute)
                       ? "group-hover:bg-black group-hover:border-2 group-hover:border-black group-hover:text-white transition-colors duration-300"
                       : "bg-black !border-black !text-white"
                   }`}

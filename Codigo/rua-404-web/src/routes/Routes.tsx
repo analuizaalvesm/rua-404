@@ -29,6 +29,7 @@ const publicRoutes: RouteConfig[] = [
   { path: "register", element: <Route.RegisterPage /> },
   { path: "store", element: <Route.StorePage /> },
   { path: "gallery", element: <Route.Gallery /> },
+  { path: "about-us", element: <Route.AboutUs /> },
   { path: "get-code", element: <Route.GetCodePage /> },
   { path: "validate-code", element: <Route.ValidadeCodePage /> },
   { path: "change-password", element: <Route.ChangePasswordPage /> },
