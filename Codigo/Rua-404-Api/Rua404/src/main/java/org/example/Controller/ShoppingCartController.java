@@ -2,73 +2,102 @@ package org.example.Controller;
 
 import java.util.List;
 
+import org.example.Model.Carrinho;
 import org.example.Model.Product;
-import org.example.Model.ShoppingCart;
+import org.example.Service.CarrinhoService;
 import org.example.Service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/carinho")
+@RequestMapping("/carrinho")
 public class ShoppingCartController {
 
     @Autowired
-    private ShoppingCartService shoppingCartService;
+    private CarrinhoService carrinhoService;
 
+    /**
+     * Obtém todos os carrinhos de um usuário pelo ID do usuário.
+     *
+     * @param userId ID do usuário.
+     * @return Lista de carrinhos.
+     */
     @GetMapping
-    public ResponseEntity<List<ShoppingCart>> getAll(Long id) {
-        
-            List<ShoppingCart> products = shoppingCartService.getByUserId(id);
-            return ResponseEntity.ok(products);
+    public ResponseEntity<List<Carrinho>> getAllByUser(@RequestParam Long userId) {
+        try {
+            List<Carrinho> carrinhos = carrinhoService.getByUserId(userId);
+            return ResponseEntity.ok(carrinhos);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
+    /**
+     * Adiciona um produto ao carrinho de um usuário.
+     *
+     * @param product Produto a ser adicionado.
+     * @param userId  ID do usuário.
+     * @return Mensagem de sucesso ou erro.
+     */
     @PostMapping
-    public ResponseEntity<String> addAtCart(@RequestBody Product product, @RequestParam Long id) {
+    public ResponseEntity<String> addToCart(@RequestBody Product product, @RequestParam Long userId) {
         try {
-            this.shoppingCartService.post(product, id);
-            return ResponseEntity.ok().body("Produto adicionado ao carrinho");
+            carrinhoService.post(product, userId);
+            return ResponseEntity.ok("Produto adicionado ao carrinho");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao adicionar produto ao carrinho");
         }
     }
 
+    /**
+     * Atualiza um carrinho pelo ID.
+     *
+     * @param carrinhoAtualizado Dados atualizados do carrinho.
+     * @param carrinhoId         ID do carrinho a ser atualizado.
+     * @return Carrinho atualizado.
+     */
     @PutMapping
-    public ResponseEntity<ShoppingCart> editCart(ShoppingCart carrinho, Long idCarrinho) {
+    public ResponseEntity<Carrinho> updateCart(@RequestBody Carrinho carrinhoAtualizado, @RequestParam Long carrinhoId) {
         try {
-            ShoppingCart cart = shoppingCartService.put(carrinho, idCarrinho);
-            return ResponseEntity.ok(cart);
+            Carrinho carrinho = carrinhoService.put(carrinhoAtualizado, carrinhoId);
+            return ResponseEntity.ok(carrinho);
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
 
+    /**
+     * Deleta um carrinho pelo ID.
+     *
+     * @param carrinhoId ID do carrinho a ser deletado.
+     * @return Mensagem de sucesso ou erro.
+     */
     @DeleteMapping
-    public ResponseEntity<String> deleteCart(Long id) {
+    public ResponseEntity<String> deleteCart(@RequestParam Long carrinhoId) {
         try {
-            shoppingCartService.delete(id);
-            return ResponseEntity.ok(HttpStatus.OK.toString());
+            carrinhoService.delete(carrinhoId);
+            return ResponseEntity.ok("Carrinho deletado com sucesso");
         } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Erro ao deletar carrinho");
         }
     }
 
-    @PostMapping("fecharCarrinho")
-    public ResponseEntity<String> fecharCart(@RequestParam Long id) {
+    /**
+     * Fecha um carrinho e cria um pedido.
+     *
+     * @param carrinhoId ID do carrinho a ser fechado.
+     * @return Mensagem de sucesso ou erro.
+     */
+    @PostMapping("/fecharCarrinho")
+    public ResponseEntity<String> fecharCarrinho(@RequestParam Long carrinhoId) {
         try {
-           ShoppingCart pedidonovo =  shoppingCartService.getById(id);
-            shoppingCartService.fecharCarrinho(pedidonovo);
-            return ResponseEntity.ok().body("Carrinho fechado com sucesso");
+            Carrinho carrinho = carrinhoService.getById(carrinhoId);
+            carrinhoService.fecharCarrinho(carrinho);
+            return ResponseEntity.ok("Carrinho fechado com sucesso");
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erro ao fechar carrinho");
         }
     }
 }

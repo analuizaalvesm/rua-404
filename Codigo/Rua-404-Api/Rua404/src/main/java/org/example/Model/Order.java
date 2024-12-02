@@ -52,7 +52,7 @@ public class Order {
         this.status = status;
     }
 
-    public  Order(ShoppingCart carrinho, OrderStatus Status, Product produto) {
+    public  Order(Carrinho carrinho, OrderStatus Status, Product produto) {
         this.data = new Date();
         this.produtos.add(produto);
         this.valorTotal = carrinho.getValorTotal();
@@ -110,14 +110,12 @@ public Order(){
         this.usuario = usuario;
     }
 
-    //GET E SET PARA PAGAMENTO
-    // public Pagamento getPagamento() {
-    //     return pagamento;
-    // }
-
-    // public void setPagamento(Pagamento pagamento) {
-    //     this.pagamento = pagamento;
-    // }
+    public Order(Carrinho carrinho, OrderStatus status, List<Product> produtos, BigDecimal valorTotal) {
+        this.usuario = carrinho.getUser();
+        this.status = status;
+        this.produtos = produtos;
+        this.valorTotal = valorTotal;
+    }
     
 }
 

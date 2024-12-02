@@ -33,9 +33,9 @@ public class ShoppingCartService {
         return shoppingCartRepository.findAll();
     }
 
-    public List<ShoppingCart> getByUserId(Long id) {
-        return shoppingCartRepository.findAllByUserID(id);
-    }
+//    public List<ShoppingCart> getByUserId(Long id) {
+//        return shoppingCartRepository.findAllByUserID(id);
+//    }
 
     public ShoppingCart getById(Long id) {
         return shoppingCartRepository.findById(id)
@@ -49,10 +49,10 @@ public class ShoppingCartService {
             carrinho.setNomeProduto(pedido.getName());
             carrinho.setQuantidade(pedido.getQuantity());
             carrinho.setValorPorProduto(pedido.getPrice());
-            carrinho.setValorTotal(pedido.getPrice().multiply(BigDecimal.valueOf(pedido.getQuantity())));
+           // carrinho.setValorTotal(pedido.getPrice().multiply(BigDecimal.valueOf(pedido.getQuantity())));
             carrinho.setDataPedido(new Date());
             carrinho.setUrl(pedido.getUrl());
-            carrinho.setUser(customerRepository.getByID(id));
+           // carrinho.setUser(customerRepository.getByID(id));
             shoppingCartRepository.save(carrinho);
 
             return "";
@@ -74,24 +74,24 @@ public class ShoppingCartService {
         return shoppingCartRepository.findById(id).map(
                 shoppingCart -> {
                     shoppingCart.setQuantidade(pedido.getQuantidade());
-                    shoppingCart.setStatus(pedido.getStatus());
+                   // shoppingCart.setStatus(pedido.getStatus());
                     return shoppingCartRepository.save(shoppingCart);
                 }).orElseThrow(() -> new RuntimeException("error doidao"));
     }
 
-    public void fecharCarrinho(ShoppingCart carrinho){
-        Product produto = new Product(
-                carrinho.getNomeProduto()
-        );
-
-        Order pedidoNovo = new Order(carrinho, OrderStatus.PENDENTE, produto);
-        orderService.savePedido(pedidoNovo, carrinho.getUser().getCustomer_id());
-        this.delete(carrinho.getId());
-
-
-        productService.updateQuantity(carrinho.getId(), carrinho.getQuantidade());
-
-
-    }
+//    public void fecharCarrinho(ShoppingCart carrinho){
+//        Product produto = new Product(
+//                carrinho.getNomeProduto()
+//        );
+//
+//        Order pedidoNovo = new Order(carrinho, OrderStatus.PENDENTE, produto);
+//        orderService.savePedido(pedidoNovo, carrinho.getUser().getCustomer_id());
+//        this.delete(carrinho.getId());
+//
+//
+//        productService.updateQuantity(carrinho.getId(), carrinho.getQuantidade());
+//
+//
+//    }
 
 }
