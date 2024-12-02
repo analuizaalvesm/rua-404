@@ -1,6 +1,8 @@
 package org.example.Controller;
 
 import java.util.Optional;
+
+import org.apache.catalina.connector.Response;
 import org.example.Model.Customer;
 import org.example.Model.Endereco;
 import org.example.Repositories.CustomerRepository;
@@ -40,8 +42,8 @@ public class EnderecoController {
     }
 
     @GetMapping
-public ResponseEntity<Endereco> getEnderecoById(@RequestParam Long ClienteId) {
-    Optional<Customer> clienteOpt = this.customerRepository.findById(ClienteId);
+public ResponseEntity<Endereco> getEnderecoById(@RequestParam Long idCliente) {
+    Optional<Customer> clienteOpt = this.customerRepository.findById(idCliente);
     if (!clienteOpt.isPresent()) {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
@@ -69,6 +71,11 @@ public ResponseEntity<Endereco> getEnderecoById(@RequestParam Long ClienteId) {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    @DeleteMapping
+    public ResponseEntity<?> deleteEndereco(@RequestParam Long idCliente){
+         this.enderecoService.deleteEndereco(idCliente);
+         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }
