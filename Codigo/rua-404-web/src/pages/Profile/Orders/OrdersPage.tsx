@@ -5,7 +5,6 @@ import { useAuth } from "@/context/useAuth";
 import { getUserProfile } from "@/services/ProfileService";
 import { Order } from "@/models/Order";
 import { FaArrowLeft } from "react-icons/fa6";
-import { FiCalendar, FiShoppingBag } from "react-icons/fi";
 
 const OrdersPage: React.FC = () => {
     const { user } = useAuth();
@@ -59,68 +58,119 @@ const OrdersPage: React.FC = () => {
         });
     };
 
+    const addDays = (data: string, days: number) => {
+        const date = new Date(data);
+        date.setDate(date.getDate() + days);
+        return date;
+    };
+
     const OrderCard = ({ order }: { order: Order }) => {
-        const handleCardClick = () => {
+        const handleDetailsButtonClick = () => {
             navigate(`/`);
         };
 
-        return (
-            <div onClick={handleCardClick} className="cursor-pointer hover:border">
-                <div className="border border-gray-300">
-                    <div className="flex justify-between items-center !bg-[#F5F5F5] p-3">
-                        <span className="font-semibold text-black">
-                            Pedido #{order.id}
-                        </span>
-                    </div>
-                    <svg className="mt-0 pt-2 w-full" width="1216" height="2" viewBox="0 0 1216 2"
-                        fill="none">
-                        <path d="M0 1H1216" stroke="#D1D5DB" />
-                    </svg>
-                    <div className="text-sm text-gray-500 font-regular flex items-center px-3">
-                        <FiCalendar className="inline-block mr-1" />
-                        Data: {formatData(order.data)}
-                    </div>
-                    <div className="text-sm text-gray-500 font-regular flex items-center px-3">
-                        <FiShoppingBag className="inline-block mr-1" />
-                        Itens: {order.produtos.length}
-                    </div>
-                    <svg className="mt-0 pt-2 w-full" width="1216" height="2" viewBox="0 0 1216 2"
-                        fill="none">
-                        <path d="M0 1H1216" stroke="#D1D5DB" />
-                    </svg>
+        const handleCancelButtonClick = () => {
+            navigate(`/`);
+        }
 
-                    <div className="flex justify-between items-center pt-3 px-3 pb-3 border-t border-gray-100">
-                        <span
-                            className={`px-2 py-1 text-xs rounded-full items-center 
-                                ${ order.status === "PENDENTE"
-                                    ? "bg-yellow-100 text-yellow-600 border border-yellow-200"
-                                    : order.status === "CANCELADO"
-                                        ? "bg-red-100 text-red-600 border border-red-200"
-                                        : "bg-green-100 text-green-600 border border-green-200"
-                                }`}
-                            >
-                            {order.status}
-                        </span>
-                        <div className="font-bold text-gray-900">
-                            Total:{" "}
-                            {order.valorTotal.toLocaleString("pt-BR", {
-                                style: "currency",
-                                currency: "BRL",
-                            })}
+        return (
+            <div className="border border-gray-300 pt-9 !bg-[#F5F5F5]">
+                <div className="flex max-md:flex-col items-center justify-between px-3 md:px-11">
+                    <div className="data">
+                        <p className="font-medium text-lg leading-4 text-black whitespace-nowrap">
+                            Pedido: #{order.id}
+                        </p>
+                        <p className="font-medium text-lg leading-4 text-black mt-3 whitespace-nowrap">
+                            Data: {formatData(order.data)}
+                        </p>
+                    </div>
+                    <div className="flex items-center gap-3 max-md:mt-5">
+                        <button
+                            onClick={handleCancelButtonClick}
+                            className="rounded-full px-7 py-3 bg-white text-gray-900 border border-gray-300 font-semibold text-sm shadow-sm shadow-transparent transition-all duration-500 hover:shadow-gray-200 hover:bg-gray-50 hover:border-gray-400"
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                            onClick={handleDetailsButtonClick}
+                            className="rounded-full px-7 py-3 bg-black shadow-sm shadow-transparent text-white font-semibold text-sm transition-all duration-500 hover:shadow-gray hover:bg-gray"
+                        >
+                            Detalhes
+                        </button>
+                    </div>
+                </div>
+
+                <svg className="my-9 w-full" width="1216" height="2" viewBox="0 0 1216 2" fill="none">
+                    <path d="M0 1H1216" stroke="#D1D5DB"></path>
+                </svg>
+
+                <div className="flex max-md:flex-col items-center gap-8 px-3 md:px-11 justify-stretch lg:gap-64">
+                    <div className="flex max-lg:flex-col items-center gap-8 lg:gap-32 justify-between">
+                        <div className="col-span-4 sm:col-span-1">
+                            <img className="h-24 w-24 rounded-sm object-cover" src="https://placehold.co/80x80/EEE/31343C" alt="PC system All in One APPLE iMac (2023) mqrq3ro/a"></img>
+                        </div>
+                        <div className="flex flex-col justify-center items-start max-sm:items-center">
+                            <p className="font-semibold text-lg text-black leading-8 mb-2 text-left whitespace-nowrap">
+                                {order.produtos[0].nome} {order.produtos.length > 1 ? "e mais..." : ""}
+                            </p>
+                            <p className="font-normal text-base leading-8 text-gray-500 text-left whitespace-nowrap">
+                                By: RUA 404
+                            </p>
                         </div>
                     </div>
+
+                    <div>
+                        <div className="items-center justify-center">
+                            <div className="flex flex-col justify-center items-start max-sm:items-center">
+                                <p className="font-normal text-lg text-gray-500 leading-8 mb-2 text-left whitespace-nowrap">
+                                    Previsão de entrega
+                                </p>
+                                <p className="font-semibold text-base leading-8 text-black text-left whitespace-nowrap">
+                                    {formatData(addDays(order.data, 15).toISOString())}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <svg className="mt-9 w-full" width="1216" height="2" viewBox="0 0 1216 2" fill="none">
+                    <path d="M0 1H1216" stroke="#D1D5DB" />
+                </svg>
+
+                <div className="px-3 md:px-11 flex items-center justify-between max-sm:flex-col-reverse">
+                    <span
+                        className={`font-bold
+                            ${order.status === "PENDENTE"
+                                ? "text-yellow-600"
+                                : order.status === "CANCELADO"
+                                    ? "text-red-500"
+                                    : "text-green-600"
+                            }`}
+                    >
+                        {order.status}
+                    </span>
+                    <p className="py-6 font-medium text-xl leading-8 text-black max-sm:py-4">
+                        <span className="text-gray-500">
+                            Total:
+                        </span> &nbsp;
+                        {order.valorTotal.toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                        })}
+                    </p>
                 </div>
             </div>
         );
     };
 
     return (
-        <div>
+        <div className="mb-12">
             <div className="mb-6">
                 <h2 className="text-xl font-medium font-orbitron-regular mb-1">Pedidos</h2>
             </div>
-            <main className="max-w-xl">
-                <div className="flex flex-col gap-6">
+            <main className="max-full">
+                <div className="flex flex-col gap-8">
                     {orders.length > 0 ? (
                         orders.map((order) => (
                             <OrderCard key={order.id} order={order} />
@@ -129,9 +179,6 @@ const OrdersPage: React.FC = () => {
                         <section className="flex items-center h-[50vh] dark:bg-gray-50 dark:text-gray-800">
                             <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
                                 <div className="max-w-xl text-center">
-                                    <p className="text-2xl font-orbitron-semibold md:text-4xl">
-                                        PEDID0S N0T F0UND
-                                    </p>
                                     <div className="mt-4 mb-8 dark:text-gray-600">
                                         <p>Parece que você ainda não fez pedidos.</p>
                                         <p>Não se preocupe, temos o que você procura.</p>

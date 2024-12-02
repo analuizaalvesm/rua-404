@@ -1,4 +1,4 @@
-import { mediaItems } from "./mediaItems";
+import { mediaItems, shuffledMediaItems } from "./mediaItems";
 
 const DraggableGallery = () => {
   return (

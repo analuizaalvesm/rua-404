@@ -37,6 +37,7 @@ interface CartContextType {
   removeItem: (id: number) => void;
   cartCount: number;
   addProductToCart: (product: Product, quantity: number) => Promise<void>;
+  closeCart: (idCart: number) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -129,6 +130,17 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     0
   );
 
+  const closeCart = async (idCart: number) => {
+    try {
+      await axios.post(`http://localhost:8080/carinho/fecharCarrinho`, null, {
+        params: { id: userId },
+      });
+      setCartItems([]);
+    } catch (error) {
+      console.error("Error closing cart:", error);
+    }
+  }
+
   useEffect(() => {
     if (userId) {
       fetchCartItems();
@@ -143,6 +155,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         removeItem,
         cartCount,
         addProductToCart,
+        closeCart,
       }}
     >
       {children}

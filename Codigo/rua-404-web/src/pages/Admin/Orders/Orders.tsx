@@ -1,54 +1,27 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/context/useAuth";
-import { getUserProfile } from "@/services/ProfileService";
 import { Order } from "@/models/Order";
 import { FaArrowLeft } from "react-icons/fa6";
 import { FiCalendar, FiShoppingBag } from "react-icons/fi";
 
-const OrdersPage: React.FC = () => {
-    const { user } = useAuth();
+const Orders: React.FC = () => {
     const navigate = useNavigate();
 
     const [orders, setOrderList] = useState<Order[]>([]);
 
-    useEffect(() => {
-        const fetchUserProfile = async () => {
-            console.log("Fetching user profile...");
-            try {
-                const userData = await getUserProfile(user?.email || "");
-                console.log("User data fetched:", userData);
-                if (userData) {
-                    if (userData?.customer_id !== 0) {
-                        console.log("Customer ID:", userData?.customer_id);
-                        axios
-                            .get(`http://localhost:8080/orders/customer/${userData?.customer_id}`)
-                            .then((response) => {
-                                setOrderList(response.data);
-                                console.log("Orders fetched:", response.data);
-                            })
-                            .catch((error) => {
-                                console.error("Error fetching orders:", error);
-                            });
-                    } else {
-                        console.log("Customer ID is 0");
-                    }
-                } else {
-                    console.log("User data is null");
-                }
-            } catch (error) {
-                console.error("Error fetching user profile:", error);
-            }
-        };
-
-        if (user) {
-            console.log("User is defined:", user);
-            fetchUserProfile();
-        } else {
-            console.log("User is not defined");
-        }
-    }, [user]);
+    useEffect(() => {     
+        axios
+            .get(`http://localhost:8080/orders`)
+            .then((response) => {
+                setOrderList(response.data);
+                console.log("Orders fetched:", response.data);
+            })
+            .catch((error) => {
+                console.error("Error fetching orders:", error);
+            });
+                    
+    }, []);
 
     const formatData = (data: string) => {
         const date = new Date(data);
@@ -61,7 +34,7 @@ const OrdersPage: React.FC = () => {
 
     const OrderCard = ({ order }: { order: Order }) => {
         const handleCardClick = () => {
-            navigate(`/`);
+            navigate(`#`);
         };
 
         return (
@@ -129,9 +102,6 @@ const OrdersPage: React.FC = () => {
                         <section className="flex items-center h-[50vh] dark:bg-gray-50 dark:text-gray-800">
                             <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8">
                                 <div className="max-w-xl text-center">
-                                    <p className="text-2xl font-orbitron-semibold md:text-4xl">
-                                        PEDID0S N0T F0UND
-                                    </p>
                                     <div className="mt-4 mb-8 dark:text-gray-600">
                                         <p>Parece que você ainda não fez pedidos.</p>
                                         <p>Não se preocupe, temos o que você procura.</p>
@@ -156,4 +126,4 @@ const OrdersPage: React.FC = () => {
     );
 };
 
-export default OrdersPage;
+export default Orders;
