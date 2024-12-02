@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { CircularProgress, Modal, Radio, IconButton } from "@mui/material";
-import { FiPlusCircle, FiTrash, FiX } from "react-icons/fi";
+import { CircularProgress, Modal, IconButton } from "@mui/material";
+import { FiPlusCircle } from "react-icons/fi";
+import { GrUpdate } from "react-icons/gr";
 import { useAuth } from "@/context/useAuth";
 import { getUserProfile, createAddress, getAddress, updateAddress } from "@/services/ProfileService";
 import { Address } from "@/models/Address";
@@ -11,16 +12,8 @@ const CheckoutAddressForm = () => {
     const [userData, setUserData] = useState<User | null>(null);
     const [loading, setLoading] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [addressData, setAddressData] = useState<Address>({
-        cep: "",
-        rua: "",
-        numero: "",
-        complemento: "",
-        bairro: "",
-        cidade: "",
-        estado: ""
-    });
-    const [address, setAddress] = useState<Address>({
+    const [addressData, setAddressData] = useState<Address>();
+    const [newAddress, setNewAddress] = useState<Address>({
         cep: "",
         rua: "",
         numero: "",
@@ -37,15 +30,13 @@ const CheckoutAddressForm = () => {
                 if (userData) {
                     setUserData(userData);
                     const response = await getAddress(userData.customer_id);
-                    console.log("response", response);
                     const addressData = response?.data;
                     console.log("addressData", addressData);
 
                     if (response?.status == 200 && addressData) {
                         setAddressData(addressData);
-                        setAddress({ ...addressData });
                     } else {
-                        setAddress({
+                        setAddressData({
                             cep: "",
                             rua: "",
                             numero: "",
@@ -67,7 +58,7 @@ const CheckoutAddressForm = () => {
 
     const handleCepChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const cep = e.target.value.replace(/\D/g, "");
-        setAddress((prev) => ({ ...prev, cep }));
+        setNewAddress((prev) => ({ ...prev, cep }));
 
         if (cep.length === 8) {
             setLoading(true);
@@ -75,7 +66,7 @@ const CheckoutAddressForm = () => {
                 const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
                 const data = await response.json();
                 if (!data.erro) {
-                    setAddressData({
+                    setNewAddress({
                         cep,
                         rua: data.logradouro,
                         bairro: data.bairro,
@@ -97,41 +88,43 @@ const CheckoutAddressForm = () => {
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setAddress((prev) => ({ ...prev, [name]: value }));
+        setNewAddress({ ...newAddress, [name]: value });
     };
 
-    const handleSaveAddress = async () => {
+    const handleUpdateAddress = async (
+        e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    ) => {
+        e.preventDefault();
         if (userData) {
-            if (addressData === null) {
-                const newAddress = await createAddress(userData.customer_id, address);
-                if (newAddress) {
-                    saveNewAddress(newAddress);
+            if (userData.address === null) {
+                const updatedAddress = await createAddress(userData.customer_id, newAddress);
+                if (updatedAddress) {
+                    updateAddressInScreen(updatedAddress);
                 }
-            } else if (JSON.stringify(address) !== JSON.stringify(addressData)) {
+            }
+
+            if (JSON.stringify(newAddress) !== JSON.stringify(addressData)) {
                 try {
-                    console.log("address:", address);
-                    const updatedAddress = await updateAddress(userData.customer_id, address);
+                    console.log("newAddress:", newAddress);
+                    const updatedAddress = await updateAddress(userData.customer_id, newAddress);
                     console.log("updatedAddress:", updatedAddress);
                     if (updatedAddress) {
-                        saveNewAddress(updatedAddress);
+                        updateAddressInScreen(updatedAddress);
                     }
                 } catch (error) {
                     alert("Ocorreu um erro ao tentar salvar as alterações.");
                 }
             } else {
                 alert("Nenhuma alteração foi detectada.");
-                console.log("address", address);
-                console.log("addressData", addressData);
             }
-            setShowModal(false);
 
         } else {
             alert("Ocorreu um erro ao tentar salvar as alterações.");
         }
     };
 
-    const saveNewAddress = async (updatedAddress: Address) => {
-        setAddress({ ...updatedAddress });
+    const updateAddressInScreen = async (updatedAddress: Address) => {
+        setAddressData({ ...updatedAddress });
         const addressObj = {
             cep: updatedAddress.cep,
             rua: updatedAddress.rua,
@@ -142,22 +135,10 @@ const CheckoutAddressForm = () => {
             estado: updatedAddress.estado
         };
 
-        setAddress(addressObj);
-
         alert("As informações foram atualizadas com sucesso!");
-    };
 
-    const handleRemoveAddress = () => {
-        // CHAMAR ROTA DE EXCLUIR O ENDEREÇO
-        setAddressData({
-            cep: "",
-            rua: "",
-            numero: "",
-            complemento: "",
-            bairro: "",
-            cidade: "",
-            estado: ""
-        });
+        setAddressData(addressObj);
+        setShowModal(false);
     };
 
     const isAddressEmpty = (address: Address) => {
@@ -170,6 +151,20 @@ const CheckoutAddressForm = () => {
             !address.estado &&
             !address.cep
         );
+    };
+
+    const handleUpdateAddressBtnClick = () => {
+        setNewAddress({
+            cep: "",
+            rua: "",
+            numero: "",
+            complemento: "",
+            bairro: "",
+            cidade: "",
+            estado: ""
+        });
+
+        setShowModal(true);
     };
 
     return (
@@ -189,8 +184,8 @@ const CheckoutAddressForm = () => {
                             <p>{`CEP: ${addressData.cep}`}</p>
                         </div>
                         <div className="flex items-center space-x-2">
-                            <IconButton onClick={() => handleRemoveAddress()}>
-                                <FiTrash size={16} color={"#ef4444"} />
+                            <IconButton onClick={handleUpdateAddressBtnClick}>
+                                <GrUpdate size={16} color={"#ef4444"} />
                             </IconButton>
                         </div>
                     </div>
@@ -221,9 +216,9 @@ const CheckoutAddressForm = () => {
                                         <label className="block text-sm font-medium">CEP</label>
                                         <input
                                             type="text"
-                                            name="cepModal"
+                                            name="cep"
                                             maxLength={8}
-                                            defaultValue={address.cep}
+                                            defaultValue={newAddress.cep}
                                             onChange={handleCepChange}
                                             className="block w-full p-2 pr-8 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
                                         />
@@ -235,7 +230,7 @@ const CheckoutAddressForm = () => {
                                     <input
                                         type="text"
                                         name="rua"
-                                        defaultValue={address.rua}
+                                        defaultValue={newAddress.rua}
                                         onChange={handleInputChange}
                                         className="block w-full p-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
                                     />
@@ -244,8 +239,8 @@ const CheckoutAddressForm = () => {
                                     <label className="block text-sm font-medium">Número</label>
                                     <input
                                         type="text"
-                                        name="number"
-                                        defaultValue={address.numero}
+                                        name="numero"
+                                        defaultValue={newAddress.numero}
                                         onChange={handleInputChange}
                                         className="block w-full p-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
                                     />
@@ -255,7 +250,7 @@ const CheckoutAddressForm = () => {
                                     <input
                                         type="text"
                                         name="bairro"
-                                        defaultValue={address.bairro}
+                                        defaultValue={newAddress.bairro}
                                         onChange={handleInputChange}
                                         className="block w-full p-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
                                     />
@@ -267,7 +262,7 @@ const CheckoutAddressForm = () => {
                                     <input
                                         type="text"
                                         name="complemento"
-                                        defaultValue={address.complemento}
+                                        defaultValue={newAddress.complemento}
                                         onChange={handleInputChange}
                                         className="block w-full p-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
                                     />
@@ -277,7 +272,7 @@ const CheckoutAddressForm = () => {
                                     <input
                                         type="text"
                                         name="cidade"
-                                        defaultValue={address.cidade}
+                                        defaultValue={newAddress.cidade}
                                         onChange={handleInputChange}
                                         className="block w-full p-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
                                     />
@@ -287,7 +282,7 @@ const CheckoutAddressForm = () => {
                                     <input
                                         type="text"
                                         name="estado"
-                                        defaultValue={address.estado}
+                                        defaultValue={newAddress.estado}
                                         onChange={handleInputChange}
                                         className="block w-full p-2 border border-gray-300 rounded-sm shadow-sm sm:text-sm"
                                     />
@@ -295,7 +290,7 @@ const CheckoutAddressForm = () => {
                             </div>
                             <div className="flex items-center justify-end space-x-2 pt-2">
                                 <button
-                                    onClick={handleSaveAddress}
+                                    onClick={handleUpdateAddress}
                                     className="bg-black text-white text-sm px-4 py-2.5 rounded-sm hover:bg-gray-800"
                                 >
                                     Salvar endereço
