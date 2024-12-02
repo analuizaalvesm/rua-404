@@ -67,7 +67,7 @@ export const createAddress = async (customerId: number, address: Address) => {
 
 export const getAddress = async (customerId: number) => {
   try {
-    const response = await axios.get(`${addressApi}?ClienteId=${customerId}`);
+    const response = await axios.get(`${addressApi}?idCliente=${customerId}`);
     return response;
   } catch (error) {
     handleError(error);
