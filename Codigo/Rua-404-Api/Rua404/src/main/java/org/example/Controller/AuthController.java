@@ -55,7 +55,7 @@ public class AuthController {
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         Customer a=this.customerRepository.findByEmail(data.email());
-        if(a.getRole()==(UserRole.USER)){
+        if(a.getRole()==(UserRole.ADMIN)){
         String token = JwtUtil.generateAdmToken(this.customerRepository.findByEmailAsync(data.email()).getEmail());
 
         ResponseDTO response=new ResponseDTO(token, a.getRole());
@@ -74,7 +74,7 @@ public class AuthController {
         }
         String encryptPassword=new BCryptPasswordEncoder().encode(data.password());
         Customer newUser= new Customer(data.first_name(),data.last_name(),data.email(),encryptPassword);
-        newUser.setRole(UserRole.ADMIN);
+        newUser.setRole(UserRole.USER);
         
         LocalDate hoje = LocalDate.now();
         Date date=Date.from(hoje.atStartOfDay(ZoneId.systemDefault()).toInstant());
