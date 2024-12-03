@@ -11,11 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/carinho")
+@RequestMapping("/carrinho")
 public class ShoppingCartController {
 
     @Autowired
     private ShoppingCartService shoppingCartService;
+
     /**
      * Obtém todos os carrinhos de um usuário pelo ID do usuário.
      *
@@ -28,6 +29,7 @@ public class ShoppingCartController {
         List<ShoppingCart> products = shoppingCartService.getByUserId(id);
         return ResponseEntity.ok(products);
     }
+
     /**
      * Adiciona um produto ao carrinho de um usuário.
      *
@@ -49,7 +51,7 @@ public class ShoppingCartController {
      * Atualiza um carrinho pelo ID.
      *
      * @paramDados atualizados do carrinho.
-     * @paracarrinhoId         ID do carrinho a ser atualizado.
+     * @paracarrinhoId ID do carrinho a ser atualizado.
      * @return Carrinho atualizado.
      */
     @PutMapping
