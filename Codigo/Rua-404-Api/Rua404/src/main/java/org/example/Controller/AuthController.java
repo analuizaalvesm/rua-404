@@ -74,7 +74,7 @@ public class AuthController {
         }
         String encryptPassword=new BCryptPasswordEncoder().encode(data.password());
         Customer newUser= new Customer(data.first_name(),data.last_name(),data.email(),encryptPassword);
-        newUser.setRole(UserRole.USER);
+        newUser.setRole(UserRole.ADMIN);
         
         LocalDate hoje = LocalDate.now();
         Date date=Date.from(hoje.atStartOfDay(ZoneId.systemDefault()).toInstant());
