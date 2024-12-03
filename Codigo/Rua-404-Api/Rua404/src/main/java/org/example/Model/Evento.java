@@ -1,6 +1,7 @@
 package org.example.Model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,11 +26,11 @@ public class Evento {
     @Column(name = "id_evento")
     private Long idEvento;
 
-    @Column(name = "nome")
-    private String nome;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "descricao")
-    private String descricao;
+    @Column(name = "texto")
+    private String texto;
 
     @Column(name = "url")
     @JsonProperty("url")

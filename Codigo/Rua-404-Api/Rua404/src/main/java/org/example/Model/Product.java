@@ -122,4 +122,10 @@ public class Product {
     public void setUrl(String url) {
         this.url = url;
     }
+
+    public Product(String nomeProduto, Integer quantidade, BigDecimal valorPorProduto) {
+        this.name = nomeProduto;
+        this.quantity = quantidade;
+        this.price = valorPorProduto;
+    }
 }

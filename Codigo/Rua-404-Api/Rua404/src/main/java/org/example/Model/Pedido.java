@@ -48,7 +48,6 @@ public class Pedido {
         this.nomeProduto = carrinho.getNomeProduto();
         this.dataPedido = new Date();
         this.quantidade = carrinho.getQuantidade();
-        this.valorTotal = carrinho.getValorTotal();
         this.valorPorProduto = carrinho.getValorPorProduto();
         this.status = status;
     }
