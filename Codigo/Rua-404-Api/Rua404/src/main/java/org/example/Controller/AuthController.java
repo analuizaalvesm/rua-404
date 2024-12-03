@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -87,6 +88,14 @@ public class AuthController {
     @PutMapping("/updateUserData/{email}")
     public String updateUserData(@RequestBody Customer customer, @PathVariable String email) {
         return authService.updateUser(customer, email);
+    }
+    @PutMapping("/changeRole")
+    public ResponseEntity<?> changeRole(@RequestParam Long id){
+       Customer newAdm= this.customerRepository.getByID(id);
+       newAdm.setRole(UserRole.ADMIN);
+       customerRepository.save(newAdm);
+       String response="Usuario= "+newAdm.getEmail()+": "+newAdm.getRole();
+       return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/deleteByEmail/{email}")
