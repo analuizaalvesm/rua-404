@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/Input/input";
 import { Label } from "@/components/ui/Label/label";
 import { Button } from "@/components/ui/Button/button";
 import { ImageIcon } from "lucide-react";
+import { FiChevronDown } from "react-icons/fi";
 
 type ProductModalProps = {
   isOpen: boolean;
@@ -93,15 +94,29 @@ const ProductModal = ({
                 />
               </div>
 
-              <div className="grid gap-2">
+              <div className="grid gap-2 relative">
                 <Label htmlFor="productType">Categoria</Label>
-                <Input
-                  id="productType"
-                  name="productType"
-                  value={formData.productType}
-                  onChange={handleChange}
-                  placeholder="Tipo do produto"
-                />
+                <div className="relative">
+                  <select
+                    id="productType"
+                    name="productType"
+                    value={formData.productType}
+                    onChange={handleChange}
+                    className="block h-9 w-full px-3 font-regular border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-primary focus:border-primary sm:text-sm"
+                  >
+                    <option value="" disabled>
+                      Selecione uma categoria
+                    </option>
+                    <option value="Print">Print</option>
+                    <option value="Adesivo">Adesivo</option>
+                    <option value="Camisa">Camisa</option>
+                    <option value="Quadro">Quadro</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                    {/* Replace ChevronDown with your preferred icon */}
+                    <FiChevronDown size={12} />
+                  </div>
+                </div>
               </div>
 
               <div className="grid gap-2">

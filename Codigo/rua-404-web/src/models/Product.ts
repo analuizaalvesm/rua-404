@@ -11,6 +11,7 @@ export type Products = {
 };
 
 export interface Product {
+  name: string;
   id: number;
   nome: string;
   productType: string;

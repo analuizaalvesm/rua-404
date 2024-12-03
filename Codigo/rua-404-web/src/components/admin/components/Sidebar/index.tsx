@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FiFile, FiLayers } from "react-icons/fi";
 import { BsGrid } from "react-icons/bs";
-import { ShoppingBag, Users } from "lucide-react";
+import { LucidePencilRuler, ShoppingBag, Users } from "lucide-react";
 import { BiColor } from "react-icons/bi";
 import { TbShoppingBagEdit } from "react-icons/tb";
 import { FiSettings } from "react-icons/fi";
@@ -107,18 +107,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Estoque
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  to="/admin/reports"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
-                    pathname.includes("/admin/users") &&
-                    "bg-graydark dark:bg-meta-4"
-                  }`}
-                >
-                  <FiFile size={20} />
-                  Relatórios
-                </NavLink>
-              </li>
+
               <li>
                 <NavLink
                   to="/admin/orders"
@@ -129,6 +118,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 >
                   <ShoppingBag size={20} />
                   Pedidos
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/admin/CMS"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/users") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <LucidePencilRuler size={20} />
+                  CMS
                 </NavLink>
               </li>
               <li>

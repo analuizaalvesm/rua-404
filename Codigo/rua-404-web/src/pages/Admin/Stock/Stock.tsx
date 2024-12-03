@@ -158,23 +158,6 @@ const Stock = () => {
     setShowDeleteModal(true);
   };
 
-  const renderInputField = (
-    label: string,
-    value: string | number,
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-    type = "text"
-  ) => (
-    <div className="flex flex-col">
-      <label className="mb-1 font-semibold">{label}</label>
-      <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        className="border rounded p-2"
-      />
-    </div>
-  );
-
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + 10;
