@@ -65,10 +65,6 @@ const OrdersPage: React.FC = () => {
     };
 
     const OrderCard = ({ order }: { order: Order }) => {
-        const handleDetailsButtonClick = () => {
-            navigate(`/`);
-        };
-
         const handleCancelButtonClick = () => {
             navigate(`/`);
         }
@@ -92,7 +88,11 @@ const OrdersPage: React.FC = () => {
                             Cancelar
                         </button>
                         <button
-                            onClick={handleDetailsButtonClick}
+                            onClick={() =>
+                                navigate(`/profile/order/${order.id}`, {
+                                    state: { orderId: order.id },
+                                })
+                              }
                             className="rounded-full px-7 py-3 bg-black shadow-sm shadow-transparent text-white font-semibold text-sm transition-all duration-500 hover:shadow-gray hover:bg-gray"
                         >
                             Detalhes

@@ -37,8 +37,9 @@ const publicRoutes: RouteConfig[] = [
 ];
 
 const profileRoutes: RouteConfig[] = [
-  { path: "edit-profile", element: <Route.Profile />, isPrivate: true },
   { path: "orders", element: <Route.Orders />, isPrivate: true },
+  { path: "order/:id", element: <Route.OrderDetails />, isPrivate: true },
+  { path: "edit-profile", element: <Route.Profile />, isPrivate: true },
   { path: "edit-address", element: <Route.Address />, isPrivate: true },
   { path: "security", element: <Route.Security />, isPrivate: true },
 ];

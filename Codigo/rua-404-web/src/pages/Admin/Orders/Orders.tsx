@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Order } from "@/models/Order";
 import { FaArrowLeft } from "react-icons/fa6";
 import { FiCalendar, FiShoppingBag } from "react-icons/fi";
+import { SlLocationPin } from "react-icons/sl";
 
 const Orders: React.FC = () => {
     const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Orders: React.FC = () => {
         };
 
         return (
-            <div onClick={handleCardClick} className="cursor-pointer hover:border">
+            <div className="cursor-pointer hover:border">
                 <div className="border border-gray-300">
                     <div className="flex justify-between items-center !bg-[#F5F5F5] p-3">
                         <span className="font-semibold text-black">
@@ -56,6 +57,12 @@ const Orders: React.FC = () => {
                     <div className="text-sm text-gray-500 font-regular flex items-center px-3">
                         <FiShoppingBag className="inline-block mr-1" />
                         Itens: {order.produtos.length}
+                    </div>
+                    <div className="text-sm text-gray-500 font-regular flex items-center px-3">
+                        <SlLocationPin className="inline-block mr-1" />
+                        Endereço: { order.usuario.address === null 
+                                    ? "Endereço não cadastrado"
+                                    : order.usuario.address.rua}
                     </div>
                     <svg className="mt-0 pt-2 w-full" width="1216" height="2" viewBox="0 0 1216 2"
                         fill="none">

@@ -1,3 +1,5 @@
+import { Address } from "./Address";
+
 export type User = {
   customer_id: number;
   store_id?: number;
@@ -7,7 +9,7 @@ export type User = {
   telefone: string;
   dataNascimento: string;
   email: string;
-  address: string;
+  address: Address;
   active: boolean;
   create_data?: string;
   last_update?: string;

@@ -16,6 +16,7 @@ export { default as CheckoutPage } from "./ShoppingCart/Checkout/Checkout";
 
 export { default as Profile } from "./Profile/EditProfile/ProfileSection";
 export { default as Orders } from "./Profile/Orders/OrdersPage";
+export { default as OrderDetails } from "./Profile/Orders/OrderDetailsPage";
 export { default as Address } from "./Profile/Address/AddressPage";
 export { default as Security } from "./Profile/Security/SecurityPage";
 export { default as NotFoundPage } from "./NotFound/NotFoundPage";
