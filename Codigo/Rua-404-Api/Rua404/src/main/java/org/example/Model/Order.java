@@ -52,13 +52,6 @@ public class Order {
         this.status = status;
     }
 
-    public  Order(Carrinho carrinho, OrderStatus Status, Product produto) {
-        this.data = new Date();
-        this.produtos.add(produto);
-        this.valorTotal = carrinho.getValorTotal();
-        this.usuario = carrinho.getUser();
-        this.status = Status;
-    }
 public Order(){
 
 }
@@ -108,13 +101,6 @@ public Order(){
 
     public void setUsuario(Customer usuario) {
         this.usuario = usuario;
-    }
-
-    public Order(Carrinho carrinho, OrderStatus status, List<Product> produtos, BigDecimal valorTotal) {
-        this.usuario = carrinho.getUser();
-        this.status = status;
-        this.produtos = produtos;
-        this.valorTotal = valorTotal;
     }
     
 }

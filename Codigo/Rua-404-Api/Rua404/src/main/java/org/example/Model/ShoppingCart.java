@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "ShoppingCart")
+@Table(name = "carrinho")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -17,14 +17,23 @@ public class ShoppingCart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column
     private String nomeProduto;
-    private Integer quantidade;
-    private BigDecimal valorPorProduto;
+    @Column
     private Date dataPedido;
+    @Column
+    private Integer quantidade;
+    @Column
+    private BigDecimal valorTotal;
+    @Column
+    private BigDecimal valorPorProduto;
+    @Column
+    private String status;
+    @Column
     private String url;
 
     @ManyToOne
-    @JoinColumn(name = "carrinho_id", referencedColumnName = "id")
-    private Carrinho carrinho;
+    @JoinColumn(name = "user_id", referencedColumnName = "customer_id")
+    private Customer user;
+
 }
