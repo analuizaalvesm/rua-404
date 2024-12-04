@@ -8,6 +8,7 @@ import Users from "../Users/Users";
 import Dashboard from "./Dashboard";
 import Orders from "../Orders/Orders";
 import CMSPage from "../CMS/CMSPage";
+import Report from "../Report/Report";
 
 const AdminRoutes = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -88,3 +89,14 @@ const AdminCMS = () => {
 };
 
 export { AdminCMS };
+
+const AdminReport = () => {
+  return (
+    <>
+      <PageTitle title="RuaAdmin - Relatórios" />
+      <Report />
+    </>
+  );
+};
+
+export { AdminReport };
