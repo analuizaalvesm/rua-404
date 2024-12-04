@@ -9,6 +9,7 @@ import {
   AdminOrders,
   AdminUsers,
   AdminCMS,
+  AdminReport
 } from "@/pages/Admin/Dashboard/AdminRoutes";
 import AdminLogin from "@/pages/Admin/Login/AdminLogin";
 
@@ -110,6 +111,10 @@ const routeConfig: RouteConfig[] = [
       {
         path: "cms",
         element: <AdminCMS />,
+      },
+      {
+        path: "report",
+        element: <AdminReport />,
       },
       {
         path: "",
