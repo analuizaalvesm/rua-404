@@ -139,19 +139,21 @@ const OrderDetailsPage: React.FC = () => {
     };
 
     const HelpCard: React.FC = () => {
+        const whatsappLink = `https://wa.me/5531995245030?text=Quero%20cancelar%20meu%20pedido%20${orderId}`;
         return (
             <div className="flex flex-row mt-20 mb-3 gap-3 items-center">
                 <p className="text-gray-600 text-sm">Precisa de ajuda?</p>
-                <button
+                <a
+                    href={whatsappLink}
+                    target="_blank"
                     rel="noopener noreferrer"
-                    onClick={() => navigate("#")}
-                    className="px-4 py-2 font-medium rounded text-white"
+                    className="px-4 py-2 font-medium rounded text-white bg-black hover:bg-gray-600"
                 >
                     <div className="flex flex-row items-center gap-2 text-sm">
                         Falar no WhatsApp
                         <FaArrowRight color="#fff" size={14} />
                     </div>
-                </button>
+                </a>
             </div>
         );
     }
