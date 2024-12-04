@@ -2,17 +2,20 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { Order } from "@/models/Order";
-import { FiCalendar, FiShoppingBag } from "react-icons/fi";
+import { FiCalendar, FiShoppingBag, FiSearch } from "react-icons/fi";
 import { SlLocationPin } from "react-icons/sl";
 
 const Orders: React.FC = () => {
     const [orders, setOrderList] = useState<Order[]>([]);
+    const [filteredOrders, setFilteredOrders] = useState<Order[]>([]);
+    const [searchQuery, setSearchQuery] = useState<string>("");
 
     useEffect(() => {
         axios
             .get(`http://localhost:8080/orders`)
             .then((response) => {
                 setOrderList(response.data);
+                setFilteredOrders(response.data);
                 console.log("Orders fetched:", response.data);
             })
             .catch((error) => {
@@ -33,12 +36,25 @@ const Orders: React.FC = () => {
                     return order;
                 });
                 setOrderList(updatedOrders);
+                setFilteredOrders(updatedOrders);
             })
             .catch((error) => {
                 alert(error.response.data);
                 console.error("Error updating order status:", error);
             });
     }
+
+    const handleSearch = () => {
+        console.log("searchQuery:", searchQuery);
+        const query = searchQuery.toLowerCase();
+        const filtered = orders.filter(
+            (order) =>
+                (order.id && order.id.toString().includes(query)) ||
+                (order.usuario.first_name && order.usuario.first_name.toLowerCase().includes(query)) ||
+                order.usuario.last_name && order.usuario.last_name.toLowerCase().includes(query)
+        );
+        setFilteredOrders(filtered);
+    };
 
     const formatData = (data: string) => {
         const date = new Date(data);
@@ -119,8 +135,6 @@ const Orders: React.FC = () => {
                                                 : order.status === "CANCELADO"
                                                     ? "bg-red-100 text-red-600 border border-red-200"
                                                     : "bg-green-100 text-green-600 border border-green-200"
-                                    
-                                    
                                 }`}
                         >
                             <option value="PENDENTE">PENDENTE</option>
@@ -147,11 +161,33 @@ const Orders: React.FC = () => {
         <div>
             <div className="mb-6">
                 <h1 className="text-2xl font-bold mb-4">Pedidos</h1>
+                <div className="mb-4 flex gap-4 justify-between w-full">
+                    <div className="flex flex-col w-1/3">
+                        <div className="flex gap-2 items-center">
+                            <div className="relative w-full">
+                                <input
+                                    type="text"
+                                    placeholder="Pesquisar por id ou nome"
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="text-sm w-full p-2 pl-10 border border-gray-200 rounded-md shadow-sm"
+                                />
+                                <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500" />
+                            </div>
+                            <button
+                                onClick={handleSearch}
+                                className="bg-primary text-white font-regular text-sm rounded-md px-3 py-2 border border-black"
+                            >
+                                Pesquisar
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <main className="max-w-xl">
                 <div className="flex flex-col gap-6">
-                    {orders.length > 0 ? (
-                        orders.map((order) => <OrderCard key={order.id} order={order} />)
+                    {filteredOrders.length > 0 ? (
+                        filteredOrders.map((order) => <OrderCard key={order.id} order={order} />)
                     ) : (
                         <section className="flex items-left">
                             <div className="container flex flex-col items-left justify-center mx-auto">
