@@ -74,7 +74,7 @@ export const UserProvider = ({ children }: Props) => {
           navigate("/store");
         }
       })
-      .catch((e) => window.alert("ERRO CADASTRO"));
+      .catch(() => window.alert("ERRO CADASTRO"));
   };
 
   const login = async (email: string, password: string) => {
@@ -94,7 +94,7 @@ export const UserProvider = ({ children }: Props) => {
           navigate("/store");
         }
       })
-      .catch((e) => window.alert("ERRO LOGIN"));
+      .catch(() => window.alert("ERRO LOGIN"));
   };
 
   const getUserInfo = async () => {
@@ -104,7 +104,7 @@ export const UserProvider = ({ children }: Props) => {
           setUserId(response.customer_id);
         }
       })
-      .catch((e) => window.alert("ERRO GET USER INFO"));
+      .catch(() => window.alert("ERRO GET USER INFO"));
   };
 
   useEffect(() => {

@@ -1,13 +1,10 @@
-import React, { CSSProperties, useState } from "react";
+import { useState } from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../context/useAuth";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button/button";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-import { Checkbox } from "@/components/ui/Checkbox/checkbox";
-
-type Props = {};
 
 type RegisterForm = {
   email: string;
@@ -26,7 +23,7 @@ const validation = Yup.object().shape({
     .required("Campo obrigatório."),
 });
 
-const RegisterPage = (props: Props) => {
+const RegisterPage = () => {
   const { register: authRegister } = useAuth();
   const {
     register,

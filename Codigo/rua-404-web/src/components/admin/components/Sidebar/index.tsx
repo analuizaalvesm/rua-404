@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { FiFile, FiLayers } from "react-icons/fi";
+import { FiLayers } from "react-icons/fi";
 import { BsGrid } from "react-icons/bs";
 import { LucidePencilRuler, ShoppingBag, Users } from "lucide-react";
-import { BiColor } from "react-icons/bi";
-import { TbShoppingBagEdit } from "react-icons/tb";
 import { FiSettings } from "react-icons/fi";
 
 interface SidebarProps {

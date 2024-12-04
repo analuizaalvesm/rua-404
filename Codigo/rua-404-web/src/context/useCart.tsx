@@ -130,7 +130,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     0
   );
 
-  const closeCart = async (idCart: number) => {
+  const closeCart = async () => {
     try {
       await axios.post(`http://localhost:8080/carrinho/fecharCarrinho`, null, {
         params: { id: userId },

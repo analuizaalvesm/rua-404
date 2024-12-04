@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { FiArrowDown, FiArrowUp, FiEye } from "react-icons/fi";
+import { FiArrowDown, FiArrowUp } from "react-icons/fi";
 
 interface CardDataStatsProps {
   title: string;
