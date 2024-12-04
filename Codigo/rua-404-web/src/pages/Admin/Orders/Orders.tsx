@@ -20,6 +20,26 @@ const Orders: React.FC = () => {
             });
     }, []);
 
+    const handleStatusChange = (orderId: number, status: string) => {
+        axios
+            .put(`http://localhost:8080/orders/${orderId}/status?status=${status}`)
+            .then((response) => {
+                alert(response.data);
+                console.log("response:", response);
+                const updatedOrders = orders.map((order) => {
+                    if (order.id === orderId) {
+                        return { ...order, status };
+                    }
+                    return order;
+                });
+                setOrderList(updatedOrders);
+            })
+            .catch((error) => {
+                alert(error.response.data);
+                console.error("Error updating order status:", error);
+            });
+    }
+
     const formatData = (data: string) => {
         const date = new Date(data);
         return date.toLocaleDateString("pt-BR", {
@@ -84,39 +104,31 @@ const Orders: React.FC = () => {
                     </svg>
 
                     <div className="flex justify-between items-center pt-3 px-3 pb-3 border-t border-gray-100">
-                        <span
+                        <select
+                            value={order.status}
+                            onChange={(e) => handleStatusChange(order.id, e.target.value)}
                             className={`px-2 py-1 text-xs rounded-full items-center 
                                 ${order.status === "PENDENTE"
                                     ? "bg-yellow-100 text-yellow-600 border border-yellow-200"
-                                    : order.status === "CANCELADO"
-                                        ? "bg-red-100 text-red-600 border border-red-200"
-                                        : "bg-green-100 text-green-600 border border-green-200"
+                                    : order.status === "PRONTO"
+                                        ? "bg-orange-100 text-orange-600 border border-orange-200"
+                                        : order.status === "ENVIADO"
+                                            ? "bg-blue-100 text-blue-600 border border-blue-200"
+                                            : order.status === "ENTREGUE"
+                                                ? "bg-green-100 text-green-600 border border-green-200"
+                                                : order.status === "CANCELADO"
+                                                    ? "bg-red-100 text-red-600 border border-red-200"
+                                                    : "bg-green-100 text-green-600 border border-green-200"
+                                    
+                                    
                                 }`}
                         >
-                            {order.status}
-                        </span>
-
-                        {/* <button id="dropdownDividerButton" data-dropdown-toggle="dropdownDivider" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown divider <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4" />
-                        </svg>
-                        </button>
-
-                        <div id="dropdownDivider" className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDividerButton">
-                                <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
-                                </li>
-                            </ul>
-                            <div className="py-2">
-                                <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Separated link</a>
-                            </div>
-                        </div> */}
+                            <option value="PENDENTE">PENDENTE</option>
+                            <option value="PRONTO">PRONTO</option>
+                            <option value="ENVIADO">ENVIADO</option>
+                            <option value="ENTREGUE">ENTREGUE</option>
+                            <option value="CANCELADO">CANCELADO</option>
+                        </select>
 
                         <div className="font-bold text-gray-900">
                             Total:{" "}
