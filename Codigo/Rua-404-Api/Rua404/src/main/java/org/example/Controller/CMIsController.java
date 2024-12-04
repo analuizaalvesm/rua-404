@@ -103,6 +103,7 @@ public class CMIsController {
 
     @DeleteMapping("/deletarBanner")
     public ResponseEntity<?> deleteBanner(Long id) {
+        cmisService.deletebanner(id);
         return ResponseEntity.ok().body("Deletado com sucesso");
     }
 
