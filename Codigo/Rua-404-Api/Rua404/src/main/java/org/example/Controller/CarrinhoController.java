@@ -86,4 +86,15 @@ public class CarrinhoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/fecharCarrinho")
+    public ResponseEntity<String> fecharCarrinho(@RequestBody Carrinho carrinho) {
+        try {
+            shoppingCartService.fecharCarrinho(carrinho);
+            return ResponseEntity.ok(HttpStatus.OK.toString());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }
