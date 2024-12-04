@@ -1,17 +1,26 @@
 package org.example.Model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import lombok.Setter;
 import org.example.Enum.OrderStatus;
 
 @Entity
 @Table(name = "Pedidos")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Order {
 
     @Id
@@ -22,9 +31,9 @@ public class Order {
 
     @ManyToMany
     @JoinTable(
-        name = "pedido_produto",
-        joinColumns = @JoinColumn(name = "pedido_id"),
-        inverseJoinColumns = @JoinColumn(name = "produto_id")
+            name = "pedido_produto",
+            joinColumns = @JoinColumn(name = "pedido_id"),
+            inverseJoinColumns = @JoinColumn(name = "produto_id")
     )
     private List<Product> produtos = new ArrayList<>();
 
@@ -35,73 +44,16 @@ public class Order {
 
 
     @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = true) 
+    @JoinColumn(name = "usuario_id", nullable = true)
     private Customer usuario;
 
-    //RELACIONAMENTO PARA PEDIDO-PAGAMENTO
-    // @OneToOne
-    // @JoinColumn(name = "pagamento_id")
-    // private Pagamento pagamento;
-
-    public Order(Long id, Date data, List<Product> produtos, BigDecimal valorTotal, Customer usuario, OrderStatus status) {
-        this.id = id;
-        this.data = data;
+    public Order(Carrinho carrinho, List<Product> produtos) {
+        this.valorTotal = carrinho.getValorTotal();
+        this.status = OrderStatus.PENDENTE;
+        this.usuario = carrinho.getUser();
         this.produtos = produtos;
-        this.valorTotal = valorTotal;
-        this.usuario = usuario;
-        this.status = status;
+        this.data = new Date();
     }
 
-public Order(){
-
-}
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
-    }
-
-    public List<Product> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Product> produtos) {
-        this.produtos = produtos;
-    }
-
-    public BigDecimal getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
-    }
-
-    public OrderStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
-    public Customer getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Customer usuario) {
-        this.usuario = usuario;
-    }
-    
 }
 

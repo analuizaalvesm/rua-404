@@ -36,4 +36,8 @@ public class ShoppingCart {
     @JoinColumn(name = "user_id", referencedColumnName = "customer_id")
     private Customer user;
 
+    @ManyToOne
+    @JoinColumn(name = "carrinho_id", referencedColumnName = "id")
+    private Carrinho carrinho;
+
 }
