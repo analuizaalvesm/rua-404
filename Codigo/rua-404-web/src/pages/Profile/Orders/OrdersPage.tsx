@@ -107,7 +107,11 @@ const OrdersPage: React.FC = () => {
                 <div className="flex max-md:flex-col items-center gap-8 px-3 md:px-11 justify-stretch lg:gap-64">
                     <div className="flex max-lg:flex-col items-center gap-8 lg:gap-32 justify-between">
                         <div className="col-span-4 sm:col-span-1">
-                            <img className="h-24 w-24 rounded-sm object-cover" src="https://placehold.co/80x80/EEE/31343C" alt="PC system All in One APPLE iMac (2023) mqrq3ro/a"></img>
+                            <img 
+                                className="h-24 w-24 rounded-sm object-cover" 
+                                src={order.produtos[0].url} 
+                                alt="PC system All in One APPLE iMac (2023) mqrq3ro/a">  
+                            </img>
                         </div>
                         <div className="flex flex-col justify-center items-start max-sm:items-center">
                             <p className="font-semibold text-lg text-black leading-8 mb-2 text-left whitespace-nowrap">
