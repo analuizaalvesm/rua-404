@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Table(name = "Carro")
+@Table(name = "carrinho_final_model")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -15,6 +15,7 @@ import java.util.List;
 public class Carrinho {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
@@ -22,7 +23,6 @@ public class Carrinho {
 
     @OneToMany(mappedBy = "carrinho", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ShoppingCart> shoppingCart;
-
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "customer_id")
     private Customer user;

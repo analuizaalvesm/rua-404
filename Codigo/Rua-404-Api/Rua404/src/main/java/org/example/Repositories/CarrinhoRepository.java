@@ -20,7 +20,7 @@ public interface CarrinhoRepository extends JpaRepository<Carrinho, Long> {
      * @return Lista de carrinhos associados ao usuário.
      */
     @Query("SELECT c FROM Carrinho c WHERE c.user.customer_id = :userId")
-    List<Carrinho> findAllByUserId(@Param("userId") Long userId);
+    Carrinho findAllByUserId(@Param("userId") Long userId);
 
     /**
      * Encontra um carrinho específico por seu ID.
@@ -30,15 +30,6 @@ public interface CarrinhoRepository extends JpaRepository<Carrinho, Long> {
      */
     @Query("SELECT c FROM Carrinho c WHERE c.id = :id")
     Optional<Carrinho> findById(@Param("id") Long id);
-
-    /**
-     * Encontra o carrinho de um usuário específico.
-     *
-     * @param user Objeto do usuário.
-     * @return Carrinho associado ao usuário.
-     */
-    @Query("SELECT c FROM Carrinho c WHERE c.user = :user")
-    Optional<Carrinho> findByUser(@Param("user") Customer user);
 
 
 }

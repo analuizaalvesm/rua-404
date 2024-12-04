@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "../../context/useAuth";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button/button";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
-
-type Props = {};
 
 type LoginForm = {
   email: string;
@@ -15,10 +13,13 @@ type LoginForm = {
 
 const validation = Yup.object().shape({
   email: Yup.string().email("E-mail inválido.").required("Campo obrigatório."),
-  password: Yup.string().min(8, "A senha deve possuir no mínimo 8 dígitos.").max(16, "A senha é grande demais.").required("Campo obrigatório."),
+  password: Yup.string()
+    .min(8, "A senha deve possuir no mínimo 8 dígitos.")
+    .max(16, "A senha é grande demais.")
+    .required("Campo obrigatório."),
 });
 
-const LoginPage = (props: Props) => {
+const LoginPage = () => {
   const { login } = useAuth();
   const {
     register,
@@ -61,7 +62,9 @@ const LoginPage = (props: Props) => {
                     {...register("email")}
                   />
                   {errors.email ? (
-                    <p className="text-red-500 text-xs pt-1">{errors.email.message}</p>
+                    <p className="text-red-500 text-xs pt-1">
+                      {errors.email.message}
+                    </p>
                   ) : (
                     ""
                   )}
@@ -93,7 +96,9 @@ const LoginPage = (props: Props) => {
                     </div>
                   </div>
                   {errors.password ? (
-                    <p className="text-red-500 text-xs pt-1">{errors.password.message}</p>
+                    <p className="text-red-500 text-xs pt-1">
+                      {errors.password.message}
+                    </p>
                   ) : (
                     ""
                   )}

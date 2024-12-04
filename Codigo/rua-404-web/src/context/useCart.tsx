@@ -52,7 +52,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   const fetchCartItems = async () => {
     try {
-      const response = await axios.get(`http://localhost:8080/carinho`, {
+      const response = await axios.get(`http://localhost:8080/carrinho`, {
         params: { id: userId },
       });
       setCartItems(response.data);
@@ -63,7 +63,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   const updateQuantity = async (id: number, newQuantity: number) => {
     try {
-      const url = `http://localhost:8080/carinho?quantidade=${newQuantity}&idCarrinho=${id}`;
+      const url = `http://localhost:8080/carrinho?quantidade=${newQuantity}&idCarrinho=${id}`;
       await axios.put(url, null, {
         params: { id: userId },
       });
@@ -91,7 +91,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         await updateQuantity(existingItem.id, newQuantity);
       } else {
         await axios.post(
-          `http://localhost:8080/carinho`,
+          `http://localhost:8080/carrinho`,
           {
             name: product.name,
             productType: product.productType,
@@ -116,7 +116,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   const removeItem = async (id: number) => {
     try {
-      await axios.delete(`http://localhost:8080/carinho`, {
+      await axios.delete(`http://localhost:8080/carrinho`, {
         params: { id },
       });
       setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
@@ -130,16 +130,16 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     0
   );
 
-  const closeCart = async (idCart: number) => {
+  const closeCart = async () => {
     try {
-      await axios.post(`http://localhost:8080/carinho/fecharCarrinho`, null, {
+      await axios.post(`http://localhost:8080/carrinho/fecharCarrinho`, null, {
         params: { id: userId },
       });
       setCartItems([]);
     } catch (error) {
       console.error("Error closing cart:", error);
     }
-  }
+  };
 
   useEffect(() => {
     if (userId) {

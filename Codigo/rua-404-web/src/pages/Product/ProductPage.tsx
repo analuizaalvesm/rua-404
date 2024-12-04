@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { FiHeart, FiShoppingCart } from "react-icons/fi";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/useAuth";
-import { User } from "@/models/User";
 import { getUserProfile } from "@/services/ProfileService";
 import { useCart } from "@/context/useCart";
 
@@ -21,7 +20,7 @@ interface Product {
 
 const ProductPage: React.FC = () => {
   const { user } = useAuth();
-  const { addProductToCart, cartItems } = useCart();
+  const { addProductToCart } = useCart();
   const { state } = useLocation();
   const navigate = useNavigate();
 
@@ -29,19 +28,17 @@ const ProductPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [productList, setProductList] = useState<Product[]>([]);
-  const [userData, setUserData] = useState<User | null>(null);
   const [quantity, setQuantity] = useState<number>(1);
   const [addingToCart, setAddingToCart] = useState<boolean>(false);
 
-  const productId = state?.productId;
+  const getUrl = window.location.pathname;
+  const getProductIdByUrl = getUrl.split("/")[2];
+  const productId = state?.productId || getProductIdByUrl;
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const userData = await getUserProfile(user?.email || "");
-        if (userData) {
-          setUserData(userData);
-        }
+        await getUserProfile(user?.email || "");
       } catch (error) {
         console.error("Error fetching user profile:", error);
       }
@@ -299,7 +296,7 @@ const ProductPage: React.FC = () => {
                     }
                     className="inline-flex w-full items-center justify-center rounded-sm bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                   >
-                    Adicionar ao carrinho
+                    Ver produto na loja
                   </button>
                 </div>
               </div>

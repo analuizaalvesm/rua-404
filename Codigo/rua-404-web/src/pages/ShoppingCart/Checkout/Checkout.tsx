@@ -89,10 +89,7 @@ const Checkout = (): JSX.Element => {
                 </div>
               ))}
             </div>
-          </div>
-
-          <div className="w-full mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
-            <div className="border border-gray-200 bg-[#fdfdfd] rounded-sm p-4">
+            <div className="border border-gray-200 bg-[#fdfdfd] rounded-sm p-4 mt-6">
               <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
                 Resumo do Pedido
               </h3>
@@ -152,7 +149,9 @@ const Checkout = (): JSX.Element => {
                 </dl>
               </div>
             </div>
+          </div>
 
+          <div className="w-full mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
             {/* PIX Payment */}
             <div className="border border-gray-200 bg-[#fdfdfd] rounded-sm p-4 text-center">
               <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">

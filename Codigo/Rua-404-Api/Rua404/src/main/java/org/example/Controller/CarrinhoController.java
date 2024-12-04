@@ -1,35 +1,42 @@
 package org.example.Controller;
 
-import java.util.List;
-
+import org.example.Model.Carrinho;
 import org.example.Model.Product;
 import org.example.Model.ShoppingCart;
+import org.example.Service.CarrinhoService;
 import org.example.Service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/carrinho")
-public class ShoppingCartController {
+@RequestMapping("/novoCarrinho")
+public class CarrinhoController {
 
     @Autowired
-    private ShoppingCartService shoppingCartService;
-
+    private CarrinhoService shoppingCartService;
     /**
      * Obtém todos os carrinhos de um usuário pelo ID do usuário.
      *
      * @paramD do usuário.
      * @return Lista de carrinhos.
      */
-    @GetMapping
-    public ResponseEntity<List<ShoppingCart>> getAll(Long id) {
+    @GetMapping("/userId")
+    public ResponseEntity<Carrinho> getAllByUserId(Long id) {
 
-        List<ShoppingCart> products = shoppingCartService.getByUserId(id);
+      Carrinho products = shoppingCartService.getByUserId(id);
         return ResponseEntity.ok(products);
     }
 
+    @GetMapping("/carrinhoId")
+    public ResponseEntity<Carrinho> getAllByCarrinhoId(Long id) {
+
+        Carrinho products = shoppingCartService.getById(id);
+        return ResponseEntity.ok(products);
+    }
     /**
      * Adiciona um produto ao carrinho de um usuário.
      *
@@ -51,13 +58,13 @@ public class ShoppingCartController {
      * Atualiza um carrinho pelo ID.
      *
      * @paramDados atualizados do carrinho.
-     * @paracarrinhoId ID do carrinho a ser atualizado.
+     * @paracarrinhoId         ID do carrinho a ser atualizado.
      * @return Carrinho atualizado.
      */
     @PutMapping
-    public ResponseEntity<ShoppingCart> editCart(ShoppingCart carrinho, Long idCarrinho) {
+    public ResponseEntity<Carrinho> editCart(Carrinho carrinho, Long idCarrinho) {
         try {
-            ShoppingCart cart = shoppingCartService.put(carrinho, idCarrinho);
+            Carrinho cart = shoppingCartService.put(carrinho, idCarrinho);
             return ResponseEntity.ok(cart);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
@@ -79,4 +86,15 @@ public class ShoppingCartController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/fecharCarrinho")
+    public ResponseEntity<String> fecharCarrinho(@RequestBody Carrinho carrinho) {
+        try {
+            shoppingCartService.fecharCarrinho(carrinho);
+            return ResponseEntity.ok(HttpStatus.OK.toString());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }

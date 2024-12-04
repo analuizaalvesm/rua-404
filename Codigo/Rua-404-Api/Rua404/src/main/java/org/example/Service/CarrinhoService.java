@@ -36,7 +36,7 @@ public class CarrinhoService {
         return carrinhoRepository.findAll();
     }
 
-    public List<Carrinho> getByUserId(Long userId) {
+    public Carrinho getByUserId(Long userId) {
         return carrinhoRepository.findAllByUserId(userId);
     }
 
@@ -47,11 +47,9 @@ public class CarrinhoService {
 
     public String post(Product produto, Long userId) {
         try {
-            // Obtém o cliente associado
             Customer user = customerRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + userId));
 
-            // Cria uma nova entrada de ShoppingCart
             ShoppingCart shoppingCart = new ShoppingCart();
             shoppingCart.setNomeProduto(produto.getName());
             shoppingCart.setQuantidade(produto.getQuantity());
@@ -61,15 +59,16 @@ public class CarrinhoService {
 
             shoppingCartRepository.save(shoppingCart);
 
-            // Cria ou atualiza o carrinho
-            Carrinho carrinho = carrinhoRepository.findByUser(user)
-                    .orElse(new Carrinho(null, BigDecimal.ZERO, new ArrayList<>(), user));
-
+            Carrinho carrinho = carrinhoRepository.findAllByUserId(user.getCustomer_id());
             carrinho.getShoppingCart().add(shoppingCart);
 
-            // Atualiza o valor total
-            BigDecimal novoValorTotal = carrinho.getValorTotal()
-                    .add(produto.getPrice().multiply(BigDecimal.valueOf(produto.getQuantity())));
+            BigDecimal novoValorTotal = BigDecimal.ZERO;
+
+            for (ShoppingCart shop : carrinho.getShoppingCart()) {
+                novoValorTotal = novoValorTotal.add(
+                        produto.getPrice().multiply(BigDecimal.valueOf(produto.getQuantity()))
+                );
+            }
             carrinho.setValorTotal(novoValorTotal);
 
             carrinhoRepository.save(carrinho);
@@ -113,13 +112,7 @@ public class CarrinhoService {
                 productService.updateQuantity(item.getId(), item.getQuantidade());
             }
 
-            Order pedidoNovo = new Order(
-                    carrinho,
-                    OrderStatus.PENDENTE,
-                    produtos, // Lista de produtos
-                    carrinho.getValorTotal()
-            );
-
+            Order pedidoNovo = new Order(carrinho, produtos);
             orderService.savePedido(pedidoNovo, carrinho.getUser().getCustomer_id());
 
             carrinhoRepository.delete(carrinho);

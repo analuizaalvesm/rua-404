@@ -1,17 +1,8 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { Button } from "@/components/ui/Button/button";
 import { useNavigate } from "react-router-dom";
 import { OTPInput, SlotProps } from "input-otp";
-
-// const validation = yup.object().shape({
-//     code: yup
-//         .string()
-//         .required('Código é obrigatório')
-//         .length(4, 'Código deve ter exatamente 4 dígitos'),
-// });
 
 type ValidateCodeForm = {
   code: string;
@@ -60,6 +51,10 @@ const ValidadeCodePage = () => {
     setOtp("");
     formRef.current?.reset();
   };
+
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
 
   return (
     <div className="max-w-full">
@@ -157,7 +152,6 @@ function Slot(props: SlotProps) {
   );
 }
 
-// You can emulate a fake textbox caret!
 function FakeCaret() {
   return (
     <div className="absolute pointer-events-none inset-0 flex items-center justify-center animate-caret-blink">
@@ -166,29 +160,11 @@ function FakeCaret() {
   );
 }
 
-// tailwind.config.ts for the blinking caret animation.
-const config = {
-  theme: {
-    extend: {
-      keyframes: {
-        "caret-blink": {
-          "0%,70%,100%": { opacity: "1" },
-          "20%,50%": { opacity: "0" },
-        },
-      },
-      animation: {
-        "caret-blink": "caret-blink 1.2s ease-out infinite",
-      },
-    },
-  },
-};
-
-// Small utility to merge class names.
 import { clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 import type { ClassValue } from "clsx";
-import axios, { Axios, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

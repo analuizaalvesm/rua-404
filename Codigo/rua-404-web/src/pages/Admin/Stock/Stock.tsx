@@ -163,6 +163,10 @@ const Stock = () => {
   const endIndex = startIndex + 10;
   const currentProducts = filteredProducts.slice(startIndex, endIndex);
 
+  if (isLoading) {
+    return <div>Carregando...</div>;
+  }
+
   return (
     <div className="max-w-full">
       <main>
