@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { FaChevronRight } from "react-icons/fa6";
 import { CircularProgress } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
-import { CheckBadgeIcon } from "@heroicons/react/24/outline";
 import { CheckCheckIcon } from "lucide-react";
 
 type OrderSummaryProps = {
