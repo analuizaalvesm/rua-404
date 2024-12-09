@@ -35,4 +35,8 @@ public class Evento {
     @Column(name = "url")
     @JsonProperty("url")
     private String url;
+
+    @Column(name = "imgUrl")
+    @JsonProperty("imgUrl")
+    private String imgUrl;
 }

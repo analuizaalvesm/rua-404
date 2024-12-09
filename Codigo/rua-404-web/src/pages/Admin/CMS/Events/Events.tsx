@@ -25,6 +25,7 @@ const Events = () => {
     name: "",
     texto: "",
     url: "",
+    imgUrl: "",
   });
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -60,7 +61,7 @@ const Events = () => {
     try {
       setLoading(true);
       await axios.post(
-        `http://localhost:8080/api/cms/salvar-eventos?idEvento=0&name=${data.name}&texto=${data.texto}&url=${data.url}`
+        `http://localhost:8080/api/cms/salvar-eventos?idEvento=0&name=${data.name}&texto=${data.texto}&url=${data.url}&imgUrl=${data.imgUrl}`
       );
       await fetchEvents();
       setError(null);
@@ -76,7 +77,7 @@ const Events = () => {
     try {
       setLoading(true);
       await axios.put(
-        `http://localhost:8080/api/cms/atualizar-eventos?idEvento=${data.idEvento}&name=${data.name}&texto=${data.texto}&url=${data.url}`
+        `http://localhost:8080/api/cms/atualizar-eventos?idEvento=${data.idEvento}&name=${data.name}&texto=${data.texto}&url=${data.url}&imgUrl=${data.imgUrl}`
       );
       await fetchEvents();
       setError(null);
@@ -110,7 +111,7 @@ const Events = () => {
   };
 
   const resetForm = () => {
-    setFormData({ idEvento: 0, name: "", texto: "", url: "" });
+    setFormData({ idEvento: 0, name: "", texto: "", url: "", imgUrl: "" });
     setIsEditing(false);
   };
 
@@ -163,7 +164,18 @@ const Events = () => {
               onChange={(e) =>
                 setFormData({ ...formData, url: e.target.value })
               }
-              className="w-full !mt-1 "
+              className="w-full !mt-1 !mb-2"
+            />
+            <Label htmlFor="imgUrl" className="text-sm">
+              URL da Imagem
+            </Label>
+            <Input
+              placeholder="URL da Imagem"
+              value={formData.imgUrl}
+              onChange={(e) =>
+                setFormData({ ...formData, imgUrl: e.target.value })
+              }
+              className="w-full !mt-1"
             />
             <div className="flex space-x-2">
               <Button type="submit">
@@ -184,6 +196,7 @@ const Events = () => {
           <Table className="w-full">
             <TableHeader className="bg-gray-100 text-gray-700">
               <TableRow>
+                <TableHead>Imagem</TableHead>
                 <TableHead>Nome</TableHead>
                 <TableHead>Descrição</TableHead>
                 <TableHead>URL</TableHead>
@@ -206,6 +219,17 @@ const Events = () => {
                     key={event.idEvento}
                     className="hover:bg-gray-50 transition-colors"
                   >
+                    <TableCell>
+                      {event.imgUrl ? (
+                        <img
+                          src={event.imgUrl}
+                          alt={event.name}
+                          className="w-16 h-16 object-cover rounded"
+                        />
+                      ) : (
+                        "Sem imagem"
+                      )}
+                    </TableCell>
                     <TableCell>{event.name}</TableCell>
                     <TableCell>{event.texto}</TableCell>
                     <TableCell>
@@ -218,23 +242,26 @@ const Events = () => {
                         {event.url}
                       </a>
                     </TableCell>
-                    <TableCell className="flex justify-end space-x-2">
-                      <Button
-                        variant="outline"
-                        onClick={() => handleEdit(event)}
-                        className="text-sm"
-                      >
-                        Editar
-                      </Button>
-                      <Button
-                        variant="destructive"
-                        onClick={() =>
-                          event.idEvento && deleteEvent(event.idEvento)
-                        }
-                        className="text-sm"
-                      >
-                        Deletar
-                      </Button>
+
+                    <TableCell>
+                      <div className="flex justify-end gap-2">
+                        <Button
+                          variant="outline"
+                          onClick={() => handleEdit(event)}
+                          className="text-sm"
+                        >
+                          Editar
+                        </Button>
+                        <Button
+                          variant="destructive"
+                          onClick={() =>
+                            event.idEvento && deleteEvent(event.idEvento)
+                          }
+                          className="text-sm"
+                        >
+                          Deletar
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))

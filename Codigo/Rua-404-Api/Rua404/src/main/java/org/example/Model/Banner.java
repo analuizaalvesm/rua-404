@@ -18,6 +18,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "home")
 public class Banner {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_banner")
@@ -26,6 +27,8 @@ public class Banner {
     @Column(name = "texto")
     private String texto;
 
-    @Column(name = "descricao")
+    @Column(name = "descricao", columnDefinition = "text"
+    )
+    
     private String descricao;
 }

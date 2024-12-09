@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaChevronRight } from "react-icons/fa6";
+import { CircularProgress } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import { CheckBadgeIcon } from "@heroicons/react/24/outline";
+import { CheckCheckIcon } from "lucide-react";
 
 type OrderSummaryProps = {
   summary: {
@@ -17,6 +21,27 @@ const OrderSummary = ({
   applyVoucher,
   proceedToCheckout,
 }: OrderSummaryProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleCheckout = () => {
+    setIsLoading(true);
+    setIsModalOpen(true);
+
+    // Simulating an API call with a timeout
+    setTimeout(() => {
+      setIsLoading(false);
+      setIsComplete(true);
+
+      // Navigate to the other screen after a short delay
+      setTimeout(() => {
+        setIsModalOpen(false);
+        proceedToCheckout(); // Navigate to the other screen
+      }, 2000); // Delay for the green check display
+    }, 3000); // Simulate loading for 3 seconds
+  };
+
   return (
     <>
       <div className="space-y-4 rounded-sm border border-gray-200 bg-[#fdfdfd] p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
@@ -92,7 +117,7 @@ const OrderSummary = ({
         </div>
 
         <button
-          onClick={proceedToCheckout}
+          onClick={handleCheckout}
           className="flex w-full items-center justify-center rounded-sm bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
         >
           Finalizar compra
@@ -112,18 +137,28 @@ const OrderSummary = ({
         </div>
       </div>
 
-      <div className="space-y-3">
-        <p className="text-sm font-medium text-gray-700 text-center">
-          Meios de Pagamento
-        </p>
-        <div>
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Logo%E2%80%94pix_powered_by_Banco_Central_%28Brazil%2C_2020%29.svg/1200px-Logo%E2%80%94pix_powered_by_Banco_Central_%28Brazil%2C_2020%29.svg.png" // Substitua pelo caminho da imagem do Pix
-            alt="Pagamento por Pix"
-            className="w-16 items-center justify-center mx-auto"
-          />
+      {/* Modal for order confirmation */}
+      <Dialog open={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className="flex flex-col items-center justify-center space-y-4 p-8 font-regular">
+          {isLoading ? (
+            <>
+              <CircularProgress size={48} color="inherit" />
+              <p className="text-gray-700 dark:text-white">
+                Estamos finalizando o seu pedido...
+              </p>
+            </>
+          ) : isComplete ? (
+            <>
+              <div className="text-green-500">
+                <CheckCheckIcon size={48} />
+              </div>
+              <p className="text-gray-700 dark:text-white">
+                Pedido finalizado com sucesso!
+              </p>
+            </>
+          ) : null}
         </div>
-      </div>
+      </Dialog>
     </>
   );
 };

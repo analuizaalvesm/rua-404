@@ -3,6 +3,7 @@ export type EventFormType = {
   name: string;
   texto: string;
   url: string;
+  imgUrl: string;
 };
 
 export type CollectionFormType = {
@@ -16,4 +17,10 @@ export type CommonFormType = {
   name: string;
   texto: string;
   url: string;
+};
+
+export type BannerFormData = {
+  id: number;
+  texto: string;
+  descricao: string;
 };

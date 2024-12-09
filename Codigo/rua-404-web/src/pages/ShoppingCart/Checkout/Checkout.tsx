@@ -47,9 +47,15 @@ const Checkout = (): JSX.Element => {
   return (
     <section className="bg-[#fafafa] border-t border-gray-200 py-8 dark:bg-gray-900 md:py-12">
       <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
-        <h2 className="text-xl font-orbitron-semibold text-gray-900 dark:text-white sm:text-2xl">
-          Checkout
-        </h2>
+        <div className="space-y-2">
+          <h2 className="text-xl font-orbitron-semibold text-gray-900 dark:text-white sm:text-2xl">
+            Seu pedido foi realizado com sucesso!
+          </h2>
+          <p className="text-gray-600">
+            O pagamento deve ser feito via PIX. Escaneie o QR Code ou copie o
+            código abaixo e cuidaremos do resto.
+          </p>
+        </div>
 
         <div className="mt-4 sm:mt-6 md:gap-6 lg:flex lg:items-start xl:gap-6">
           <div className="w-full lg:max-w-2xl xl:max-w-2xl">

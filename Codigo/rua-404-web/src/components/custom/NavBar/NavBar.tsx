@@ -204,8 +204,7 @@ const Navbar = () => {
         </nav>
       </div>
 
-      {(location.pathname === "/store" ||
-        location.pathname === "/shopping-cart") && (
+      {location.pathname === "/store" && (
         <div className="bg-[#37CA7F] text-white text-center p-2 w-full">
           15% OFF NA PRIMEIRA COMPRA
         </div>

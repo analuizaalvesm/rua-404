@@ -15,110 +15,113 @@ import {
 } from "@/components/ui/Table/table";
 import { Button } from "@/components/ui/Button/button";
 import { Input } from "@/components/ui/Input/input";
-import { CommonFormType } from "../types";
 import axios from "axios";
 import { Label } from "@/components/ui/Label/label";
+import { BannerFormData } from "../types";
 
-const Collabs = () => {
-  const [formData, setFormData] = useState<CommonFormType>({
+const Banner = () => {
+  const [formData, setFormData] = useState<BannerFormData>({
     id: 0,
-    name: "",
     texto: "",
-    url: "",
+    descricao: "",
   });
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [items, setItems] = useState([]);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<String>("");
+
+  const fetchBanner = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `http://localhost:8080/api/cms/listar-banners`
+      );
+      setItems(response.data);
+      setError("");
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createBanner = async (data: BannerFormData) => {
+    try {
+      setLoading(true);
+      await axios.post(
+        `http://localhost:8080/api/cms/salvar-banner?id=0&texto=${data.texto}&descricao=${data.descricao}`
+      );
+      fetchBanner();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateBanner = async (data: BannerFormData) => {
+    try {
+      setLoading(true);
+      await axios.put(
+        `http://localhost:8080/api/cms/atualizar-banner?id=${data.id}&texto=${data.texto}&descricao=${data.descricao}`
+      );
+      fetchBanner();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteCollection = async (id: number) => {
+    console.log(id);
+    try {
+      setLoading(true);
+      await axios.delete(
+        `http://localhost:8080/api/cms/deletarBanner?id=${id}`
+      );
+      fetchBanner();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    if (!isEditing && items.length >= 1) {
+      setError("Apenas um banner pode ser criado. Edite o banner existente.");
+      return;
+    }
     if (isEditing) {
-      await updateCollab(formData);
+      await updateBanner(formData);
     } else {
-      await createCollab(formData);
+      await createBanner(formData);
     }
     resetForm();
   };
 
-  const fetchCollabs = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `http://localhost:8080/api/cms/listar-collabs`
-      );
-      setItems(response.data);
-      setError(null);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const createCollab = async (data: CommonFormType) => {
-    try {
-      setLoading(true);
-      await axios.post(
-        `http://localhost:8080/api/cms/salvar-collabs?id=0&name=${data.name}&texto=${data.texto}`
-      );
-      fetchCollabs();
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const updateCollab = async (data: CommonFormType) => {
-    try {
-      setLoading(true);
-      await axios.put(
-        `http://localhost:8080/api/cms/atualizar-collabs?id=${data.id}&name=${data.name}&texto=${data.texto}`
-      );
-      fetchCollabs();
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const deleteCollab = async (id: number) => {
-    try {
-      setLoading(true);
-      await axios.delete(
-        `http://localhost:8080/api/cms/deletar-collabs?id=${id}`
-      );
-      fetchCollabs();
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleEdit = (collab: any) => {
-    setFormData(collab);
+  const handleEdit = (collection: any) => {
+    setFormData(collection);
     setIsEditing(true);
   };
 
   const resetForm = () => {
-    setFormData({ id: 0, name: "", texto: "", url: "" });
+    setFormData({ id: 0, texto: "", descricao: "" });
     setIsEditing(false);
   };
 
   useEffect(() => {
-    fetchCollabs();
+    fetchBanner();
   }, []);
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   return (
     <>
       <CardHeader className="bg-white border border-gray-200 mb-5 items-start p-4 rounded-sm">
-        <CardTitle className="font-medium">Gerenciar Colaborações</CardTitle>
+        <CardTitle className="font-medium">Gerenciar Banner</CardTitle>
       </CardHeader>
       <Card className="p-4 mb-5 rounded-sm">
         <CardContent>
@@ -127,10 +130,10 @@ const Collabs = () => {
               Nome
             </Label>
             <Input
-              placeholder="Nome da colaboração"
-              value={formData.name}
+              placeholder="Nome da coleção"
+              value={formData.texto}
               onChange={(e) =>
-                setFormData({ ...formData, name: e.target.value })
+                setFormData({ ...formData, texto: e.target.value })
               }
               className="w-full !mt-1 !mb-2"
             />
@@ -140,16 +143,16 @@ const Collabs = () => {
             </Label>
             <textarea
               placeholder="Descrição"
-              value={formData.texto}
+              value={formData.descricao}
               onChange={(e) =>
-                setFormData({ ...formData, texto: e.target.value })
+                setFormData({ ...formData, descricao: e.target.value })
               }
               className="w-full !mt-1 p-3 border rounded-lg resize-none focus:ring-2 text-sm focus:ring-blue-500"
               rows={2}
             />
             <div className="flex space-x-2">
               <Button type="submit">
-                {isEditing ? "Atualizar" : "Criar"} Collab
+                {isEditing ? "Atualizar" : "Criar"} Coleção
               </Button>
               {isEditing && (
                 <Button type="button" variant="outline" onClick={resetForm}>
@@ -157,6 +160,7 @@ const Collabs = () => {
                 </Button>
               )}
             </div>
+            {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
           </form>
         </CardContent>
       </Card>
@@ -182,21 +186,21 @@ const Collabs = () => {
                   </TableCell>
                 </TableRow>
               ) : (
-                items.map((collab: CommonFormType) => (
-                  <TableRow key={collab.id}>
-                    <TableCell>{collab.name}</TableCell>
-                    <TableCell>{collab.texto}</TableCell>
+                items.map((banner: BannerFormData) => (
+                  <TableRow key={banner.id}>
+                    <TableCell>{banner.texto}</TableCell>
+                    <TableCell>{banner.descricao}</TableCell>
                     <TableCell className="flex justify-end space-x-2">
                       <Button
                         variant="outline"
-                        onClick={() => handleEdit(collab)}
+                        onClick={() => handleEdit(banner)}
                         className="text-sm"
                       >
                         Editar
                       </Button>
                       <Button
                         variant="destructive"
-                        onClick={() => collab.id && deleteCollab(collab.id)}
+                        onClick={() => banner.id && deleteCollection(banner.id)}
                         className="text-sm"
                       >
                         Deletar
@@ -213,4 +217,4 @@ const Collabs = () => {
   );
 };
 
-export default Collabs;
+export default Banner;

@@ -66,8 +66,7 @@ const OrdersPage: React.FC = () => {
 
     const OrderCard = ({ order }: { order: Order }) => {
         const handleCancelButtonClick = () => {
-            const whatsappLink = `https://wa.me/5531995245030?text=Quero%20cancelar%20meu%20pedido%20${order.id}`;
-            window.open(whatsappLink, '_blank');
+            navigate(`/`);
         }
 
         return (
