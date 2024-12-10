@@ -65,7 +65,6 @@ public class ShoppingCartService {
             carrinho.setUser(customerRepository.getByID(id));
             carrinho.setCarrinho(c);
             shoppingCartRepository.save(carrinho);
-            carrinhoRepository.save(c);
 
             return "";
         } catch (RuntimeException e) {
@@ -85,34 +84,18 @@ public class ShoppingCartService {
                 if(item.getNomeProduto().equals(prod.getName())){
                     productService.updateQuantity(prod.getId(),item.getQuantidade());
                     produtosPedido.add(prod);
-
-                    Order newPedido=new Order(c, produtosPedido);
-                    orderService.savePedido(newPedido, clienteId);
-
                 }
             }
         }
+        Order newPedido=new Order(c, produtosPedido);
+        orderService.savePedido(newPedido, clienteId);
+
         c.getShoppingCart().clear();
         carrinhoRepository.save(c);
     
 
         return "Prossiga Para o pagamento";
 
-
-            /*for (ShoppingCart item : carrinho.getShoppingCart()) {
-                Product produto = new Product(
-                        item.getNomeProduto(),
-                        item.getQuantidade(),
-                        item.getValorPorProduto()
-                );
-                produtos.add(produto);
-                
-
-                productService.updateQuantity(item.getId(), item.getQuantidade());
-                Order pedidoNovo = new Order(carrinho, produtos);
-                orderService.savePedido(pedidoNovo, carrinho.getUser().getCustomer_id());
-
-            */
             }
     public String delete(Long id) {
         try {
