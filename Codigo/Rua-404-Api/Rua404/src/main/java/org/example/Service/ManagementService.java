@@ -8,6 +8,7 @@ import org.example.Repositories.CustomerRepository;
 import org.example.Repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -53,11 +54,11 @@ public class ManagementService {
             Date diferent = new Date(new Date().getTime() - userBd.getDataSendCode().getTime());
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
-            String encryptedPassword=user.getPassword();
-            passwordEncoder.encode(encryptedPassword);
+            String passwordEncrypted=passwordEncoder.encode(userBd.getPassword());
+            
             
             if (diferent.getTime() / 1000 < 900) {
-                userBd.setPassword(encryptedPassword);
+                userBd.setPassword(passwordEncrypted);
                 userBd.setCode(null);
                 userBd.setSendCode(null);
                 userBd.setCodeExpiration(null);
@@ -79,7 +80,7 @@ public class ManagementService {
             if (diferent.getTime() / 1000 < 900) { // 15 minutos
                 return "Código válido!";
             } else {
-                return "Código expirado! Solicite um novo código!";
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT)+"Código expirado! Solicite um novo código!";
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Código inválido");
