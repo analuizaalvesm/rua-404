@@ -33,21 +33,25 @@ Antes de começar, certifique-se de ter os seguintes requisitos instalados:
 4. [PostgreSQL LTS (17.2)](https://www.postgresql.org/download/) - Banco de dados relacional para persistência do sistema.
 5. [pgAdmin 4](https://www.pgadmin.org/download/) ou [DBeaver](https://dbeaver.io/download/) - Ferramentas para gerenciar o banco de dados.
    
-## 🛠️ Tecnologias utilizadas
+## 🛠️ Tecnologias & Arquitetura
+Nesta seção listaremos as principais tecnologias e decisões arquiteturais do nosso projeto.
 ### Back-end
 - Java com Spring Boot
-- Arquitetura MVC - Estrutura para separar as camadas de apresentação, lógica de negócios e dados.
-- Repository Pattern - Para acesso aos dados com desacoplamento entre as camadas de negócio e de persistência.
-- Utilização de JPA/Hibernate - Para persistência de dados e mapeamento objeto-relacional.
-- Swagger - Para documentação automática da nossa API REST.
+- Arquitetura MVC - estrutura para separar as camadas de apresentação, lógica de negócios e dados.
+- Repository Pattern - para acesso aos dados com desacoplamento entre as camadas de negócio e de persistência.
+- Utilização de JPA/Hibernate - para persistência de dados e mapeamento objeto-relacional.
+- [Swagger](http://localhost:8080/swagger-ui/index.html#/) - para documentação automática da nossa API REST.
   
 ### Front-end
-- React + TypeScript
-- Vite com SWC - Ferramentas para bundling rápido e compilação eficiente do JavaScript e TypeScript.
-- Tailwind CSS - Framework de utilitários para construção rápida de layouts.
-- React Router DOM - Para navegação entre páginas e gerenciamento de rotas.
-- React Context API - Gerenciamento de estado global e comunicação entre componentes.
-- Axios - Biblioteca para requisições HTTP para integração com o back-end.
+- Core: React + TypeScript
+   - Vite + SWC - ferramentas para bundling rápido e compilação eficiente do JavaScript e TypeScript.
+   - React Router DOM - navegação entre páginas e gerenciamento de rotas.
+   - React Context API - gerenciamento de estado global e comunicação entre componentes.
+   - Axios - biblioteca para requisições HTTP para integração com o back-end.
+- Arquitetura baseada em componentes - estrutura em que cada elemento de UI é cosntruído como um componente independente e reutilizável.
+- Estilização:
+   - shadcn/ui + Radix - biblioteca de componentes
+   - Tailwind CSS - framework de utilitários para construção rápida de layouts.
   
 ## 🚀 Instalando RUA 4.0.4
 
