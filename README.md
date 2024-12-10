@@ -31,23 +31,6 @@ Este trabalho tem como objetivo criar um sistema multifuncional que permita a ap
 * Joyce Christina de Paiva Carvalho
 * Soraia Lúcia da Silva
 
-## 🛠️ Tecnologias utilizadas
-### Back-end
-- Java com Spring Boot - Framework para desenvolvimento de aplicações empresariais, com foco na produtividade e segurança.
-- Arquitetura MVC - Estrutura para separar as camadas de apresentação, lógica de negócios e dados.
-- Repository Pattern - Para acesso aos dados com desacoplamento entre as camadas de negócio e de persistência.
-- Utilização de JPA/Hibernate - Para persistência de dados e mapeamento objeto-relacional.
-- Swagger - Para documentação automática da API REST.
-  
-### Front-end
-- React - Biblioteca JavaScript para construção de interfaces de usuário.
-- Vite com SWC - Ferramentas para bundling rápido e compilação eficiente do JavaScript e TypeScript.
-- TypeScript - Tipagem estática para JavaScript, adicionando segurança e reduzindo erros.
-- Tailwind CSS - Framework de utilitários para construção rápida de designs responsivos.
-- React Router DOM - Para navegação entre páginas e gerenciamento de rotas.
-- React Context API - Gerenciamento de estado global e comunicação entre componentes.
-- Axios - Biblioteca para requisições HTTP, facilitando a comunicação entre o frontend e o backend.
-
 ## 💻 Pré-requisitos
 
 Antes de começar, certifique-se de ter os seguintes requisitos instalados:  
@@ -56,7 +39,23 @@ Antes de começar, certifique-se de ter os seguintes requisitos instalados:
 2. [npm 10.8.2](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) - Gerenciador de pacotes do Node.js.  
 3. [Node.js LTS (20.17.0)](https://nodejs.org/en/download) - Ambiente de execução para o frontend React.  
 4. [PostgreSQL LTS (17.2)](https://www.postgresql.org/download/) - Banco de dados relacional para persistência do sistema.
-5. [pgAdmin 4](https://www.pgadmin.org/download/) ou [DBeaver](https://dbeaver.io/download/) - Ferramentas para gerenciar o banco de dados. 
+5. [pgAdmin 4](https://www.pgadmin.org/download/) ou [DBeaver](https://dbeaver.io/download/) - Ferramentas para gerenciar o banco de dados.
+   
+## 🛠️ Tecnologias utilizadas
+### Back-end
+- Java com Spring Boot
+- Arquitetura MVC - Estrutura para separar as camadas de apresentação, lógica de negócios e dados.
+- Repository Pattern - Para acesso aos dados com desacoplamento entre as camadas de negócio e de persistência.
+- Utilização de JPA/Hibernate - Para persistência de dados e mapeamento objeto-relacional.
+- Swagger - Para documentação automática da nossa API REST.
+  
+### Front-end
+- React + TypeScript
+- Vite com SWC - Ferramentas para bundling rápido e compilação eficiente do JavaScript e TypeScript.
+- Tailwind CSS - Framework de utilitários para construção rápida de layouts.
+- React Router DOM - Para navegação entre páginas e gerenciamento de rotas.
+- React Context API - Gerenciamento de estado global e comunicação entre componentes.
+- Axios - Biblioteca para requisições HTTP para integração com o back-end.
   
 ## 🚀 Instalando RUA 4.0.4
 
@@ -71,8 +70,8 @@ git clone https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2024-2-ti4-1254100-r
 cd .\Codigo
 ```
 
-### 3. Configuração do Backend
-  1. Acesse o diretório do backend
+### 3. Configuração do Back-End
+  1. Acesse o diretório do back-end
      ```bash
      cd \Rua-404-Api\
      ```
@@ -94,12 +93,12 @@ cd .\Codigo
     
       Obs: normalmente o `username` e `senha` é configurado convencionalmente como "root".
 
-  4. Execute o servidor backend
+  4. Execute o servidor back=end
      ```bash
      ./mvnw spring-boot:run
      ```
-### 4. Configuração do Frontend
-  1. Acesse o diretório do frontend
+### 4. Configuração do Front-end
+  1. Acesse o diretório do front-end
      ```bash
      cd \rua-404-web\
      ```
