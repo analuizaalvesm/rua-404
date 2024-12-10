@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/useAuth";
 import {
   DropdownMenu,
@@ -9,12 +9,14 @@ import {
 import logo from "../../../assets/images/logo_rua.png";
 import logoWhite from "../../../assets/images/logo_rua_white.png";
 import { useState } from "react";
-import { FiUser, FiHeart } from "react-icons/fi";
+import { FiUser, FiHeart, FiArrowRight } from "react-icons/fi";
 import { useCart } from "@/context/useCart";
 import CartDropdown from "./components/CartDropdown";
+import UserOne from "@/assets/images/blue_dog.jpg";
 
 const Navbar = () => {
-  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
+  const { isAuthenticated, user, logout, role } = useAuth();
   const { cartCount, cartItems } = useCart();
 
   const [isHovering, setIsHovering] = useState(false);
@@ -157,7 +159,7 @@ const Navbar = () => {
               />
             </div>
 
-            {isAuthenticated() ? (
+            {isAuthenticated() && role !== "ADMIN" ? (
               <div className="hidden lg:flex items-center text-black">
                 <div
                   className={`flex items-center space-x-4 ${
@@ -175,6 +177,37 @@ const Navbar = () => {
                     <FiUser size={20} />
                   </Link>
                 </div>
+              </div>
+            ) : isAuthenticated() && role === "ADMIN" ? (
+              <div
+                className="flex flex-row items-center gap-4 cursor-pointer"
+                onClick={() => navigate("/admin/dashboard")}
+              >
+                <span className="hidden text-right lg:block">
+                  <span
+                    className={`block text-sm font-medium text-black dark:text-white ${
+                      allowedRoutes.includes(currentRoute)
+                        ? "text-white group-hover:text-black"
+                        : "text-black"
+                    }`}
+                  >
+                    {user?.email}
+                  </span>
+                  <span
+                    className={`block text-xs text-gray-500 ${
+                      allowedRoutes.includes(currentRoute)
+                        ? "text-white group-hover:text-black"
+                        : "text-black"
+                    }`}
+                  >
+                    Administrador
+                  </span>
+                </span>
+
+                <span className="h-12 w-12">
+                  <img src={UserOne} alt="User" className="rounded-full" />
+                </span>
+                <FiArrowRight size={20} color={"#000"} />
               </div>
             ) : (
               <div className="hidden lg:flex items-center space-x-4 text-black">

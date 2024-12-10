@@ -2,11 +2,35 @@ import { Link } from "react-router-dom";
 import DropdownUser from "../Dropdowns/DropdownUser";
 import DarkModeSwitcher from "./DarkModeSwitcher";
 import { FiSearch } from "react-icons/fi";
+import { useAuth } from "@/context/useAuth";
+import { User } from "@/models/User";
+import { useEffect, useState } from "react";
+import { getUserProfile } from "@/services/ProfileService";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
+  const { user, logout } = useAuth();
+  const [userData, setUserData] = useState<User | null>(null);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        console.log("user?.email", user?.email);
+        const userData = await getUserProfile(user?.email || "");
+        if (userData) {
+          setUserData(userData);
+        }
+      } catch (error) {
+        console.error("Error fetching user profile:", error);
+      }
+    };
+    if (user) {
+      fetchUserProfile();
+    }
+  }, [user]);
+
   return (
     <header className="sticky top-0 z-999 flex w-full bg-white shadow drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
       <div className="flex flex-grow items-center justify-between px-4 py-3 shadow-2 md:px-6 2xl:px-11">
@@ -80,7 +104,14 @@ const Header = (props: {
           <ul className="flex items-center gap-2 2xsm:gap-4">
             <DarkModeSwitcher />
           </ul>
-          <DropdownUser />
+          <DropdownUser
+            name={
+              `${userData?.first_name ?? ""} ${
+                userData?.last_name ?? ""
+              }`.trim() || "Administrador"
+            }
+            logout={logout}
+          />
         </div>
       </div>
     </header>
