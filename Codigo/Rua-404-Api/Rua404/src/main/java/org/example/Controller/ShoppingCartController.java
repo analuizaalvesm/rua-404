@@ -63,6 +63,11 @@ public class ShoppingCartController {
             return ResponseEntity.notFound().build();
         }
     }
+    
+    @PostMapping("/checkout")
+    public ResponseEntity<?> changePassword(@RequestParam Long clienteId){
+        return ResponseEntity.ok().body(this.shoppingCartService.checkout(clienteId));
+    }
 
     /**
      * Deleta um carrinho pelo ID.

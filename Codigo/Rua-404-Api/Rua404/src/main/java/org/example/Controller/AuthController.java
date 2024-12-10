@@ -1,14 +1,16 @@
 package org.example.Controller;
 
-import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+
 import org.example.DTOS.ResponseDTO;
 import org.example.DTOS.loginDTO;
 import org.example.DTOS.registerDTO;
 import org.example.Enum.UserRole;
+import org.example.Model.Carrinho;
 import org.example.Model.Customer;
+import org.example.Repositories.CarrinhoRepository;
 import org.example.Repositories.CustomerRepository;
 import org.example.Security.JwtUtil;
 import org.example.Service.AuthService;
@@ -27,6 +29,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
@@ -39,6 +43,9 @@ public class AuthController {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    CarrinhoRepository carrinhoRepository;
 
     @GetMapping("/{email}")
     public ResponseEntity<Customer> getUserByemail(@PathVariable String email){
@@ -83,6 +90,12 @@ public class AuthController {
         newUser.setCreate_data(date);
 
         customerRepository.save(newUser);
+
+        Carrinho carrinho_final=new Carrinho();
+        carrinho_final.setUser(newUser);
+        carrinhoRepository.save(carrinho_final);
+    
+
         return ResponseEntity.ok(newUser);
     }
     @PutMapping("/updateUserData/{email}")
