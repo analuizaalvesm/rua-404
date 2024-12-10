@@ -1,17 +1,9 @@
 <div>
 <h1 align="center">Projeto Rua 4.0.4</h1>
-<div align="center">
-  
-  ![GitHub repo size](https://img.shields.io/github/repo-size/iuricode/README-template?style=for-the-badge)
-  ![GitHub language count](https://img.shields.io/github/languages/count/iuricode/README-template?style=for-the-badge)
-  ![GitHub forks](https://img.shields.io/github/forks/iuricode/README-template?style=for-the-badge)
-  ![Bitbucket open issues](https://img.shields.io/bitbucket/issues/iuricode/README-template?style=for-the-badge)
-  ![Bitbucket open pull requests](https://img.shields.io/bitbucket/pr-raw/iuricode/README-template?style=for-the-badge)
-  
-</div>
 </div>
 
-![1](https://github.com/user-attachments/assets/a7735faa-61e7-4480-96c6-167884c5d4c1)
+![Rua404 - Website Showcase](https://github.com/user-attachments/assets/99001e80-aba3-47fc-8d23-5d2e3bee74a9)
+
 
 ## Objetivo
 
