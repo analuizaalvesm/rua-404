@@ -43,7 +43,7 @@ public class OrderService {
                         order.getValorTotal(),
                         order.getStatus().name(),
                         order.getProdutos().stream()
-                                .map(product -> new ProductDTO(product.getId(), product.getName()))
+                                .map(product -> new ProductDTO(product.getId(), product.getName(), product.getUrl()))
                                 .collect(Collectors.toList())
                 ))
                 .collect(Collectors.toList());
