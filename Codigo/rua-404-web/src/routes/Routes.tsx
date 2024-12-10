@@ -1,7 +1,7 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { App } from "../App";
 import * as Route from "../pages/index";
-import { useAuth } from "../context/useAuth";
+import { useAuth, UserProvider } from "../context/useAuth";
 import {
   AdminDashboard,
   AdminRoutes,
@@ -9,9 +9,9 @@ import {
   AdminOrders,
   AdminUsers,
   AdminCMS,
-  AdminReport
+  AdminReport,
 } from "@/pages/Admin/Dashboard/AdminRoutes";
-import AdminLogin from "@/pages/Admin/Login/AdminLogin";
+import AdminRoute from "./AdminRoute";
 
 type RouteConfig = {
   path: string;
@@ -84,13 +84,14 @@ const routeConfig: RouteConfig[] = [
     ],
   },
   {
-    path: "/admin/login",
-    element: <AdminLogin />,
-    isPrivate: false,
-  },
-  {
     path: "/admin",
-    element: <AdminRoutes />,
+    element: (
+      <UserProvider>
+        <AdminRoute requiredRole="ADMIN">
+          <AdminRoutes />
+        </AdminRoute>
+      </UserProvider>
+    ),
     children: [
       {
         path: "dashboard",

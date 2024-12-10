@@ -4,7 +4,6 @@ import { FiLayers } from "react-icons/fi";
 import { BsGrid } from "react-icons/bs";
 import { LucidePencilRuler, ShoppingBag, Users } from "lucide-react";
 import { RiFolderDownloadFill } from "react-icons/ri";
-import { FiSettings } from "react-icons/fi";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -59,8 +58,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col bg-gray-900 overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 px-8 py-6 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col bg-gray-900 overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 px-8 py-6 ${
+        sidebarOpen ? "translate-x-0" : "-translate-x-full"
+      }`}
     >
       <div className="flex items-center justify-between gap-2 px-4 py-5.5 lg:py-6.5">
         <NavLink to="/admin/dashboard" className="flex items-center gap-3">
@@ -84,9 +84,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/admin/dashboard"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${pathname.includes("/admin/dashboard") &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/dashboard") &&
                     "bg-gray-800 dark:bg-meta-4"
-                    }`}
+                  }`}
                 >
                   <BsGrid size={20} />
                   Dashboard
@@ -95,9 +96,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/admin/stock"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${pathname.includes("/admin/stock") &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/stock") &&
                     "bg-graydark dark:bg-meta-4"
-                    }`}
+                  }`}
                 >
                   <FiLayers size={20} />
                   Estoque
@@ -107,9 +109,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/admin/orders"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${pathname.includes("/admin/orders") &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/orders") &&
                     "bg-graydark dark:bg-meta-4"
-                    }`}
+                  }`}
                 >
                   <ShoppingBag size={20} />
                   Pedidos
@@ -118,9 +121,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/admin/CMS"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${pathname.includes("/admin/users") &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/users") &&
                     "bg-graydark dark:bg-meta-4"
-                    }`}
+                  }`}
                 >
                   <LucidePencilRuler size={20} />
                   CMS
@@ -129,23 +133,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/admin/report"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${pathname.includes("/admin/report") &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/report") &&
                     "bg-graydark dark:bg-meta-4"
-                    }`}
+                  }`}
                 >
                   <RiFolderDownloadFill size={20} />
                   Relatórios
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/admin/settings"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${pathname.includes("/admin/settings") &&
-                    "bg-graydark dark:bg-meta-4"
-                    }`}
-                >
-                  <FiSettings size={20} />
-                  Configurações
                 </NavLink>
               </li>
             </ul>
@@ -159,9 +153,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/admin/users"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${pathname.includes("/admin/users") &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-regular text-bodydark1 duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-meta-4 ${
+                    pathname.includes("/admin/users") &&
                     "bg-graydark dark:bg-meta-4"
-                    }`}
+                  }`}
                 >
                   <Users size={20} />
                   Usuários
