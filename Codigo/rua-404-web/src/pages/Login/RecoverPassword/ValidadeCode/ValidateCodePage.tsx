@@ -30,18 +30,17 @@ const ValidadeCodePage = () => {
 
             if (response.status === 200) {
                 window.alert(response.data);
+                console.log("Resposta recebida:", response);
                 localStorage.setItem("userCode", otp);
                 navigate("/change-password");
+            } else if (response.status === 204) {
+                console.error("Código espirado:", response);
+                window.alert("Código expirado! Solicite um novo código!");
+                navigate("/get-code");
             } else {
                 cleanCode();
-                if (response.status === 204) {
-                    console.error("Código espirado:", response);
-                    window.alert(response.data);
-                    navigate("/get-code");
-                } else {
-                    console.error("Erro na validação do código:", response);
-                    window.alert("Erro na validação do código, tente novamente.");
-                }
+                console.error("Erro na validação do código:", response);
+                window.alert("Erro na validação do código, tente novamente.");
             }
         } catch (err) {
             cleanCode();
