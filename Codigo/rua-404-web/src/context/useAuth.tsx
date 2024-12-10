@@ -17,6 +17,7 @@ type UserContextType = {
   login: (email: string, password: string) => void;
   logout: () => void;
   isAuthenticated: () => boolean;
+  role: string | null;
   userId: number | null;
   setUser: (user: UserProfile) => void;
 };
@@ -37,12 +38,13 @@ export const UserProvider = ({ children }: Props) => {
   );
   const [userId, setUserId] = useState<number | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [role, setRole] = useState<string | null>(localStorage.getItem("role"));
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("user");
     if (token && user) {
-      setToken(token);
+      setToken(token || null);
       setUser(JSON.parse(user));
       axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     }
@@ -78,23 +80,38 @@ export const UserProvider = ({ children }: Props) => {
   };
 
   const login = async (email: string, password: string) => {
-    await loginApi(email, password)
-      .then((response) => {
-        if (response) {
-          if (response?.data.token) {
-            localStorage.setItem("token", response?.data.token);
-          }
-          const userObj = {
-            email: email,
-          };
-          localStorage.setItem("user", JSON.stringify(userObj));
-          setToken(response?.data.token!);
-          setUser(userObj!);
-          window.alert("User logged in successfully!");
+    try {
+      const response = await loginApi(email, password);
+
+      if (response?.data) {
+        const { token, role } = response.data;
+        if (token) {
+          localStorage.setItem("token", token);
+        }
+        if (role) {
+          localStorage.setItem("role", role);
+        } else {
+          localStorage.setItem("role", "USER");
+        }
+
+        setToken(token || null);
+        setRole(role);
+
+        const userObj = { email };
+        localStorage.setItem("user", JSON.stringify(userObj));
+        setUser(userObj);
+
+        if (role === "ADMIN") {
+          navigate("/admin/dashboard");
+        } else {
           navigate("/store");
         }
-      })
-      .catch(() => window.alert("ERRO LOGIN"));
+
+        window.alert("User logged in successfully!");
+      }
+    } catch (error) {
+      window.alert("ERRO LOGIN");
+    }
   };
 
   const getUserInfo = async () => {
@@ -133,6 +150,7 @@ export const UserProvider = ({ children }: Props) => {
         setUser,
         register,
         token,
+        role,
         logout,
         isAuthenticated,
         userId,

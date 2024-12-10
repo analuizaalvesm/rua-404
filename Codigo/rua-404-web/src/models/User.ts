@@ -24,6 +24,7 @@ export type User = {
   token?: string;
   id?: number;
   profilePicture?: any;
+  role: string | null;
 };
 
 export type UserProfile = {

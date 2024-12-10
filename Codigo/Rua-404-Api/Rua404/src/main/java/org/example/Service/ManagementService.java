@@ -2,6 +2,7 @@ package org.example.Service;
 
 import java.util.Date;
 import java.util.Random;
+
 import org.example.Model.Customer;
 import org.example.Repositories.CustomerRepository;
 import org.example.Repositories.UserRepository;
@@ -50,8 +51,13 @@ public class ManagementService {
         Customer userBd = userRepository.findByEmailAndCode(user.getEmail(), user.getRecuperationCode());
         if (userBd != null) {
             Date diferent = new Date(new Date().getTime() - userBd.getDataSendCode().getTime());
+
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
+            String encryptedPassword=user.getPassword();
+            passwordEncoder.encode(encryptedPassword);
+            
             if (diferent.getTime() / 1000 < 900) {
-                userBd.setPassword(user.getPassword());
+                userBd.setPassword(encryptedPassword);
                 userBd.setCode(null);
                 userBd.setSendCode(null);
                 userBd.setCodeExpiration(null);
@@ -89,8 +95,8 @@ public class ManagementService {
     if (passwordEncoder.matches(senhaAtual, user.getPassword())) {
          String novaSenhaEncrypted = passwordEncoder.encode(novaSenha);
           user.setPassword(novaSenhaEncrypted); this.customerRepository.save(user);
-           return true; } 
-           else 
+           return true; 
+        }else 
            { 
             return false;
          }
