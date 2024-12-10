@@ -9,10 +9,12 @@ const Banner = ({ texto, descricao }: { texto: string; descricao: string }) => {
         <div className="flex items-center">
           <div className="py-14">
             <h1 className="text-6xl text-center font-orbitron-bold text-white tracking-wider uppercase">
-              {texto}
+              {texto ? texto : "This is ARTE DE RUA"}
             </h1>
             <p className="text-gray-600 text-center text-lg text-white leading-relaxed mt-8 px-32">
-              {descricao}
+              {descricao
+                ? descricao
+                : "Onde a tecnologia encontra a arte nas ruas, transformando o urbano em um playground digital. Somos um coletivo que mistura intervenções urbanas e arte multimídia para criar experiências imersivas e únicas. Conecte-se com o futuro da arte, onde cada projeto é uma nova interação entre o digital e o real."}
             </p>
             <div className="flex justify-center">
               <button
