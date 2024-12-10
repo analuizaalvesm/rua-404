@@ -50,7 +50,7 @@ Nesta seção listaremos as principais tecnologias e decisões arquiteturais do 
    - Axios - biblioteca para requisições HTTP para integração com o back-end.
 - Arquitetura baseada em componentes - estrutura em que cada elemento de UI é cosntruído como um componente independente e reutilizável.
 - Estilização:
-   - shadcn/ui + Radix - biblioteca de componentes
+   - shadcn/ui + Radix - biblioteca open-source de componentes altamente customizáveis.
    - Tailwind CSS - framework de utilitários para construção rápida de layouts.
   
 ## 🚀 Instalando RUA 4.0.4
