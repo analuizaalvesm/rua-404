@@ -7,7 +7,7 @@
 
 ## Objetivo
 
-Este trabalho tem como objetivo criar um sistema multifuncional que permita a apresentação, venda e gerenciamento de obras de arte, facilitando a comunicação entre artistas e apreciadores, através de uma loja virtual, uma landing page junto com diversas experiências visuais para o cliente e um dashboard de gerenciamento para o Administrador. O cliente se trata de um coletivo de artistas de rua de Belo Horizonte e já utilizava divulgação através das redes sociais, no entanto, sentiu a necessidade de também possuir uma plataforma web para atingir seus clientes.
+O objetivo deste trabalho é capturar a essência do grupo RUA 4.0.4 e traduzi-la em uma plataforma web que funcione tanto como um portfólio para os artistas quanto como uma vitrine para aqueles que desejam adquirir seus produtos. Este trabalho teve como objetivo criar um sistema multifuncional que permita a apresentação, venda e gerenciamento de obras de arte, facilitando a comunicação entre artistas e apreciadores. Isso será feito através de uma loja virtual, uma landing page com diversas experiências visuais para o cliente e um dashboard de gerenciamento para o administrador.
 
 ## Alunos integrantes da equipe
 
