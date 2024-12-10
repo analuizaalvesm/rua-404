@@ -1,12 +1,17 @@
 package org.example.DTOS;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 public class OrderDTO {
     private Long id;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy", timezone = "UTC")
     private Date data;
+    
     private BigDecimal valorTotal;
     private String status;
     private List<ProductDTO> produtos;
