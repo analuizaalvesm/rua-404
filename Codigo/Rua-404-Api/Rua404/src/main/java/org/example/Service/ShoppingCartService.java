@@ -71,7 +71,7 @@ public class ShoppingCartService {
             throw new RuntimeException("Não foi possível adicionar Cliente");
         }
     }
-    public String checkout(long clienteId){
+    public Order checkout(long clienteId){
     
         Carrinho c=this.carrinhoRepository.findAllByUserId(clienteId);
 
@@ -94,7 +94,7 @@ public class ShoppingCartService {
         carrinhoRepository.save(c);
     
 
-        return "Prossiga Para o pagamento";
+        return newPedido;
 
             }
     public String delete(Long id) {
