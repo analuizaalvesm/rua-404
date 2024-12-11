@@ -1,4 +1,3 @@
 # Divulgação: Vídeo do Projeto
 
-Nesta pasta inclua arquivos de vídeo produzidos para divulgação do projeto e seus resutados.
-
+O vídeo foi compactado para respeitar o tamanho máximo permitido pelo GitHub (> 25mb). Para ver o vídeo na íntegra, acesse: https://youtu.be/-g2V61oRrak

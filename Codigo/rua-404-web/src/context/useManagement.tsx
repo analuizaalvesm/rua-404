@@ -6,6 +6,7 @@ import {
   changePasswordApi,
 } from "../services/ManagementService";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 type UserProfile = {
   email: string;
@@ -42,11 +43,13 @@ export const UserProvider = ({ children }: Props) => {
     try {
       const response = getCodeApi(email);
       if (response) {
-        window.alert(response);
+        toast.success(`Código enviado com sucesso!: ${response}`, {
+          position: "top-center",
+        });
         navigate("/validate-code");
       }
     } catch (e) {
-      window.alert("ERRO");
+      toast.error(`Erro ao enviar código: ${e}`, { position: "top-center" });
     }
 
     return { getCode };
@@ -57,7 +60,7 @@ export const UserProvider = ({ children }: Props) => {
       const response = await validateCodeApi(code);
       return response ? true : false;
     } catch (e) {
-      window.alert("ERRO");
+      toast.error(`Erro ao enviar código: ${e}`, { position: "top-center" });
       return false;
     }
   };
@@ -66,11 +69,13 @@ export const UserProvider = ({ children }: Props) => {
     try {
       const response = await changePasswordApi(email, password);
       if (response) {
-        window.alert("Password changed successfully!");
+        toast.success(`Senha alterada com sucesso!`, {
+          position: "top-center",
+        });
       }
       navigate("/store");
     } catch (e) {
-      window.alert("ERRO");
+      toast.error(`Erro ao enviar código: ${e}`, { position: "top-center" });
     }
   };
 

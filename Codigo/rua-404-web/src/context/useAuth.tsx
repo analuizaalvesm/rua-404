@@ -3,6 +3,8 @@ import { UserProfile } from "../models/User";
 import { useNavigate } from "react-router-dom";
 import { loginApi, registerApi } from "@/services/AuthService";
 import { getUserProfile } from "@/services/ProfileService";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 
 type UserContextType = {
@@ -72,11 +74,15 @@ export const UserProvider = ({ children }: Props) => {
           localStorage.setItem("user", JSON.stringify(userObj));
           setToken(response?.data.token!);
           setUser(userObj!);
-          window.alert("User registered successfully!");
+          toast.success("Cadastro realizado com sucesso!", {
+            position: "top-center",
+          });
           navigate("/store");
         }
       })
-      .catch(() => window.alert("ERRO CADASTRO"));
+      .catch(() =>
+        toast.error("Erro ao realizar cadastro!", { position: "top-center" })
+      );
   };
 
   const login = async (email: string, password: string) => {
@@ -107,10 +113,12 @@ export const UserProvider = ({ children }: Props) => {
           navigate("/store");
         }
 
-        window.alert("User logged in successfully!");
+        toast.success("Login realizado com sucesso!", {
+          position: "top-center",
+        });
       }
     } catch (error) {
-      window.alert("ERRO LOGIN");
+      toast.error("Erro ao realizar login!", { position: "top-center" });
     }
   };
 
