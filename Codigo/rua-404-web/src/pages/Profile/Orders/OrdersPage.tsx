@@ -50,12 +50,7 @@ const OrdersPage: React.FC = () => {
     }, [user]);
 
     const formatData = (data: string) => {
-        const date = new Date(data);
-        return date.toLocaleDateString('pt-BR', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-        });
+       return data.replace(/-/g, '/');
     };
 
     const addDays = (data: string, days: number) => {
