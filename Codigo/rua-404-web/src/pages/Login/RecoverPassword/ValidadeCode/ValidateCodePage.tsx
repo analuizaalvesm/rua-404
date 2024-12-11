@@ -37,7 +37,7 @@ const ValidadeCodePage = () => {
       } else {
         cleanCode();
         if (response.status === 204) {
-          toast.info("Código expirado!", {
+          toast.info("Código expirado! Solicite um novo código.", {
             position: "top-center",
           });
           navigate("/get-code");

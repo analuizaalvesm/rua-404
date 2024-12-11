@@ -5,7 +5,6 @@ import org.example.Model.Customer;
 import org.example.Service.ManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,8 +24,11 @@ public class ManagementController {
     }
 
     @PostMapping("/validate-code")
-    public String validateCode(@RequestBody Customer user) {
-        return managementService.validateCode(user);
+    public ResponseEntity<?> validateCode(@RequestBody Customer user) {
+        if(managementService.validateCode(user).equals("Código expirado! Solicite um novo código!")){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/change-password")
