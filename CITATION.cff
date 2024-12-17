@@ -1,31 +1,33 @@
 cff-version: 1.0.1
 message: Please cite this software using these metadata.
-title: 
+title: Rua-404-Project
 authors:
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names:
+  - family-names: Machado Alves 
+    given-names: Ana Luiza
+  - family-names: de Carvalho Barbosa
+    given-names: Lucas
+  - family-names: Chaves de Barros
+    given-names: Lucas Henrique
+  - family-names: Brasil Aguiar
+    given-names: Matheus
+  - family-names: Martins da Silva Porto
+    given-names: Matheus
+  - family-names: Inez de Almeida Calazans
+    given-names: Raquel
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: de Paiva Carvalho
+    given-names: Joyce Christina
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: da Silva
+    given-names: Soraia Lúcia
 keywords:
-  - 
-  - 
-repository-code: 
+  - Arte de rua
+  - Realidade aumentada
+  - Loja virtual
+  - Landing page
+repository-code: https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2024-2-ti4-1254100-rua-4-0-4
 license: CC-BY-4.0
 version: 1.0.0
-date-released: 2022-07-14
+date-released: 2024-12-11
