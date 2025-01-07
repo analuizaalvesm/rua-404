@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type Collection = {
@@ -7,29 +6,16 @@ type Collection = {
   texto: string;
 };
 
-const Collections = () => {
+type CollectionsProps = {
+  collections: Collection[];
+};
+
+const Collections = ({ collections }: CollectionsProps) => {
   const navigate = useNavigate();
-  const [items, setItems] = useState<Collection[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:8080/api/cms/listar-colecoes"
-        );
-        const data = await response.json();
-        setItems(data);
-      } catch (error) {
-        console.error("Erro ao buscar dados:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   return (
     <div className="text-center py-8">
-      {items.map((item, index) => {
+      {collections.map((item, index) => {
         const isOdd = index % 2 !== 0;
         const backgroundClass = isOdd ? "bg-black" : "bg-white";
         const textColorClass = isOdd ? "text-white" : "text-black";

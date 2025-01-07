@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { FaCirclePlus } from "react-icons/fa6";
 import { BiChevronsRight } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
@@ -9,16 +8,12 @@ type Collab = {
   texto: string;
 };
 
-const Collabs = () => {
-  const [collabs, setCollabs] = useState<Collab[]>([]);
-  const navigate = useNavigate();
+type CollabsProps = {
+  collabs: Collab[];
+};
 
-  useEffect(() => {
-    fetch("http://localhost:8080/api/cms/listar-collabs")
-      .then((response) => response.json())
-      .then((data) => setCollabs(data))
-      .catch((error) => console.error("Error fetching collabs:", error));
-  }, []);
+const Collabs = ({ collabs }: CollabsProps) => {
+  const navigate = useNavigate();
 
   return (
     <section className="mx-auto max-w-screen-2xl px-16 py-8">

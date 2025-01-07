@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Heart } from "lucide-react";
+import Loader from "@/components/admin/components/Loader";
 import logoWhite from "../../assets/images/y2k_star_white.png";
 import MarqueeDemo from "@/components/custom/Marquee/Marquee";
 import chevronRight from "../../assets/icons/mdi_chevron-right.svg";
@@ -12,11 +15,63 @@ import Banner from "./Components/Banner";
 import Collections from "./Components/Collections";
 import Collabs from "./Components/Collabs";
 
+type Collab = {
+  id: number;
+  name: string;
+  texto: string;
+};
+
+type Collection = {
+  id: number;
+  name: string;
+  texto: string;
+};
+
+const backupCollections = [
+  {
+    id: 1,
+    name: "última collab",
+    texto: "CAXIN",
+  },
+  {
+    id: 2,
+    name: "última coleção",
+    texto: "4.0.4 ORIGINALS",
+  },
+  {
+    id: 3,
+    name: "último evento",
+    texto: "BH CONECTA",
+  },
+];
+
+const backupCollabs = [
+  {
+    id: 1,
+    name: "10 stickers",
+    texto:
+      "Mais de 10 modelos de adesivos diferentes para você estilizar suas coisas e a cidade.",
+  },
+  {
+    id: 2,
+    name: "8 prints",
+    texto:
+      "Mais de 8 modelos de prints criativos para você decorar seu cantinho com a arte do Rua.",
+  },
+  {
+    id: 3,
+    name: "5 parcerias com artistas de BH",
+    texto:
+      "Parcerias como Caxin, NOID, BH Conecta, entre outros artistas influentes de BH.",
+  },
+];
+
 const Home = () => {
   const [eventList, setEventList] = useState<EventFormType[]>([]);
   const [banner, setBanner] = useState<BannerFormData[]>([]);
+  const [collabs, setCollabs] = useState<Collab[]>([]);
+  const [collections, setCollections] = useState<Collection[]>([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const fetchEvents = async () => {
@@ -26,10 +81,8 @@ const Home = () => {
         `http://localhost:8080/api/cms/listar-eventos`
       );
       setEventList(response.data);
-      setError(null);
-    } catch (err: any) {
+    } catch {
       setEventList(events);
-      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -42,8 +95,7 @@ const Home = () => {
         `http://localhost:8080/api/cms/listar-banners`
       );
       setBanner(response.data);
-      setError(null);
-    } catch (err: any) {
+    } catch {
       setBanner([
         {
           id: 1,
@@ -52,23 +104,50 @@ const Home = () => {
             "Onde a tecnologia encontra a arte nas ruas, transformando o urbano em um playground digital. Somos um coletivo que mistura intervenções urbanas e arte multimídia para criar experiências imersivas e únicas. Conecte-se com o futuro da arte, onde cada projeto é uma nova interação entre o digital e o real.",
         },
       ]);
-      setError(err.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchCollections = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/cms/listar-colecoes"
+      );
+      const data = await response.json();
+      setCollections(data);
+    } catch (error) {
+      setCollections(backupCollections);
+      console.error("Erro ao buscar dados:", error);
+    }
+  };
+
+  const fetchCollabs = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/cms/listar-collabs"
+      );
+      const data = await response.json();
+      setCollabs(data);
+    } catch (error) {
+      setCollabs(backupCollabs);
+      console.error("Erro ao buscar dados:", error);
     }
   };
 
   useEffect(() => {
     fetchEvents();
     fetchBanner();
+    fetchCollections();
+    fetchCollabs();
   }, []);
 
   if (loading) {
-    return <div>Carregando...</div>;
-  }
-
-  if (error) {
-    return <div>Erro</div>;
+    return (
+      <div className="flex justify-center items-center h-screen bg-black">
+        <Loader inverted />
+      </div>
+    );
   }
 
   return (
@@ -173,8 +252,8 @@ const Home = () => {
           </div>
         </section>
       </div>
-      <Collabs />
-      <Collections />
+      <Collabs collabs={collabs} />
+      <Collections collections={collections} />
     </div>
   );
 };
