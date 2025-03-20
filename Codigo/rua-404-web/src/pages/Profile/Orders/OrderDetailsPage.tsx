@@ -5,6 +5,10 @@ import { Order } from "@/models/Order";
 import { FaTimes } from "react-icons/fa";
 import { FaArrowRight, FaCheck, FaTruck, FaBoxOpen } from "react-icons/fa6";
 import { MdAttachMoney } from "react-icons/md";
+import { FiPackage } from "react-icons/fi";
+import { Home, MapPin, User } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { CardProps } from "@mui/material";
 
 const OrderDetailsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -76,8 +80,9 @@ const OrderDetailsPage: React.FC = () => {
     const currentStepIndex = getStatusIndex(status);
 
     return (
-      <div>
-        <ol className="relative text-gray-500 border-s border-gray-200 dark:border-gray-700 dark:text-gray-400">
+      <div className="relative ml-8">
+        {" "}
+        <ol className="text-gray-500 border-s border-gray-200 dark:border-gray-700 dark:text-gray-400">
           {status !== "CANCELADO" ? (
             steps.map((step, index) => (
               <li
@@ -88,16 +93,16 @@ const OrderDetailsPage: React.FC = () => {
               >
                 <span
                   className={`absolute flex items-center justify-center w-8 h-8 
-                                            ${
-                                              index <= currentStepIndex
-                                                ? "bg-green-200"
-                                                : "bg-gray-100"
-                                            } rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 
-                                            ${
-                                              index <= currentStepIndex
-                                                ? "dark:bg-green-900"
-                                                : "dark:bg-gray-600"
-                                            }`}
+                                              ${
+                                                index <= currentStepIndex
+                                                  ? "bg-green-200"
+                                                  : "bg-gray-100"
+                                              } rounded-full -start-4 ring-4 ring-white dark:ring-gray-900 
+                                              ${
+                                                index <= currentStepIndex
+                                                  ? "dark:bg-green-900"
+                                                  : "dark:bg-gray-600"
+                                              }`}
                 >
                   <span
                     className={`w-3.5 h-3.5 ${
@@ -156,76 +161,127 @@ const OrderDetailsPage: React.FC = () => {
     );
   };
 
-  const ProductsCard: React.FC<{ order: Order }> = () => {
+  const Card: React.FC<CardProps> = ({ className, children }) => {
     return (
-      <div className="w-full md:w-1/3">
-        <div className="flex flex-col gap-2 text-gray-800 text-base border border-gray-200 p-5 !bg-[#F5F5F5]">
-          <h3 className="font-medium leading-tight">Produtos</h3>
-
-          <svg
-            className="my-1 w-full"
-            width="1216"
-            height="2"
-            viewBox="0 0 1216 2"
-            fill="none"
-          >
-            <path d="M0 1H1216" stroke="#D1D5DB"></path>
-          </svg>
-
-          <div className="flex flex-col gap-2">
-            {order?.produtos.map((produto) => (
-              <div key={produto.id}>
-                <p>
-                  {produto.quantity}x {produto.name} tamanho {produto.size}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+      <div
+        className={cn(
+          "w-full bg-white p-6 shadow-sm border border-gray-100 transition-all duration-500 hover:shadow-md",
+          className
+        )}
+      >
+        {children}
       </div>
     );
   };
 
-  const AdressCard: React.FC<{ order: Order }> = () => {
+  const ProductsCard: React.FC<{ order: Order }> = ({ order }) => {
+    const groupedProducts = order.produtos.reduce((acc, produto) => {
+      const key = produto.id || produto.name;
+
+      if (!acc[key]) {
+        acc[key] = {
+          ...produto,
+          quantity: 1,
+        };
+      } else {
+        acc[key].quantity += 1;
+      }
+
+      return acc;
+    }, {});
+
+    const productsList = Object.values(groupedProducts);
+
     return (
-      <div className="w-full md:w-1/3">
-        <div className="flex flex-col gap-2 text-gray-800 text-base border border-gray-200 p-5 !bg-[#F5F5F5]">
-          <h3 className="font-medium leading-tight">Endereço de entrega</h3>
+      <Card className="h-full p-4">
+        <div className="flex items-center mb-4 space-x-2">
+          <FiPackage className="h-5 w-5 text-neutral-800" strokeWidth={1.5} />
+          <h3 className="font-medium text-lg text-neutral-800">
+            Produtos ({productsList.length})
+          </h3>
+        </div>
 
-          <svg
-            className="my-1 w-full"
-            width="1216"
-            height="2"
-            viewBox="0 0 1216 2"
-            fill="none"
-          >
-            <path d="M0 1H1216" stroke="#D1D5DB"></path>
-          </svg>
+        <div className="h-px w-full bg-gray-100 mb-4" />
 
-          <div className="flex flex-col gap-2">
+        <div className="flex flex-col">
+          {productsList.map((produto, index) => (
+            <div
+              key={produto.id || produto.name}
+              className={`group p-3 rounded-lg ${
+                index % 2 === 0 ? "bg-gray-50" : "bg-white"
+              } hover:bg-gray-100 transition-colors duration-300`}
+            >
+              <div className="flex items-start justify-between">
+                <div className="flex items-center">
+                  <span className="inline-flex items-center justify-center h-6 w-6 rounded-full bg-neutral-800 text-white text-xs mr-3">
+                    {produto.quantity}
+                  </span>
+                  <p className="font-medium text-neutral-700 group-hover:text-neutral-900 transition-colors">
+                    {produto.name}
+                  </p>
+                </div>
+                <span className="text-sm text-neutral-500 group-hover:text-neutral-700 transition-colors">
+                  Tam: {produto.size}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </Card>
+    );
+  };
+
+  const AdressCard: React.FC<{ order: Order }> = ({ order }) => {
+    return (
+      <Card className="h-full">
+        <div className="flex items-center mb-4 space-x-2">
+          <MapPin className="h-5 w-5 text-neutral-800" strokeWidth={1.5} />
+          <h3 className="font-medium text-lg text-neutral-800">
+            Endereço de entrega
+          </h3>
+        </div>
+
+        <div className="h-px w-full bg-gray-100 mb-4" />
+
+        <div className="rounded-lg bg-gray-50 p-4 transition-all duration-300 hover:bg-gray-100">
+          <div className="flex items-start space-x-3 mb-3">
+            <User className="h-4 w-4 text-neutral-600 mt-1" strokeWidth={1.5} />
+            <p className="font-medium text-neutral-700">
+              {order?.usuario.first_name} {order?.usuario.last_name}
+            </p>
+          </div>
+
+          <div className="flex items-start space-x-3 mb-3">
+            <Home className="h-4 w-4 text-neutral-600 mt-1" strokeWidth={1.5} />
             <div>
-              <p>
-                {order?.usuario.first_name} {order?.usuario.last_name}
+              <p className="text-neutral-700">
+                {order?.usuario.address.rua}, {order?.usuario.address.numero}
+                {order?.usuario.address.complemento &&
+                  `, ${order?.usuario.address.complemento}`}
               </p>
-              <p>
-                {order?.usuario.address.rua}, {order?.usuario.address.numero},{" "}
-                {order?.usuario.address.complemento}
-              </p>
-              <p>
+              <p className="text-neutral-700">
                 {order?.usuario.address.bairro}, {order?.usuario.address.cidade}
                 /{order?.usuario.address.estado}
               </p>
-              <p>CEP: {order?.usuario.address.cep}</p>
             </div>
           </div>
+
+          <div className="flex items-start space-x-3">
+            <MapPin
+              className="h-4 w-4 text-neutral-600 mt-1"
+              strokeWidth={1.5}
+            />
+            <p className="text-neutral-700">
+              CEP: {order?.usuario.address.cep}
+            </p>
+          </div>
         </div>
-      </div>
+      </Card>
     );
   };
-
   const HelpCard: React.FC = () => {
     return (
-      <div className="flex flex-row mt-20 mb-3 gap-3 items-center">
+      <div className="flex flex-row mt-10 gap-3 items-center">
         <p className="text-gray-600 text-sm">Precisa de ajuda?</p>
         <button
           rel="noopener noreferrer"
@@ -247,7 +303,10 @@ const OrderDetailsPage: React.FC = () => {
         {order ? (
           <div>
             <Stepper status={order.status} />
-            <div className="mt-20 flex flex-col md:flex-row items-start gap-8">
+            <h2 className="text-xl font-medium font-orbitron-regular mb-1">
+              Informações do Pedido
+            </h2>
+            <div className="mt-6 flex flex-col items-start gap-8">
               <ProductsCard order={order} />
               <AdressCard order={order} />
             </div>

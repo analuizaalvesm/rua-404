@@ -1,0 +1,22 @@
+.order-card {
+  transform: translateY(0);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.order-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Status badge animations */
+.order-card select {
+  transition: all 0.2s ease-in-out;
+}
+
+.order-card select:hover {
+  filter: brightness(105%);
+}
+
+/* Animation for the card content */
+.order-card > div {
+  transition: all 0.3s ease-in-out;
+}

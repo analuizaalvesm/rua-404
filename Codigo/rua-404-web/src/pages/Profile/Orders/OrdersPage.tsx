@@ -52,13 +52,15 @@ const OrdersPage: React.FC = () => {
   }, [user]);
 
   const formatData = (data: string) => {
-    return data !== null ? data.replace(/-/g, "/") : data;
+    const [day, month, year] = data.split("-");
+    return `${day}/${month}/${year}`;
   };
 
-  const addDays = (data: string, days: number) => {
-    const date = new Date(data);
+  const addDaysToFormattedData = (data: string, days: number) => {
+    const [day, month, year] = data.split("-");
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
     date.setDate(date.getDate() + days);
-    return date;
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
   };
 
   const OrderCard = ({ order }: { order: Order }) => {
@@ -67,8 +69,8 @@ const OrdersPage: React.FC = () => {
     };
 
     return (
-      <div className="border border-gray-300 pt-9 !bg-[#F5F5F5]">
-        <div className="flex max-md:flex-col items-center justify-between px-3 md:px-11">
+      <div className="border border-gray-300 pt-5 !bg-[#F5F5F5]">
+        <div className="flex max-md:flex-col items-center justify-between px-2 md:px-5">
           <div className="data">
             <p className="font-medium text-lg leading-4 text-black whitespace-nowrap">
               Pedido: #{order.id}
@@ -98,7 +100,7 @@ const OrdersPage: React.FC = () => {
         </div>
 
         <svg
-          className="my-9 w-full"
+          className="my-5 w-full"
           width="1216"
           height="2"
           viewBox="0 0 1216 2"
@@ -133,7 +135,7 @@ const OrdersPage: React.FC = () => {
                   Previsão de entrega
                 </p>
                 <p className="font-semibold text-base leading-8 text-black text-left whitespace-nowrap">
-                  {formatData(addDays(order.data, 15).toISOString())}
+                  {addDaysToFormattedData(order.data, 15)}
                 </p>
               </div>
             </div>
@@ -141,7 +143,7 @@ const OrdersPage: React.FC = () => {
         </div>
 
         <svg
-          className="mt-9 w-full"
+          className="mt-5 w-full"
           width="1216"
           height="2"
           viewBox="0 0 1216 2"
@@ -150,7 +152,7 @@ const OrdersPage: React.FC = () => {
           <path d="M0 1H1216" stroke="#D1D5DB" />
         </svg>
 
-        <div className="px-3 md:px-11 flex items-center justify-between max-sm:flex-col-reverse">
+        <div className="px-3 md:px-5 flex items-center justify-between max-sm:flex-col-reverse">
           <span
             className={`font-bold
                             ${
@@ -163,7 +165,7 @@ const OrdersPage: React.FC = () => {
           >
             {order.status}
           </span>
-          <p className="py-6 font-medium text-xl leading-8 text-black max-sm:py-4">
+          <p className="py-4 font-medium text-xl leading-8 text-black max-sm:py-4">
             <span className="text-gray-500">Total:</span> &nbsp;
             {order.valorTotal.toLocaleString("pt-BR", {
               style: "currency",
@@ -181,6 +183,18 @@ const OrdersPage: React.FC = () => {
         <h2 className="text-xl font-medium font-orbitron-regular mb-1">
           Pedidos
         </h2>
+        <p className="text-sm text-gray-500 font-regular">
+          Acompanhe o status dos seus pedidos.
+        </p>
+        <svg
+          className="my-6 w-full"
+          width="1216"
+          height="2"
+          viewBox="0 0 1216 2"
+          fill="none"
+        >
+          <path d="M0 1H1216" stroke="#D1D5DB"></path>
+        </svg>
       </div>
       <main className="max-full">
         <div className="flex flex-col gap-8">

@@ -28,7 +28,6 @@ public class ManagementService {
 // comentando por motivos de testes
 //    @Autowired
 //    PasswordEncoder passwordEncoder;
-
     public String RequestPasswordCode(String email) {
         Customer user = userRepository.findByEmailAsync(email);
         if (user != null) {
@@ -50,57 +49,58 @@ public class ManagementService {
 
     public String changePassword(Customer user) {
         Customer userBd = userRepository.findByEmailAndCode(user.getEmail(), user.getRecuperationCode());
-        if (userBd != null) {
-            Date diferent = new Date(new Date().getTime() - userBd.getDataSendCode().getTime());
 
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
-            String passwordEncrypted=passwordEncoder.encode(userBd.getPassword());
-            
-            
-            if (diferent.getTime() / 1000 < 900) {
+        if (userBd != null) {
+            Date diferenca = new Date(new Date().getTime() - userBd.getDataSendCode().getTime());
+
+            if (diferenca.getTime() / 1000 < 900) { // 15 minutos para expiração do código
+                BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+                String passwordEncrypted = passwordEncoder.encode(user.getPassword()); // Criptografando a nova senha
+
                 userBd.setPassword(passwordEncrypted);
                 userBd.setCode(null);
                 userBd.setSendCode(null);
                 userBd.setCodeExpiration(null);
                 userRepository.saveAndFlush(userBd);
+
                 return HttpStatus.OK.toString();
             } else {
-               return HttpStatus.UNAUTHORIZED.toString();
+                return HttpStatus.UNAUTHORIZED.toString(); // Código expirado
             }
         } else {
-            return HttpStatus.BAD_REQUEST.toString();
+            return HttpStatus.BAD_REQUEST.toString(); // Código inválido
         }
     }
 
     public String validateCode(Customer user) {
         Customer userBd = userRepository.findByEmailAndCode(user.getEmail(), user.getRecuperationCode());
         try {
-            Date diferent = new Date(new Date().getTime() -
-                    userBd.getDataSendCode().getTime());
+            Date diferent = new Date(new Date().getTime()
+                    - userBd.getDataSendCode().getTime());
             if (diferent.getTime() / 1000 < 900) { // 15 minutos
                 return "Código válido!";
             } else {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT)+"Código expirado! Solicite um novo código!";
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT) + "Código expirado! Solicite um novo código!";
             }
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Código inválido");
         }
     }
 
-    public boolean updatePassword(Long id, String senhaAtual,String novaSenha) { 
+    public boolean updatePassword(Long id, String senhaAtual, String novaSenha) {
         Customer user = this.customerRepository.findById(id).orElse(null);
         if (user == null) {
-     return false; 
-    } 
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
-    if (passwordEncoder.matches(senhaAtual, user.getPassword())) {
-         String novaSenhaEncrypted = passwordEncoder.encode(novaSenha);
-          user.setPassword(novaSenhaEncrypted); this.customerRepository.save(user);
-           return true; 
-        }else 
-           { 
             return false;
-         }
+        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if (passwordEncoder.matches(senhaAtual, user.getPassword())) {
+            String novaSenhaEncrypted = passwordEncoder.encode(novaSenha);
+            user.setPassword(novaSenhaEncrypted);
+            this.customerRepository.save(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private String getCode(Long id) {

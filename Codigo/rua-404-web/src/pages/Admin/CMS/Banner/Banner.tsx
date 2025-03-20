@@ -130,7 +130,7 @@ const Banner = () => {
               Nome
             </Label>
             <Input
-              placeholder="Nome da coleção"
+              placeholder="Banner"
               value={formData.texto}
               onChange={(e) =>
                 setFormData({ ...formData, texto: e.target.value })
@@ -152,7 +152,7 @@ const Banner = () => {
             />
             <div className="flex space-x-2">
               <Button type="submit">
-                {isEditing ? "Atualizar" : "Criar"} Coleção
+                {isEditing ? "Atualizar" : "Criar"} Banner
               </Button>
               {isEditing && (
                 <Button type="button" variant="outline" onClick={resetForm}>

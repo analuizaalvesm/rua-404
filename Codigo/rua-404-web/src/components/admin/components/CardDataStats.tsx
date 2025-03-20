@@ -4,9 +4,9 @@ import { FiArrowDown, FiArrowUp } from "react-icons/fi";
 interface CardDataStatsProps {
   title: string;
   total: string;
-  rate: string;
+  rate: string | null;
   levelUp?: boolean;
-  levelDown?: boolean;
+  levelDown?: boolean | null;
   icon: ReactNode;
 }
 

@@ -15,6 +15,7 @@ import org.example.Repositories.CustomerRepository;
 import org.example.Security.JwtUtil;
 import org.example.Service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -48,67 +49,77 @@ public class AuthController {
     CarrinhoRepository carrinhoRepository;
 
     @GetMapping("/{email}")
-    public ResponseEntity<Customer> getUserByemail(@PathVariable String email){
-        Customer user=authService.getByEmail(email);
-        if(user!=null){
+    public ResponseEntity<Customer> getUserByemail(@PathVariable String email) {
+        Customer user = authService.getByEmail(email);
+        if (user != null) {
             return ResponseEntity.ok().body(user);
-        }else{
+        } else {
             return ResponseEntity.notFound().build();
         }
-        
+
     }
-@PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid loginDTO data){
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        Customer a=this.customerRepository.findByEmail(data.email());
-        if(a.getRole()==(UserRole.ADMIN)){
-        String token = JwtUtil.generateAdmToken(this.customerRepository.findByEmailAsync(data.email()).getEmail());
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody @Valid loginDTO data) {
+        try {
+            var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
+            var auth = this.authenticationManager.authenticate(usernamePassword); // Autenticação do Spring Security
 
-        ResponseDTO response=new ResponseDTO(token, a.getRole());
-         return ResponseEntity.ok(response);
+            Customer user = this.customerRepository.findByEmail(data.email());
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuário não encontrado!");
+            }
+
+            // Gerar token JWT com base na role do usuário
+            String token;
+            if (user.getRole() == UserRole.ADMIN) {
+                token = JwtUtil.generateAdmToken(user.getEmail());
+            } else {
+                token = JwtUtil.generateToken(user.getEmail());
+            }
+
+            ResponseDTO response = new ResponseDTO(token, user.getRole());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Credenciais inválidas!");
         }
-
-        String token = JwtUtil.generateToken(this.customerRepository.findByEmailAsync(data.email()).getEmail());
-
-        return ResponseEntity.ok(token);
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody @Valid registerDTO data){
-        if(this.customerRepository.findByEmail(data.email())!=null){
+    public ResponseEntity register(@RequestBody @Valid registerDTO data) {
+        if (this.customerRepository.findByEmail(data.email()) != null) {
             return ResponseEntity.badRequest().build();
         }
-        String encryptPassword=new BCryptPasswordEncoder().encode(data.password());
-        Customer newUser= new Customer(data.first_name(),data.last_name(),data.email(),encryptPassword);
+        String encryptPassword = new BCryptPasswordEncoder().encode(data.password());
+        Customer newUser = new Customer(data.first_name(), data.last_name(), data.email(), encryptPassword);
         newUser.setRole(UserRole.USER);
-        
+
         LocalDate hoje = LocalDate.now();
-        Date date=Date.from(hoje.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date date = Date.from(hoje.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         newUser.setCreate_data(date);
 
         customerRepository.save(newUser);
 
-        Carrinho carrinho_final=new Carrinho();
+        Carrinho carrinho_final = new Carrinho();
         carrinho_final.setUser(newUser);
         carrinhoRepository.save(carrinho_final);
-    
 
         return ResponseEntity.ok(newUser);
     }
+
     @PutMapping("/updateUserData/{email}")
     public String updateUserData(@RequestBody Customer customer, @PathVariable String email) {
         return authService.updateUser(customer, email);
     }
+
     @PutMapping("/changeRole")
-    public ResponseEntity<?> changeRole(@RequestParam Long id){
-       Customer newAdm= this.customerRepository.getByID(id);
-       newAdm.setRole(UserRole.ADMIN);
-       customerRepository.save(newAdm);
-       String response="Usuario= "+newAdm.getEmail()+": "+newAdm.getRole();
-       return ResponseEntity.ok(response);
+    public ResponseEntity<?> changeRole(@RequestParam Long id) {
+        Customer newAdm = this.customerRepository.getByID(id);
+        newAdm.setRole(UserRole.ADMIN);
+        customerRepository.save(newAdm);
+        String response = "Usuario= " + newAdm.getEmail() + ": " + newAdm.getRole();
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/deleteByEmail/{email}")

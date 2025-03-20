@@ -125,6 +125,15 @@ const Profile = () => {
           Aqui estão as informações básicas da sua conta. Atualize seus dados
           quando quiser.{" "}
         </p>
+        <svg
+          className="my-6 w-full"
+          width="1216"
+          height="2"
+          viewBox="0 0 1216 2"
+          fill="none"
+        >
+          <path d="M0 1H1216" stroke="#D1D5DB"></path>
+        </svg>
       </div>
       <form className="space-y-6">
         <div className="flex flex-row items-center bg-white border border-gray-300 rounded-sm p-4 space-x-4">
@@ -136,7 +145,7 @@ const Profile = () => {
             />
           ) : (
             <div className="w-24 h-24 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-4xl">
-              {editableUser?.first_name?.[0].toUpperCase() || ""}
+              {editableUser?.first_name?.charAt(0)?.toUpperCase() || ""}
             </div>
           )}
           <div>

@@ -1,7 +1,7 @@
 package org.example.Security;
 
-import jakarta.servlet.DispatcherType;
 import java.util.List;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,6 +16,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import jakarta.servlet.DispatcherType;
 
 @Configuration
 @EnableWebSecurity
@@ -48,11 +50,12 @@ public class SecurityConfigurations {
                 .requestMatchers(HttpMethod.PUT, "/products/{id}").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/products/{id}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/payment").permitAll()
-                .requestMatchers(HttpMethod.POST, "/carrinho").permitAll()
-                .requestMatchers(HttpMethod.POST, "/carrinho/fecharCarrinho").permitAll()
                 .requestMatchers(HttpMethod.GET, "/carrinho").permitAll()
-                .requestMatchers(HttpMethod.PUT, "/carrinho").permitAll()
+                .requestMatchers(HttpMethod.POST, "/carrinho").permitAll()
                 .requestMatchers(HttpMethod.DELETE, "/carrinho").permitAll()
+                .requestMatchers(HttpMethod.POST, "/carrinho/fecharCarrinho").permitAll()
+                .requestMatchers(HttpMethod.POST, "/carrinho/checkout").permitAll()
+                .requestMatchers(HttpMethod.PUT, "/carrinho").permitAll()
                 .requestMatchers(HttpMethod.POST, "/orders/{usuarioId}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/orders").permitAll()
                 .requestMatchers(HttpMethod.GET, "/orders/{id}").permitAll()

@@ -45,7 +45,12 @@ const Users = () => {
   }, []);
 
   const generateMockOrders = (count: number): Order[] => {
-    const statuses = ["Concluído", "Pendente", "Cancelado"];
+    const statuses: ("Concluído" | "Pendente" | "Cancelado")[] = [
+      "Concluído",
+      "Pendente",
+      "Cancelado",
+    ];
+    if (Math.random() < 0.3) return [];
     return Array.from(
       { length: count },
       (_, i): Order => ({
@@ -53,9 +58,7 @@ const Users = () => {
         date: new Date(
           Date.now() - Math.floor(Math.random() * 1000 * 60 * 60 * 24 * 30)
         ).toLocaleDateString("pt-BR"),
-        status: statuses[
-          Math.floor(Math.random() * statuses.length)
-        ] as Order["status"],
+        status: statuses[Math.floor(Math.random() * statuses.length)],
         total: parseFloat((Math.random() * 500 + 20).toFixed(2)),
         items: Math.floor(Math.random() * 10) + 1,
       })

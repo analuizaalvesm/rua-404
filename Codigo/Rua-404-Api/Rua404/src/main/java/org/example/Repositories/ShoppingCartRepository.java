@@ -13,10 +13,13 @@ import org.springframework.stereotype.Repository;
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Long> {
 
     @Query("SELECT u FROM ShoppingCart u WHERE u.id = :id")
-    Optional<ShoppingCart> findById(@Param("id")Long id);
+    Optional<ShoppingCart> findById(@Param("id") Long id);
 
     @Query("SELECT u FROM ShoppingCart u WHERE u.user.customer_id = :id")
-    List<ShoppingCart> findAllByUserID(@Param("id")Long id);
+    List<ShoppingCart> findAllByUserID(@Param("id") Long id);
+
+    @Query("SELECT u FROM ShoppingCart u WHERE u.user.customer_id = :id AND u.status = 'ACTIVE'")
+    List<ShoppingCart> findActiveCartsByUserID(@Param("id") Long id);
 
     public List<ShoppingCart> findByCarrinhoId(Long id);
 }

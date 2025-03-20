@@ -28,7 +28,7 @@ interface Product {
   collab: string;
   price: number;
   url: string;
-  lastUpdated: any;
+  lastUpdated: unknown;
 }
 
 interface CartContextType {
