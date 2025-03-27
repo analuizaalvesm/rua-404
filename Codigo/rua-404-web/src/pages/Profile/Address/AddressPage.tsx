@@ -9,6 +9,7 @@ import { useAuth } from "@/context/useAuth";
 import { User } from "@/models/User";
 import { CircularProgress } from "@mui/material";
 import { Address } from "@/models/Address";
+import { toast } from "react-toastify";
 
 const AddressPage = () => {
   const { user } = useAuth();
@@ -119,7 +120,10 @@ const AddressPage = () => {
 
     setAddress(addressObj);
 
-    alert("As informações foram atualizadas com sucesso!");
+    toast.success("As informações foram atualizadas com sucesso!", {
+      position: "top-center",
+    });
+    // alert("As informações foram atualizadas com sucesso!");
   };
 
   const handleCepChange = async (e: any) => {

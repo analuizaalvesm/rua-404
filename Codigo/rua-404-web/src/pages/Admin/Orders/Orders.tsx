@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Order } from "@/models/Order";
 import { FiSearch } from "react-icons/fi";
 import OrderCard from "./components/OrderCard";
+import { toast } from "react-toastify";
 
 const Orders: React.FC = () => {
   const [orders, setOrderList] = useState<Order[]>([]);
@@ -26,7 +27,7 @@ const Orders: React.FC = () => {
     axios
       .put(`http://localhost:8080/orders/${orderId}/status?status=${status}`)
       .then((response) => {
-        alert(response.data);
+        toast.success("Status do pedido atualizado com sucesso!");
         console.log("response:", response);
         const updatedOrders = orders.map((order) => {
           if (order.id === orderId) {
@@ -175,7 +176,7 @@ const Orders: React.FC = () => {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-4">Pedidos</h1>
+        <h1 className="text-2xl font-bold mb-4">Pedidos em Aberto</h1>
         <div className="mb-4 flex gap-4 justify-between w-full">
           <div className="flex flex-col w-1/3">
             <div className="flex gap-2 items-center">

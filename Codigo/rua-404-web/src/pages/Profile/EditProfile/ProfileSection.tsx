@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getUserProfile, updateUserProfile } from "@/services/ProfileService";
 import { useAuth } from "@/context/useAuth";
 import { User } from "@/models/User";
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const { user, setUser } = useAuth();
@@ -85,7 +86,10 @@ const Profile = () => {
           setUser(userObj);
           localStorage.setItem("user", JSON.stringify(userObj));
 
-          alert("As informações foram atualizadas com sucesso!");
+          // alert("As informações foram atualizadas com sucesso!");
+          toast.success("As informações foram atualizadas com sucesso!", {
+            position: "top-center",
+          });
         }
       } catch (error) {
         alert("Ocorreu um erro ao tentar salvar as alterações.");

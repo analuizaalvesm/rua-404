@@ -31,7 +31,7 @@ const stats = [
   },
   {
     title: "Total de usuários",
-    total: "20",
+    total: "13",
     rate: null,
     levelDown: null,
     icon: <FiUser size={20} />,
