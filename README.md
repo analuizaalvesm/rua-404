@@ -48,7 +48,7 @@ Nesta seção listaremos as principais tecnologias e decisões arquiteturais do 
    - React Router DOM - navegação entre páginas e gerenciamento de rotas.
    - React Context API - gerenciamento de estado global e comunicação entre componentes.
    - Axios - biblioteca para requisições HTTP para integração com o back-end.
-- Arquitetura baseada em componentes - estrutura em que cada elemento de UI é cosntruído como um componente independente e reutilizável.
+- Arquitetura baseada em componentes - estrutura em que cada elemento de UI é construído como um componente independente e reutilizável.
 - Estilização:
    - shadcn/ui + Radix - biblioteca open-source de componentes altamente customizáveis.
    - Tailwind CSS - framework de utilitários para construção rápida de layouts.
