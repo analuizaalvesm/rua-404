@@ -23,7 +23,7 @@ O objetivo deste trabalho é capturar a essência do grupo RUA 4.0.4 e traduzi-l
 * Joyce Christina de Paiva Carvalho
 * Soraia Lúcia da Silva
 
-## 💻 Pré-requisitos
+## Pré-requisitos
 
 Antes de começar, certifique-se de ter os seguintes requisitos instalados:  
 
@@ -33,7 +33,7 @@ Antes de começar, certifique-se de ter os seguintes requisitos instalados:
 4. [PostgreSQL LTS (17.2)](https://www.postgresql.org/download/) - Banco de dados relacional para persistência do sistema.
 5. [pgAdmin 4](https://www.pgadmin.org/download/) ou [DBeaver](https://dbeaver.io/download/) - Ferramentas para gerenciar o banco de dados.
    
-## 🛠️ Tecnologias & Arquitetura
+## Tecnologias & Arquitetura
 Nesta seção listaremos as principais tecnologias e decisões arquiteturais do nosso projeto.
 ### Back-end
 - Java com Spring Boot
@@ -53,7 +53,7 @@ Nesta seção listaremos as principais tecnologias e decisões arquiteturais do 
    - shadcn/ui + Radix - biblioteca open-source de componentes altamente customizáveis.
    - Tailwind CSS - framework de utilitários para construção rápida de layouts.
   
-## 🚀 Instalando RUA 4.0.4
+## Instalação
 
 ### 1. Clonar o repositório
 Abra o terminal e execute:
@@ -104,7 +104,7 @@ cd .\Codigo
      npm install --save
      ```
 
-  3. Execute o servidor frontend
+  3. Execute o servidor front-end
      ```bash
      npm run dev
      ```
@@ -112,17 +112,17 @@ cd .\Codigo
   4. Acesse a aplicação no navegador
      Normalmente a aplicação ficará disponível em [http://localhost:5173](http://localhost:5173).
 
-## 📋 Observações
-1. Certifique-se de que o backend está rodando antes de acessar o frontend.
-2. Verifique se as portas padrão (8080 para o backend e 5173 para o frontend) não estão em uso.
+## Observações
+1. Certifique-se de que o back-end está rodando antes de acessar o front-end.
+2. Verifique se as portas padrão (8080 para o back-end e 5173 para o front-end) não estão em uso.
 
-## 🌍 Deploy
-### Frontend
-O frontend foi hospedado na Vercel, aproveitando sua integração com projetos React e suporte nativo a aplicações construídas com Vite.
-Acesse a aplicação frontend em: [https://rua-404.vercel.app/](https://rua-404.vercel.app/)
+## Deploy
+### Front-end
+O front-end foi hospedado na Vercel, aproveitando sua integração com projetos React e suporte nativo a aplicações construídas com Vite.
+Acesse a aplicação front-end em: [https://rua-404.vercel.app/](https://rua-404.vercel.app/)
 
-### Backend
-O backend foi implementado utilizando o framework Spring Boot, com deploy distribuído em dois ambientes:
+### Back-end
+O back-end foi implementado utilizando o framework Spring Boot, com deploy distribuído em dois ambientes:
 - Railway: Plataforma para deploy rápido e gerenciamento automático de serviços.
 - Azure: Para maior estabilidade e controle em produção.
 - Acesse o banco de dados em: [ruafourzerofour.postgres.database.azure.com](ruafourzerofour.postgres.database.azure.com)
